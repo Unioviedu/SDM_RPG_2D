@@ -8,6 +8,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
+
 public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
 
     boolean iniciado = false;
@@ -18,6 +20,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     public static int pantallaAlto;
 
     private Habitacion habitacion;
+    private Jugador jugador;
     public int numeroHabitacion = 0;
 
     public GameView(Context context) {
@@ -105,15 +108,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
 
     protected void inicializar() throws Exception {
         habitacion = new Habitacion(context, numeroHabitacion);
-
+        jugador = new Jugador(context, 250, 250);
     }
 
     public void actualizar(long tiempo) throws Exception {
             //TODO habitacion.actualizar(tiempo);
+        jugador.actualizar(tiempo);
     }
 
     protected void dibujar(Canvas canvas) {
+
         habitacion.dibujar(canvas);
+        jugador.dibujar(canvas);
     }
 
     public void surfaceChanged(SurfaceHolder holder, int format, int width,
