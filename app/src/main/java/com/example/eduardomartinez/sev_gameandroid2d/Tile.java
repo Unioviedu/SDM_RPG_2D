@@ -12,8 +12,8 @@ public class Tile {
     public static final int SOLIDO = 1;
     public static final int DESTRUIBLE = 2;
 
-    public static int ancho = 150;
-    public static int altura = 150;
+    public static int ancho = 100;
+    public static int altura = 100;
 
     public int tipoDeColision;
 
@@ -29,9 +29,11 @@ public class Tile {
             case '#':
                 imagen = CargadorGraficos.cargarDrawable(context,
                         determinarImagenPared(altoMapaTiles, anchoMapaTiles, x, y));
+                tipoDeColision = SOLIDO;
                 break;
             case '.':
                 imagen = CargadorGraficos.cargarDrawable(context, R.drawable.habitacion_suelo);
+                tipoDeColision = PASABLE;
                 break;
             default:
                 throw new RuntimeException("Tipo de tile incorrecto");
@@ -40,7 +42,7 @@ public class Tile {
 
     private int determinarImagenPared(int altoMapaTiles, int anchoMapaTiles, int x, int y) {
         if(x == 0 && y == 0)
-            return R.drawable.habitacion_esquina_izq_arriba;
+            return R.drawable.habitacion_esquina_izq_arriba_v2;
         else if(x == 0 && y == altoMapaTiles - 1)
             return R.drawable.habitacion_esquina_izq_abajo;
         else if(x == anchoMapaTiles - 1 && y == 0)
@@ -56,6 +58,6 @@ public class Tile {
         else if(x != 0 && x != anchoMapaTiles - 1 && y == altoMapaTiles - 1)
             return R.drawable.habitacion_pared_abajo;
         else
-            return R.drawable.habitacion_suelo;
+            throw new RuntimeException("Pared Incorrecta");
     }
 }
