@@ -42,7 +42,7 @@ public class Tile {
 
     private int determinarImagenPared(int altoMapaTiles, int anchoMapaTiles, int x, int y) {
         if(x == 0 && y == 0)
-            return R.drawable.habitacion_esquina_izq_arriba_v2;
+            return R.drawable.habitacion_esquina_izq_arriba;
         else if(x == 0 && y == altoMapaTiles - 1)
             return R.drawable.habitacion_esquina_izq_abajo;
         else if(x == anchoMapaTiles - 1 && y == 0)
