@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 public class PantallaInicioActivity extends AppCompatActivity {
 
@@ -19,7 +17,7 @@ public class PantallaInicioActivity extends AppCompatActivity {
     }
 
     public void iniciarJuego(View v){
-        Intent juegoActivity = new Intent(PantallaInicioActivity.this, MainActivity.class);
+        Intent juegoActivity = new Intent(PantallaInicioActivity.this, JuegoActivity.class);
 
         startActivity(juegoActivity);
     }

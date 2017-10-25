@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo_seleccion_long_juego"
+    tools:context="com.example.eduardomartinez.sev_gameandroid2d.PantallaSeleccionLongitudJuegoActivity">
+
+    <Button
+        android:id="@+id/button_long_3"
+        android:layout_width="419dp"
+        android:layout_height="57dp"
+        android:background="@android:color/transparent"
+        tools:layout_editor_absoluteX="87dp"
+        tools:layout_editor_absoluteY="116dp" />
+
+    <Button
+        android:id="@+id/button_long_5"
+        android:layout_width="419dp"
+        android:layout_height="57dp"
+        android:background="@android:color/transparent"
+        tools:layout_editor_absoluteX="87dp"
+        tools:layout_editor_absoluteY="180dp" />
+
+    <Button
+        android:id="@+id/button_long_7"
+        android:layout_width="419dp"
+        android:layout_height="57dp"
+        android:background="@android:color/transparent"
+        tools:layout_editor_absoluteX="87dp"
+        tools:layout_editor_absoluteY="238dp" />
+</android.support.constraint.ConstraintLayout>
