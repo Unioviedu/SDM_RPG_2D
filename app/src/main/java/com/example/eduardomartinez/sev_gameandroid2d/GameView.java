@@ -8,7 +8,11 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.DisparoJugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.controles.BotonDisparo;
+
+import java.util.List;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
 
@@ -19,9 +23,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     public static int pantallaAncho;
     public static int pantallaAlto;
 
+    private BotonDisparo botonDisparo;
+
     private Habitacion habitacion;
-    private Jugador jugador;
     public int numeroHabitacion = 0;
+
+    private List<DisparoJugador> disparosJugador;
 
     public GameView(Context context) {
         super(context);
@@ -86,7 +93,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
 
         for(int i=0; i < 6; i++){
             if(accion[i] != NO_ACTION ) {
-
+                if (botonDisparo.estaPulsado(x[i], y[i]))
+                    if (accion[i] == ACTION_DOWN)
+                        habitacion.botonDispararPulsado = true;
             }
         }
 
@@ -108,18 +117,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
 
     protected void inicializar() throws Exception {
         habitacion = new Habitacion(context, numeroHabitacion);
-        jugador = new Jugador(context, 250, 250);
+        botonDisparo = new BotonDisparo(context);
     }
 
     public void actualizar(long tiempo) throws Exception {
-            //TODO habitacion.actualizar(tiempo);
-        jugador.actualizar(tiempo);
+        habitacion.actualizar(tiempo);
     }
 
     protected void dibujar(Canvas canvas) {
-
         habitacion.dibujar(canvas);
-        jugador.dibujar(canvas);
+        botonDisparo.dibujar(canvas);
     }
 
     public void surfaceChanged(SurfaceHolder holder, int format, int width,

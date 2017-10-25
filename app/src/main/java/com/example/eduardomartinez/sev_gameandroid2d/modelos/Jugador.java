@@ -42,7 +42,7 @@ public class Jugador extends Modelo {
     private double velocidadX;
     private double velocidadY;
 
-    private int orientacion;
+    public int orientacion;
     public static final int DERECHA = 1;
     public static int ARRIBA = 2;
     public static final int IZQUIERDA = -1;
@@ -207,5 +207,16 @@ public class Jugador extends Modelo {
         sprites.put(nombre, temp);
 
         return temp;
+    }
+
+    public void procesarOrdenes(float orientacionPad, boolean disparar) {
+        if (disparar) {
+            disparando = true;
+
+            sprites.get(DISPARANDO_DERECHA).setFrameActual(0);
+            sprites.get(DISPARANDO_IZQUIERDA).setFrameActual(0);
+            sprites.get(DISPARANDO_ARRIBA).setFrameActual(0);
+            sprites.get(DISPARANDO_ABAJO).setFrameActual(0);
+        }
     }
 }
