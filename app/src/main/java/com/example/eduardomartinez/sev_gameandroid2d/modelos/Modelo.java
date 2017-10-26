@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 
-public class Modelo {
+public abstract class Modelo {
     public int cDerecha;
     public int cIzquierda;
     public int cArriba;

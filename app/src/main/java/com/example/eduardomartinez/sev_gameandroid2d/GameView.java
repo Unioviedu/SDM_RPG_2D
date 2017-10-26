@@ -11,8 +11,7 @@ import android.view.SurfaceView;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.DisparoJugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.controles.BotonDisparo;
-
-import java.util.List;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.controles.BotonMovimiento;
 
 import java.util.List;
 
@@ -25,12 +24,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     public static int pantallaAncho;
     public static int pantallaAlto;
 
-    private Jugador jugador;
     private List<Habitacion> habitaciones;
     public int habitacionActual = 0;
 
     private BotonDisparo botonDisparo;
     private List<DisparoJugador> disparosJugador;
+
+    private BotonMovimiento botonMovimiento;
 
     public GameView(Context context) {
         super(context);
@@ -42,6 +42,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
         this.context = context;
         gameloop = new GameLoop(this);
         gameloop.setRunning(true);
+    }
+
+    public Habitacion getHabitacionActual(){
+        return habitaciones.get(habitacionActual);
     }
 
     @Override
@@ -95,12 +99,28 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
 
         for(int i=0; i < 6; i++){
             if(accion[i] != NO_ACTION ) {
+
+
                 if (botonDisparo.estaPulsado(x[i], y[i]))
                     if (accion[i] == ACTION_DOWN)
-                        habitaciones.get(habitacionActual).botonDispararPulsado = true;
+                        getHabitacionActual().botonDispararPulsado = true;
+            }
+
+            if(botonMovimiento.estaPulsado(x[i], y[i])){
+                float orientacionX = botonMovimiento.getOrientacionX(x[i]);
+                float orientacionY = botonMovimiento.getOrientacionY(y[i]);
+
+                if (accion[i] != ACTION_UP) {
+                    pulsacionPadMover = true;
+                    getHabitacionActual().orientacionPadX = orientacionX;
+                    getHabitacionActual().orientacionPadY = orientacionY;
+                }
             }
         }
-
+        if(!pulsacionPadMover) {
+            getHabitacionActual().orientacionPadX = 0;
+            getHabitacionActual().orientacionPadY = 0;
+        }
     }
 
 
@@ -121,23 +141,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
 
         habitaciones = GestorNivel.getInstance().seleccionarLongitudJuego(context);
 
-        jugador = new Jugador(context, 250, 250);
         botonDisparo = new BotonDisparo(context);
+        botonMovimiento = new BotonMovimiento(context);
 
     }
 
     public void actualizar(long tiempo) throws Exception {
-            //TODO habitacion.actualizar(tiempo);
-        jugador.actualizar(tiempo);
+        getHabitacionActual().actualizar(tiempo);
     }
 
     protected void dibujar(Canvas canvas) {
 
         habitaciones.get(habitacionActual).dibujar(canvas);
 
-        jugador.dibujar(canvas);
-
         botonDisparo.dibujar(canvas);
+        botonMovimiento.dibujar(canvas);
 
     }
 

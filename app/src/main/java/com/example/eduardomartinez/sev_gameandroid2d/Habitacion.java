@@ -32,7 +32,11 @@ public class Habitacion {
     private Jugador jugador;
     private List<DisparoJugador> disparosJugador;
 
-    public boolean botonDispararPulsado = false;
+    public boolean botonDispararPulsado;
+    public boolean botonSaltarPulsado;
+
+    public float orientacionPadX;
+    public float orientacionPadY;
 
     public Habitacion(Context context, int numeroHabitacion) throws Exception {
         inicializado = false;
@@ -90,6 +94,23 @@ public class Habitacion {
         }
     }
 
+    private void aplicarReglasMoviemiento() {
+        if (jugador.velocidadX > 0) {
+
+
+            jugador.x += jugador.velocidadX;
+        }
+        if (jugador.velocidadX <= 0) {
+            jugador.x += jugador.velocidadX;
+        }
+        if (jugador.velocidadY <= 0) {
+            jugador.y += jugador.velocidadY;
+        }
+        if (jugador.velocidadY > 0) {
+            jugador.y += jugador.velocidadY;
+        }
+    }
+
     public void dibujar (Canvas canvas) {
         if(inicializado) {
 
@@ -121,18 +142,24 @@ public class Habitacion {
     }
 
     public void actualizar (long tiempo) {
-        jugador.actualizar(tiempo);
+        if (inicializado) {
+            jugador.actualizar(tiempo);
 
-        for (DisparoJugador disparoJugador: disparosJugador)
-            disparoJugador.actualizar(tiempo);
+            for (DisparoJugador disparoJugador : disparosJugador)
+                disparoJugador.actualizar(tiempo);
 
-        if (botonDispararPulsado) {
-            disparosJugador.add(new DisparoJugador(context, jugador.x, jugador.y,
-                    jugador.orientacion));
-            botonDispararPulsado = false;
+            if (botonSaltarPulsado)
+                botonSaltarPulsado = false;
+
+            if (botonDispararPulsado) {
+                disparosJugador.add(new DisparoJugador(context, jugador.x, jugador.y,
+                        jugador.orientacion));
+                botonDispararPulsado = false;
+            }
+
+            jugador.procesarOrdenes(orientacionPadX, orientacionPadY, botonDispararPulsado);
+
+            aplicarReglasMoviemiento();
         }
-
-        //AQUI HABRIA QUE PONER LA ORIENTACION, NO JUGADOR.DERECHA
-        jugador.procesarOrdenes(jugador.DERECHA, botonDispararPulsado);
     }
 }

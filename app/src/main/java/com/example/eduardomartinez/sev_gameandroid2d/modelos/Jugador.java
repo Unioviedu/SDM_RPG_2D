@@ -39,8 +39,8 @@ public class Jugador extends Modelo {
 
     private double xInicial;
     private double yInicial;
-    private double velocidadX;
-    private double velocidadY;
+    public double velocidadX;
+    public double velocidadY;
 
     public int orientacion;
     public static final int DERECHA = 1;
@@ -69,48 +69,46 @@ public class Jugador extends Modelo {
     }
 
     public void inicializar() {
-        Sprite paradoArriba = crearSprite(R.drawable.protagonista_animacion_parado_arriba,
+        crearSprite(R.drawable.protagonista_animacion_parado_arriba,
                 PARADO_ARRIBA, 2, true);
         Sprite paradoAbajo = crearSprite(R.drawable.protagonista_animacion_parado_abajo,
                 PARADO_ABAJO, 2, true);
-        Sprite paradoDerecha = crearSprite(R.drawable.protagonista_animacion_parado_derecha,
+        crearSprite(R.drawable.protagonista_animacion_parado_derecha,
                 PARADO_DERECHA, 2, true);
-        Sprite paradoIzquierda = crearSprite(R.drawable.protagonista_animacion_parado_izquierda,
+        crearSprite(R.drawable.protagonista_animacion_parado_izquierda,
                 PARADO_IZQUIERDA, 2, true);
 
-        Sprite caminandoArriba = crearSprite(R.drawable.protagonista_animacion_caminando_arriba,
+        crearSprite(R.drawable.protagonista_animacion_caminando_arriba,
                 CAMINANDO_ARRIBA, 6, true);
-        Sprite caminandoAbajo = crearSprite(R.drawable.protagonista_animacion_caminando_abajo,
+        crearSprite(R.drawable.protagonista_animacion_caminando_abajo,
                 CAMINANDO_ABAJO, 6, true);
-        Sprite caminandoDerecha = crearSprite(R.drawable.protagonista_animacion_caminando_derecha,
+        crearSprite(R.drawable.protagonista_animacion_caminando_derecha,
                 CAMINANDO_DERECHA, 6, true);
-        Sprite caminandoIzquierda = crearSprite(R.drawable.protagonista_animacion_caminando_izquierda,
+        crearSprite(R.drawable.protagonista_animacion_caminando_izquierda,
                 CAMINANDO_IZQUIERDA, 6, true);
 
-        Sprite disparandoArriba = crearSprite(R.drawable.protagonista_animacion_disparando_arriba,
+        crearSprite(R.drawable.protagonista_animacion_disparando_arriba,
                 DISPARANDO_ARRIBA, 2, false);
-        Sprite disparandoAbajo = crearSprite(R.drawable.protagonista_animacion_golpeado_abajo,
+        crearSprite(R.drawable.protagonista_animacion_golpeado_abajo,
                 DISPARANDO_ABAJO, 2, false);
-        Sprite disparandoDerecha = crearSprite(R.drawable.protagonista_animacion_disparando_derecha,
+        crearSprite(R.drawable.protagonista_animacion_disparando_derecha,
                 DISPARANDO_DERECHA, 2, false);
-        Sprite disparandoIzquierda = crearSprite(R.drawable.protagonista_animacion_disparando_izquierda,
+        crearSprite(R.drawable.protagonista_animacion_disparando_izquierda,
                 DISPARANDO_IZQUIERDA, 2, false);
 
-        Sprite golpeadoArriba = crearSprite(R.drawable.protagonista_animacion_golpeado_arriba,
+        crearSprite(R.drawable.protagonista_animacion_golpeado_arriba,
                 GOLPEADO_ARRIBA, 2, false);
-        Sprite golpeadoAbajo = crearSprite(R.drawable.protagonista_animacion_golpeado_abajo,
+        crearSprite(R.drawable.protagonista_animacion_golpeado_abajo,
                 GOLPEADO_ABAJO, 2, false);
-        Sprite golpeadoDerecha = crearSprite(R.drawable.protagonista_animacion_golpeado_derecha,
+        crearSprite(R.drawable.protagonista_animacion_golpeado_derecha,
                 GOLPEADO_DERECHA, 2, false);
-        Sprite golpeadoIzquierda = crearSprite(R.drawable.protagonista_animacion_golpeado_izquierda,
+        crearSprite(R.drawable.protagonista_animacion_golpeado_izquierda,
                 GOLPEADO_IZQUIERDA, 2, false);
 
-        spriteActual = caminandoDerecha;
+        spriteActual = paradoAbajo;
     }
 
     public void dibujar(Canvas canvas){
-        //CUANDO TENGAMOS SCROLL
-        //sprite.dibujarSprite(canvas, (int) x - Nivel.scrollEjeX , (int) y,msInmunidad > 0);
         spriteActual.dibujarSprite(canvas, (int) x, (int) y,msInmunidad > 0);
     }
 
@@ -134,8 +132,6 @@ public class Jugador extends Modelo {
         if (golpeado)
             comprobarGolpeado();
 
-        //PARA COMPROBAR SPRITES (IGNORAR)
-        //spriteActual = sprites.get(DISPARANDO_ARRIBA);
     }
 
     public int golpeado(){
@@ -209,7 +205,7 @@ public class Jugador extends Modelo {
         return temp;
     }
 
-    public void procesarOrdenes(float orientacionPad, boolean disparar) {
+    public void procesarOrdenes(float orientacionMoverX, float orientacionMoverY, boolean disparar) {
         if (disparar) {
             disparando = true;
 
@@ -217,6 +213,29 @@ public class Jugador extends Modelo {
             sprites.get(DISPARANDO_IZQUIERDA).setFrameActual(0);
             sprites.get(DISPARANDO_ARRIBA).setFrameActual(0);
             sprites.get(DISPARANDO_ABAJO).setFrameActual(0);
+        }
+
+        float sensibilidad = 20;
+        float velocidad = 10;
+
+        if (orientacionMoverX > sensibilidad) {
+            velocidadX = -velocidad;
+            orientacion = IZQUIERDA;
+        } else if (orientacionMoverX < -sensibilidad ){
+            velocidadX = velocidad;
+            orientacion = DERECHA;
+        } else {
+            velocidadX = 0;
+        }
+
+        if (orientacionMoverY > sensibilidad) {
+            velocidadY = -velocidad;
+            orientacion = ARRIBA;
+        } else if (orientacionMoverY < -sensibilidad ){
+            velocidadY = velocidad;
+            orientacion = ABAJO;
+        } else {
+            velocidadY = 0;
         }
     }
 }
