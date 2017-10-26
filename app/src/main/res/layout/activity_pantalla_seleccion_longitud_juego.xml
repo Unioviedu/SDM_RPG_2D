@@ -7,27 +7,48 @@
     android:background="@drawable/fondo_seleccion_long_juego"
     tools:context="com.example.eduardomartinez.sev_gameandroid2d.PantallaSeleccionLongitudJuegoActivity">
 
-    <Button
-        android:id="@+id/button_long_3"
-        android:layout_width="419dp"
-        android:layout_height="57dp"
+    <ImageButton
+        android:id="@+id/boton_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:background="@android:color/transparent"
-        tools:layout_editor_absoluteX="87dp"
-        tools:layout_editor_absoluteY="116dp" />
+        android:onClick="nivelLogitud3"
+        android:src="@drawable/boton_3"
+        app:layout_constraintBottom_toTopOf="@+id/boton_5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/boton_3" />
 
-    <Button
-        android:id="@+id/button_long_5"
-        android:layout_width="419dp"
-        android:layout_height="57dp"
+    <ImageButton
+        android:id="@+id/boton_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:background="@android:color/transparent"
-        tools:layout_editor_absoluteX="87dp"
-        tools:layout_editor_absoluteY="180dp" />
+        android:onClick="nivelLogitud5"
+        android:src="@drawable/boton_5"
+        app:layout_constraintBottom_toTopOf="@+id/boton_7"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/boton_5" />
 
-    <Button
-        android:id="@+id/button_long_7"
-        android:layout_width="419dp"
-        android:layout_height="57dp"
+    <ImageButton
+        android:id="@+id/boton_7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:background="@android:color/transparent"
-        tools:layout_editor_absoluteX="87dp"
-        tools:layout_editor_absoluteY="238dp" />
+        android:onClick="nivelLogitud7"
+        android:src="@drawable/boton_7"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/boton_7" />
 </android.support.constraint.ConstraintLayout>

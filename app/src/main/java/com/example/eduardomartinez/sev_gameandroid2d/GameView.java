@@ -8,6 +8,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.List;
+
 public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
 
     boolean iniciado = false;
@@ -17,8 +19,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     public static int pantallaAncho;
     public static int pantallaAlto;
 
-    private Habitacion habitacion;
-    public int numeroHabitacion = 0;
+    private List<Habitacion> habitaciones;
+    public int habitacionActual = 0;
 
     public GameView(Context context) {
         super(context);
@@ -104,8 +106,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
 
 
     protected void inicializar() throws Exception {
-        habitacion = new Habitacion(context, numeroHabitacion);
-
+        habitaciones = GestorNivel.getInstance().seleccionarLongitudJuego(context);
     }
 
     public void actualizar(long tiempo) throws Exception {
@@ -113,7 +114,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     }
 
     protected void dibujar(Canvas canvas) {
-        habitacion.dibujar(canvas);
+        habitaciones.get(habitacionActual).dibujar(canvas);
     }
 
     public void surfaceChanged(SurfaceHolder holder, int format, int width,
@@ -157,12 +158,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
 
     public void nivelCompleto() throws Exception {
 
-        if (numeroHabitacion < 1){ // Número Máximo de Nivel
-            numeroHabitacion++;
+        if (habitacionActual < habitaciones.size()){ // Número Máximo de Nivel
+            habitacionActual++;
         } else {
-            numeroHabitacion = 0;
+            habitacionActual = 0;
         }
-        inicializar();
     }
 
 

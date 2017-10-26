@@ -1,12 +1,13 @@
 package com.example.eduardomartinez.sev_gameandroid2d;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class JuegoActivity extends AppCompatActivity {
+public class JuegoActivity extends Activity {
 
     GameView gameView;
 
@@ -14,14 +15,17 @@ public class JuegoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getSupportActionBar().hide();
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
         gameView = new GameView(this);
         setContentView(gameView);
-        gameView.numeroHabitacion = 0;
+        gameView.habitacionActual = 0;
         gameView.requestFocus();
     }
 
