@@ -8,7 +8,11 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.DisparoJugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.controles.BotonDisparo;
+
+import java.util.List;
 
 import java.util.List;
 
@@ -24,6 +28,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     private Jugador jugador;
     private List<Habitacion> habitaciones;
     public int habitacionActual = 0;
+
+    private BotonDisparo botonDisparo;
+    private List<DisparoJugador> disparosJugador;
 
     public GameView(Context context) {
         super(context);
@@ -88,7 +95,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
 
         for(int i=0; i < 6; i++){
             if(accion[i] != NO_ACTION ) {
-
+                if (botonDisparo.estaPulsado(x[i], y[i]))
+                    if (accion[i] == ACTION_DOWN)
+                        habitaciones.get(habitacionActual).botonDispararPulsado = true;
             }
         }
 
@@ -113,6 +122,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
         habitaciones = GestorNivel.getInstance().seleccionarLongitudJuego(context);
 
         jugador = new Jugador(context, 250, 250);
+        botonDisparo = new BotonDisparo(context);
 
     }
 
@@ -126,6 +136,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
         habitaciones.get(habitacionActual).dibujar(canvas);
 
         jugador.dibujar(canvas);
+
+        botonDisparo.dibujar(canvas);
 
     }
 

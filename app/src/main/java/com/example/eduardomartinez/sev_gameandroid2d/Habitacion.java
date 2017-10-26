@@ -6,6 +6,9 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
 
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.DisparoJugador;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +28,11 @@ public class Habitacion {
     private Tile[][] mapaTiles;
     private boolean inicializado;
     public GameView gameView;
+
+    private Jugador jugador;
+    private List<DisparoJugador> disparosJugador;
+
+    public boolean botonDispararPulsado = false;
 
     public Habitacion(Context context, int numeroHabitacion) throws Exception {
         inicializado = false;
@@ -46,6 +54,8 @@ public class Habitacion {
 
     public void inicializar() throws Exception {
         inicializarMapaTiles();
+        disparosJugador = new LinkedList<>();
+        jugador = new Jugador(context, 250, 250);
     }
 
     private void inicializarMapaTiles() throws Exception {
@@ -85,6 +95,10 @@ public class Habitacion {
 
             dibujarTiles(canvas);
 
+            for (DisparoJugador disparoJugador: disparosJugador)
+                disparoJugador.dibujar(canvas);
+
+            jugador.dibujar(canvas);
         }
     }
 
@@ -104,5 +118,21 @@ public class Habitacion {
                 }
             }
         }
+    }
+
+    public void actualizar (long tiempo) {
+        jugador.actualizar(tiempo);
+
+        for (DisparoJugador disparoJugador: disparosJugador)
+            disparoJugador.actualizar(tiempo);
+
+        if (botonDispararPulsado) {
+            disparosJugador.add(new DisparoJugador(context, jugador.x, jugador.y,
+                    jugador.orientacion));
+            botonDispararPulsado = false;
+        }
+
+        //AQUI HABRIA QUE PONER LA ORIENTACION, NO JUGADOR.DERECHA
+        jugador.procesarOrdenes(jugador.DERECHA, botonDispararPulsado);
     }
 }
