@@ -13,17 +13,29 @@ import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
 
 public class DisparoJugador extends Modelo {
     private Sprite sprite;
-    private double velocidadX = 10;
-    private double velocidadY = 10;
+
+    public double velocidadXOriginal = 30;
+    private double velocidadYOriginal = 30;
+    public double velocidadX;
+    public double velocidadY;
     private int orientacion;
 
     public DisparoJugador(Context context, double x, double y, int orientacion) {
-        super(context, x, y, 35, 35);
+        super(context, x, y, 55, 55);
 
-        if (orientacion == Jugador.IZQUIERDA)
-            velocidadX *= -1;
-        else if (orientacion == Jugador.ARRIBA)
-            velocidadY *= -1;
+        if (orientacion == Jugador.DERECHA) {
+            velocidadX = velocidadXOriginal;
+            velocidadY = 0;
+        } else if (orientacion == Jugador.IZQUIERDA) {
+            velocidadX = -velocidadXOriginal;
+            velocidadY = 0;
+        } else if (orientacion == Jugador.ARRIBA) {
+            velocidadY = -velocidadYOriginal;
+            velocidadX = 0;
+        } else if (orientacion == Jugador.ABAJO) {
+            velocidadY = velocidadYOriginal;
+            velocidadX = 0;
+        }
 
         cDerecha = 6;
         cIzquierda = 6;
@@ -37,7 +49,7 @@ public class DisparoJugador extends Modelo {
         sprite = new Sprite(CargadorGraficos.cargarDrawable(context,
                 R.drawable.animacion_disparo1),
                 ancho, altura,
-                24, 5, true);
+                24, 4, true);
     }
 
     public void actualizar(long tiempo) {
