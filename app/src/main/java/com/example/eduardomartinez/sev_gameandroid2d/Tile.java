@@ -31,6 +31,10 @@ public class Tile {
                         determinarImagenPared(altoMapaTiles, anchoMapaTiles, x, y));
                 tipoDeColision = SOLIDO;
                 break;
+            case 'P':
+                imagen = CargadorGraficos.cargarDrawable(context, R.drawable.piedra_1);
+                tipoDeColision = SOLIDO;
+                break;
             case '.':
                 imagen = CargadorGraficos.cargarDrawable(context, R.drawable.habitacion_suelo);
                 tipoDeColision = PASABLE;

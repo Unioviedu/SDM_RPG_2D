@@ -1,12 +1,13 @@
-package com.example.eduardomartinez.sev_gameandroid2d;
+package com.example.eduardomartinez.sev_gameandroid2d.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.example.eduardomartinez.sev_gameandroid2d.R;
 
 public class PantallaInicioActivity extends Activity {
 

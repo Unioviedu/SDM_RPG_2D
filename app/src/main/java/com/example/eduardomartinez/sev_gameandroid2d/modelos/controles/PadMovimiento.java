@@ -11,10 +11,17 @@ import com.example.eduardomartinez.sev_gameandroid2d.modelos.Modelo;
  * Created by karolmc on 26/10/2017.
  */
 
-public class BotonMovimiento extends Modelo {
+public class PadMovimiento extends Modelo {
 
-    public BotonMovimiento(Context context) {
+    public PadMovimiento(Context context) {
         super(context, GameView.pantallaAncho*0.15 , GameView.pantallaAlto*0.8,
+                280,280);
+
+        imagen = CargadorGraficos.cargarDrawable(context, R.drawable.pad);
+    }
+
+    public PadMovimiento(Context context, double posX, double posY) {
+        super(context, posX , posY,
                 280,280);
 
         imagen = CargadorGraficos.cargarDrawable(context, R.drawable.pad);

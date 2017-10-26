@@ -11,9 +11,9 @@ import com.example.eduardomartinez.sev_gameandroid2d.modelos.Modelo;
  * Created by eduardomartinez on 26/10/17.
  */
 
-public class BotonDisparo extends Modelo {
+public class PadDisparo extends Modelo {
 
-    public BotonDisparo(Context context) {
+    public PadDisparo(Context context) {
         super(context, GameView.pantallaAncho*0.85, GameView.pantallaAlto*0.6,
                 70, 70);
 

@@ -8,18 +8,16 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.example.eduardomartinez.sev_gameandroid2d.modelos.DisparoJugador;
-import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
-import com.example.eduardomartinez.sev_gameandroid2d.modelos.controles.BotonDisparo;
-import com.example.eduardomartinez.sev_gameandroid2d.modelos.controles.BotonMovimiento;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.Disparo;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.controles.PadMovimiento;
 
 import java.util.List;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
 
     boolean iniciado = false;
-    Context context;
-    GameLoop gameloop;
+    public Context context;
+    public GameLoop gameloop;
 
     public static int pantallaAncho;
     public static int pantallaAlto;
@@ -27,10 +25,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     private List<Habitacion> habitaciones;
     public int habitacionActual = 0;
 
-    private BotonDisparo botonDisparo;
-    private List<DisparoJugador> disparosJugador;
+    private List<Disparo> disparosJugador;
 
-    private BotonMovimiento botonMovimiento;
+    private PadMovimiento padMovimiento;
+    private PadMovimiento padDisparo;
 
     public GameView(Context context) {
         super(context);
@@ -96,30 +94,45 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
 
     public void procesarEventosTouch(){
         boolean pulsacionPadMover = false;
+        boolean pulsacionPadDisparar = false;
 
         for(int i=0; i < 6; i++){
             if(accion[i] != NO_ACTION ) {
 
 
-                if (botonDisparo.estaPulsado(x[i], y[i]))
-                    if (accion[i] == ACTION_DOWN)
-                        getHabitacionActual().botonDispararPulsado = true;
-            }
+                if(padDisparo.estaPulsado(x[i], y[i])){
+                    float orientacionX = padDisparo.getOrientacionX(x[i]);
+                    float orientacionY = padDisparo.getOrientacionY(y[i]);
 
-            if(botonMovimiento.estaPulsado(x[i], y[i])){
-                float orientacionX = botonMovimiento.getOrientacionX(x[i]);
-                float orientacionY = botonMovimiento.getOrientacionY(y[i]);
+                    if (accion[i] != ACTION_UP) {
+                        pulsacionPadDisparar = true;
+                        getHabitacionActual().orientacionPadDispararX = orientacionX;
+                        getHabitacionActual().orientacionPadDispararY = orientacionY;
+                    }
+                }
 
-                if (accion[i] != ACTION_UP) {
-                    pulsacionPadMover = true;
-                    getHabitacionActual().orientacionPadX = orientacionX;
-                    getHabitacionActual().orientacionPadY = orientacionY;
+
+                if(padMovimiento.estaPulsado(x[i], y[i])){
+                    float orientacionX = padMovimiento.getOrientacionX(x[i]);
+                    float orientacionY = padMovimiento.getOrientacionY(y[i]);
+
+                    if (accion[i] != ACTION_UP) {
+                        pulsacionPadMover = true;
+                        getHabitacionActual().orientacionPadMoverX = orientacionX;
+                        getHabitacionActual().orientacionPadMoverY = orientacionY;
+                    }
                 }
             }
+
+
         }
         if(!pulsacionPadMover) {
-            getHabitacionActual().orientacionPadX = 0;
-            getHabitacionActual().orientacionPadY = 0;
+            getHabitacionActual().orientacionPadMoverX = 0;
+            getHabitacionActual().orientacionPadMoverY = 0;
+        }
+        if(!pulsacionPadDisparar) {
+            getHabitacionActual().orientacionPadDispararX = 0;
+            getHabitacionActual().orientacionPadDispararY = 0;
         }
     }
 
@@ -127,11 +140,29 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Log.v("Tecla","Tecla pulsada: "+keyCode);
-        return false;
+
+        if( keyCode == KeyEvent.KEYCODE_A) {
+            getHabitacionActual().orientacionPadMoverX = 25;
+        }
+        if( keyCode == KeyEvent.KEYCODE_D) {
+            getHabitacionActual().orientacionPadMoverX = -25;
+        }
+        if( keyCode == KeyEvent.KEYCODE_S) {
+            getHabitacionActual().orientacionPadMoverY = 25;
+        }
+        if( keyCode == KeyEvent.KEYCODE_W) {
+            getHabitacionActual().orientacionPadMoverY = -25;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
     public boolean onKeyUp (int keyCode, KeyEvent event) {
+        if( keyCode == KeyEvent.KEYCODE_A || keyCode == KeyEvent.KEYCODE_S
+                || keyCode == KeyEvent.KEYCODE_W || keyCode == KeyEvent.KEYCODE_D) {
+            getHabitacionActual().orientacionPadMoverX = 0;
+            getHabitacionActual().orientacionPadMoverY = 0;
+        }
         return super.onKeyDown(keyCode, event);
     }
 
@@ -141,8 +172,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
 
         habitaciones = GestorNivel.getInstance().seleccionarLongitudJuego(context);
 
-        botonDisparo = new BotonDisparo(context);
-        botonMovimiento = new BotonMovimiento(context);
+        padDisparo = new PadMovimiento(context, pantallaAncho*0.85, pantallaAlto*0.8);
+        padMovimiento = new PadMovimiento(context);
 
     }
 
@@ -154,8 +185,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
 
         habitaciones.get(habitacionActual).dibujar(canvas);
 
-        botonDisparo.dibujar(canvas);
-        botonMovimiento.dibujar(canvas);
+        padDisparo.dibujar(canvas);
+        padMovimiento.dibujar(canvas);
 
     }
 

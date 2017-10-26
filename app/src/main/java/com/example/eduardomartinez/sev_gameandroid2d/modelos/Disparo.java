@@ -11,13 +11,13 @@ import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
  * Created by eduardomartinez on 25/10/17.
  */
 
-public class DisparoJugador extends Modelo {
+public class Disparo extends Modelo {
     private Sprite sprite;
     private double velocidadX = 10;
     private double velocidadY = 10;
     private int orientacion;
 
-    public DisparoJugador(Context context, double x, double y, int orientacion) {
+    public Disparo(Context context, double x, double y, int orientacion) {
         super(context, x, y, 35, 35);
 
         if (orientacion == Jugador.IZQUIERDA)

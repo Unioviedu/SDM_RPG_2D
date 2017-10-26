@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".JuegoActivity"
+            android:name=".activities.JuegoActivity"
             android:screenOrientation="landscape"></activity>
         <activity
-            android:name=".PantallaInicioActivity"
+            android:name=".activities.PantallaInicioActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PantallaSeleccionLongitudJuegoActivity"></activity>
+        <activity android:name=".activities.PantallaSeleccionLongitudJuegoActivity"></activity>
     </application>
 
 </manifest>

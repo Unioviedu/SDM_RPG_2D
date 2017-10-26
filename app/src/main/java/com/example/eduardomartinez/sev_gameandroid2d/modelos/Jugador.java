@@ -48,8 +48,12 @@ public class Jugador extends Modelo {
     public static final int IZQUIERDA = -1;
     public static final int ABAJO = -2;
 
+    public Disparo disparo;
     private boolean disparando;
     private boolean golpeado = false;
+
+    float sensibilidadPad = 20;
+    public float velocidad = 12;
 
     public int vidas;
     public double msInmunidad = 0;
@@ -58,12 +62,12 @@ public class Jugador extends Modelo {
         super(context, xInicial, yInicial, 59*2, 50*2);
 
         this.xInicial = xInicial;
-        this.yInicial = yInicial - altura/2;
+        this.yInicial = yInicial;
 
         this.x =  this.xInicial;
         this.y =  this.yInicial;
 
-        orientacion = DERECHA;
+        orientacion = ABAJO;
 
         inicializar();
     }
@@ -205,7 +209,9 @@ public class Jugador extends Modelo {
         return temp;
     }
 
-    public void procesarOrdenes(float orientacionMoverX, float orientacionMoverY, boolean disparar) {
+    public void procesarOrdenes(float orientacionMoverX, float orientacionMoverY,
+                                boolean disparar, float orientacionPadDispararX,
+                                float orientacionPadDispararY) {
         if (disparar) {
             disparando = true;
 
@@ -215,23 +221,22 @@ public class Jugador extends Modelo {
             sprites.get(DISPARANDO_ABAJO).setFrameActual(0);
         }
 
-        float sensibilidad = 20;
-        float velocidad = 10;
 
-        if (orientacionMoverX > sensibilidad) {
+
+        if (orientacionMoverX > sensibilidadPad) {
             velocidadX = -velocidad;
             orientacion = IZQUIERDA;
-        } else if (orientacionMoverX < -sensibilidad ){
+        } else if (orientacionMoverX < -sensibilidadPad){
             velocidadX = velocidad;
             orientacion = DERECHA;
         } else {
             velocidadX = 0;
         }
 
-        if (orientacionMoverY > sensibilidad) {
+        if (orientacionMoverY > sensibilidadPad) {
             velocidadY = -velocidad;
             orientacion = ARRIBA;
-        } else if (orientacionMoverY < -sensibilidad ){
+        } else if (orientacionMoverY < -sensibilidadPad){
             velocidadY = velocidad;
             orientacion = ABAJO;
         } else {
