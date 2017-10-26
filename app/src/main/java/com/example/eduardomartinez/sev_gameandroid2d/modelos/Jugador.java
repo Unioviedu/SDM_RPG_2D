@@ -55,7 +55,7 @@ public class Jugador extends Modelo {
     public double msInmunidad = 0;
 
     public Jugador(Context context, double xInicial, double yInicial) {
-        super(context, xInicial, yInicial, 59, 50);
+        super(context, xInicial, yInicial, 59*2, 50*2);
 
         this.xInicial = xInicial;
         this.yInicial = yInicial - altura/2;

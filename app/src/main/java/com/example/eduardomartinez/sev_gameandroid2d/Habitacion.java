@@ -63,7 +63,7 @@ public class Habitacion {
                 if (linea.length() != anchoLinea)
                 {
                     Log.e("ERROR", "Dimensiones incorrectas en la línea");
-                    throw new Exception("Dimensiones incorrectas en la línea.");
+                    throw new RuntimeException("Dimensiones incorrectas en la línea.");
                 }
                 linea = reader.readLine();
             }
