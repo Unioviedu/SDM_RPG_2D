@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_seleccion_long_juego"
-    tools:context="com.example.eduardomartinez.sev_gameandroid2d.PantallaSeleccionLongitudJuegoActivity">
+    tools:context="com.example.eduardomartinez.sev_gameandroid2d.activities.PantallaSeleccionLongitudJuegoActivity">
 
     <ImageButton
         android:id="@+id/boton_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_width="521dp"
+        android:layout_height="98dp"
+        android:layout_marginBottom="0dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:background="@android:color/transparent"
@@ -20,13 +20,16 @@
         app:layout_constraintBottom_toTopOf="@+id/boton_5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/boton_3" />
+        app:srcCompat="@drawable/boton_3"
+        tools:layout_editor_absoluteX="226dp"
+        tools:layout_editor_absoluteY="169dp"
+        app:layout_constraintHorizontal_bias="0.501" />
 
     <ImageButton
         android:id="@+id/boton_5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="9dp"
+        android:layout_width="522dp"
+        android:layout_height="92dp"
+        android:layout_marginBottom="0dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:background="@android:color/transparent"
@@ -35,13 +38,14 @@
         app:layout_constraintBottom_toTopOf="@+id/boton_7"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/boton_5" />
+        app:srcCompat="@drawable/boton_5"
+        app:layout_constraintHorizontal_bias="0.501" />
 
     <ImageButton
         android:id="@+id/boton_7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_width="522dp"
+        android:layout_height="103dp"
+        android:layout_marginBottom="0dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:background="@android:color/transparent"

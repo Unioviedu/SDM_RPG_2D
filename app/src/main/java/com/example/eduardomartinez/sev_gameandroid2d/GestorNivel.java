@@ -16,7 +16,7 @@ public class GestorNivel {
     private static final GestorNivel ourInstance = new GestorNivel();
     public int longitudJuego;
 
-    static GestorNivel getInstance() {
+    public static GestorNivel getInstance() {
         return ourInstance;
     }
 

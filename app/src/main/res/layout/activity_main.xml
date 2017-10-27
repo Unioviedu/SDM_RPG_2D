@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.eduardomartinez.sev_gameandroid2d.JuegoActivity">
+    tools:context="com.example.eduardomartinez.sev_gameandroid2d.activities.JuegoActivity">
 
     <TextView
         android:layout_width="wrap_content"

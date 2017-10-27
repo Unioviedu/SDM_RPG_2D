@@ -2,15 +2,12 @@ package com.example.eduardomartinez.sev_gameandroid2d;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.Log;
 
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.DisparoJugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Iterator;
@@ -26,7 +23,7 @@ public class Habitacion {
     private Context context;
 
     private int numeroHabitacion;
-    private Tile[][] mapaTiles;
+    public Tile[][] mapaTiles;
     private boolean inicializado;
     public GameView gameView;
 
@@ -36,8 +33,10 @@ public class Habitacion {
     public boolean botonDispararPulsado;
     public boolean botonSaltarPulsado;
 
-    public float orientacionPadX;
-    public float orientacionPadY;
+    public float orientacionPadMoverX;
+    public float orientacionPadMoverY;
+    public float orientacionPadDispararX;
+    public float orientacionPadDispararY;
 
     public Habitacion(Context context, int numeroHabitacion) throws Exception {
         inicializado = false;
@@ -95,6 +94,10 @@ public class Habitacion {
         }
     }
 
+    private void aplicarReglasMoviemiento() {
+        jugador.maplicarReglasMovimiento(this);
+    }
+
     public void dibujar (Canvas canvas) {
         if(inicializado) {
 
@@ -127,42 +130,23 @@ public class Habitacion {
 
     public void actualizar (long tiempo) {
         if (inicializado) {
+
             jugador.actualizar(tiempo);
+
+            jugador.procesarOrdenes(orientacionPadMoverX, orientacionPadMoverY, botonDispararPulsado, orientacionPadDispararX, orientacionPadDispararY);
 
             for (DisparoJugador disparoJugador : disparosJugador)
                 disparoJugador.actualizar(tiempo);
 
-            if (botonSaltarPulsado)
-                botonSaltarPulsado = false;
-
             if (botonDispararPulsado) {
                 disparosJugador.add(new DisparoJugador(context, jugador.x, jugador.y,
-                        jugador.orientacion));
+                        jugador.orientacion, orientacionPadDispararX, orientacionPadDispararY));
                 botonDispararPulsado = false;
             }
 
-            jugador.procesarOrdenes(orientacionPadX, orientacionPadY, botonDispararPulsado);
-
             aplicarReglasMoviemiento();
+            aplicarReglasDisparoJugador();
         }
-    }
-
-    private void aplicarReglasMoviemiento() {
-        if (jugador.velocidadX > 0) {
-            jugador.x += jugador.velocidadX;
-        }
-        if (jugador.velocidadX <= 0) {
-            jugador.x += jugador.velocidadX;
-        }
-        if (jugador.velocidadY <= 0) {
-            jugador.y += jugador.velocidadY;
-        }
-        if (jugador.velocidadY > 0) {
-            jugador.y += jugador.velocidadY;
-        }
-
-        aplicarReglasDisparoJugador();
-
     }
 
     private void aplicarReglasDisparoJugador() {

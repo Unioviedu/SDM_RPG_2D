@@ -14,27 +14,32 @@ import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
 public class DisparoJugador extends Modelo {
     private Sprite sprite;
 
-    public double velocidadXOriginal = 30;
-    private double velocidadYOriginal = 30;
     public double velocidadX;
     public double velocidadY;
-    private int orientacion;
+    float sensibilidad = 20;
+    float velocidad = 20;
 
-    public DisparoJugador(Context context, double x, double y, int orientacion) {
-        super(context, x, y, 55, 55);
 
-        if (orientacion == Jugador.DERECHA) {
-            velocidadX = velocidadXOriginal;
-            velocidadY = 0;
-        } else if (orientacion == Jugador.IZQUIERDA) {
-            velocidadX = -velocidadXOriginal;
-            velocidadY = 0;
-        } else if (orientacion == Jugador.ARRIBA) {
-            velocidadY = -velocidadYOriginal;
-            velocidadX = 0;
-        } else if (orientacion == Jugador.ABAJO) {
-            velocidadY = velocidadYOriginal;
-            velocidadX = 0;
+    public DisparoJugador(Context context, double x, double y, int orientacion, float orientacionX, float orientacionY) {
+        super(context, x, y, 110, 110);
+
+        if(orientacionX < -sensibilidad)
+            velocidadX = velocidad;
+        if(orientacionX > sensibilidad)
+            velocidadX = -velocidad;
+        if(orientacionY < -sensibilidad)
+            velocidadY = velocidad;
+        if(orientacionY > sensibilidad)
+            velocidadY = -velocidad;
+        if((orientacionX <= sensibilidad && orientacionX >= -sensibilidad) &&
+                orientacionY >= -sensibilidad && orientacionY <= sensibilidad) {
+            if (orientacion == Jugador.DERECHA) {
+                velocidadX = velocidad;
+                velocidadY = 0;
+            } else {
+                velocidadX = -velocidad;
+                velocidadY = 0;
+            }
         }
 
         cDerecha = 6;

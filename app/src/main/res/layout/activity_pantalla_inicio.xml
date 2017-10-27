@@ -6,6 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/pantalla_inicio"
     android:onClick="iniciarJuego"
-    tools:context="com.example.eduardomartinez.sev_gameandroid2d.PantallaInicioActivity">
+    tools:context="com.example.eduardomartinez.sev_gameandroid2d.activities.PantallaInicioActivity">
 
 </android.support.constraint.ConstraintLayout>
