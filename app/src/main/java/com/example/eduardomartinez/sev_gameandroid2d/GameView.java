@@ -8,7 +8,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.example.eduardomartinez.sev_gameandroid2d.modelos.Disparo;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.DisparoJugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.controles.PadMovimiento;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     private List<Habitacion> habitaciones;
     public int habitacionActual = 0;
 
-    private List<Disparo> disparosJugador;
+    private List<DisparoJugador> disparosJugador;
 
     private PadMovimiento padMovimiento;
     private PadMovimiento padDisparo;
@@ -106,6 +106,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
 
                     if (accion[i] != ACTION_UP) {
                         pulsacionPadDisparar = true;
+                        getHabitacionActual().botonDispararPulsado = true;
                         getHabitacionActual().orientacionPadDispararX = orientacionX;
                         getHabitacionActual().orientacionPadDispararY = orientacionY;
                     }
@@ -148,10 +149,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
             getHabitacionActual().orientacionPadMoverX = -25;
         }
         if( keyCode == KeyEvent.KEYCODE_S) {
-            getHabitacionActual().orientacionPadMoverY = 25;
+            getHabitacionActual().orientacionPadMoverY = -25;
         }
         if( keyCode == KeyEvent.KEYCODE_W) {
-            getHabitacionActual().orientacionPadMoverY = -25;
+            getHabitacionActual().orientacionPadMoverY = 25;
         }
         return super.onKeyDown(keyCode, event);
     }

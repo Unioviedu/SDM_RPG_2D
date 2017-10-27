@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 
 import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
+import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
+import com.example.eduardomartinez.sev_gameandroid2d.Tile;
 import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
 
 import java.util.HashMap;
@@ -48,7 +50,7 @@ public class Jugador extends Modelo {
     public static final int IZQUIERDA = -1;
     public static final int ABAJO = -2;
 
-    public Disparo disparo;
+    public DisparoJugador disparoJugador;
     private boolean disparando;
     private boolean golpeado = false;
 
@@ -241,6 +243,47 @@ public class Jugador extends Modelo {
             orientacion = ABAJO;
         } else {
             velocidadY = 0;
+        }
+    }
+
+    public void maplicarReglasMovimiento(Habitacion habitacion) {
+        int tileXJugadorIzquierda
+                = (int) (x - (ancho / 2 - 1)) / Tile.ancho;
+        int tileXJugadorCentro
+                = (int) x / Tile.ancho;
+        int tileXJugadorDerecha
+                = (int) (x + (ancho / 2 - 1)) / Tile.ancho;
+
+        int tileYJugadorInferior
+                = (int) (y + (altura / 2 - 1)) / Tile.altura;
+        int tileYJugadorCentro
+                = (int) y / Tile.altura;
+        int tileYJugadorSuperior
+                = (int) (y - (altura / 2 - 1)) / Tile.altura;
+
+        if (velocidadX > 0) {
+            if (habitacion.mapaTiles[tileXJugadorDerecha][tileYJugadorCentro].tipoDeColision ==
+                    Tile.PASABLE) {
+                x += velocidadX;
+            }
+        }
+        if (velocidadX <= 0) {
+            if (habitacion.mapaTiles[tileXJugadorIzquierda][tileYJugadorCentro].tipoDeColision ==
+                    Tile.PASABLE) {
+                x += velocidadX;
+            }
+        }
+        if (velocidadY <= 0) {
+            if (habitacion.mapaTiles[tileXJugadorCentro][tileYJugadorSuperior].tipoDeColision ==
+                    Tile.PASABLE) {
+                y += velocidadY;
+            }
+        }
+        if (velocidadY > 0) {
+            if (habitacion.mapaTiles[tileXJugadorCentro][tileYJugadorInferior].tipoDeColision ==
+                    Tile.PASABLE) {
+                y += velocidadY;
+            }
         }
     }
 }
