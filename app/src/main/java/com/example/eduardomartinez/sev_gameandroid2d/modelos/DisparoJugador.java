@@ -25,13 +25,13 @@ public class DisparoJugador extends Modelo {
 
         if(orientacionX < -sensibilidad)
             velocidadX = velocidad;
-        if(orientacionX > sensibilidad)
+        else if(orientacionX > sensibilidad)
             velocidadX = -velocidad;
-        if(orientacionY < -sensibilidad)
+        else if(orientacionY < -sensibilidad)
             velocidadY = velocidad;
-        if(orientacionY > sensibilidad)
+        else if(orientacionY > sensibilidad)
             velocidadY = -velocidad;
-        if((orientacionX <= sensibilidad && orientacionX >= -sensibilidad) &&
+        else if((orientacionX <= sensibilidad && orientacionX >= -sensibilidad) &&
                 orientacionY >= -sensibilidad && orientacionY <= sensibilidad) {
             if (orientacion == Jugador.DERECHA) {
                 velocidadX = velocidad;
@@ -41,11 +41,6 @@ public class DisparoJugador extends Modelo {
                 velocidadY = 0;
             }
         }
-
-        cDerecha = 6;
-        cIzquierda = 6;
-        cArriba = 6;
-        cAbajo = 6;
 
         inicializar();
     }
@@ -62,7 +57,6 @@ public class DisparoJugador extends Modelo {
     }
 
     public void dibujar(Canvas canvas) {
-        //sprite.dibujarSprite(canvas, (int) x - Habitacion.ScrollX,  (int) y - Habitacion.ScrollY);
         sprite.dibujarSprite(canvas, (int) x,  (int) y);
     }
 

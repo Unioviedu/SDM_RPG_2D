@@ -95,7 +95,8 @@ public class Habitacion {
     }
 
     private void aplicarReglasMoviemiento() {
-        jugador.maplicarReglasMovimiento(this);
+        jugador.aplicarReglasMovimiento(this);
+
     }
 
     public void dibujar (Canvas canvas) {
@@ -272,7 +273,6 @@ public class Habitacion {
             int TileDisparoBordeAbajo = tileYDisparo*Tile.altura + Tile.altura;
             double distanciaY =
                     TileDisparoBordeAbajo - (disparoJugador.y + disparoJugador.cAbajo);
-
             if (distanciaY > 0) {
                 double velocidadNecesaria =
                         Math.min(distanciaY, disparoJugador.velocidadY);

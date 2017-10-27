@@ -7,6 +7,7 @@ import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
 import com.example.eduardomartinez.sev_gameandroid2d.Tile;
+import com.example.eduardomartinez.sev_gameandroid2d.Utilidades;
 import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
 
 import java.util.HashMap;
@@ -246,11 +247,9 @@ public class Jugador extends Modelo {
         }
     }
 
-    public void maplicarReglasMovimiento(Habitacion habitacion) {
+    public void aplicarReglasMovimiento(Habitacion habitacion) {
         int tileXJugadorIzquierda
                 = (int) (x - (ancho / 2 - 1)) / Tile.ancho;
-        int tileXJugadorCentro
-                = (int) x / Tile.ancho;
         int tileXJugadorDerecha
                 = (int) (x + (ancho / 2 - 1)) / Tile.ancho;
 
@@ -261,28 +260,169 @@ public class Jugador extends Modelo {
         int tileYJugadorSuperior
                 = (int) (y - (altura / 2 - 1)) / Tile.altura;
 
-        if (velocidadX > 0) {
-            if (habitacion.mapaTiles[tileXJugadorDerecha][tileYJugadorCentro].tipoDeColision ==
-                    Tile.PASABLE) {
-                x += velocidadX;
+        if (velocidadX > 0)
+            aplicarMovimientoDerecha(habitacion, tileXJugadorDerecha, tileYJugadorInferior, tileYJugadorCentro, tileYJugadorSuperior);
+        if (velocidadY > 0)
+            aplicarMovimientoAbajo(habitacion.mapaTiles[tileXJugadorIzquierda], habitacion.mapaTiles[tileXJugadorDerecha], tileYJugadorInferior);
+        if (velocidadX <= 0)
+            aplicarMovimientoIzquierda(habitacion, tileXJugadorIzquierda, tileYJugadorInferior, tileYJugadorCentro, tileYJugadorSuperior);
+        if (velocidadY <= 0)
+            aplicarMovimientoArriba(habitacion, tileXJugadorDerecha, tileXJugadorIzquierda, tileYJugadorInferior, tileYJugadorSuperior);
+    }
+
+    private void aplicarMovimientoIzquierda(Habitacion habitacion, int tileXJugadorIzquierda, int tileYJugadorInferior, int tileYJugadorCentro, int tileYJugadorSuperior) {
+        // Tengo un tile detrás y es PASABLE
+        // El tile de detras está dentro del Nivel
+        if (habitacion.mapaTiles[tileXJugadorIzquierda - 1][tileYJugadorInferior].tipoDeColision ==
+                Tile.PASABLE &&
+                habitacion.mapaTiles[tileXJugadorIzquierda - 1][tileYJugadorCentro].tipoDeColision ==
+                        Tile.PASABLE &&
+                habitacion.mapaTiles[tileXJugadorIzquierda - 1][tileYJugadorSuperior].tipoDeColision ==
+                        Tile.PASABLE &&
+                habitacion.mapaTiles[tileXJugadorIzquierda][tileYJugadorInferior].tipoDeColision ==
+                        Tile.PASABLE &&
+                habitacion.mapaTiles[tileXJugadorIzquierda][tileYJugadorCentro].tipoDeColision ==
+                        Tile.PASABLE &&
+                habitacion.mapaTiles[tileXJugadorIzquierda][tileYJugadorSuperior].tipoDeColision ==
+                        Tile.PASABLE) {
+
+            x += velocidadX;
+
+            // No tengo un tile PASABLE detrás
+            // o es el INICIO del nivel o es uno SOLIDO
+        } else if (tileXJugadorIzquierda >= 0 && tileYJugadorInferior <= habitacion.altoMapaTiles() - 1 &&
+                habitacion.mapaTiles[tileXJugadorIzquierda][tileYJugadorInferior].tipoDeColision
+                        == Tile.PASABLE &&
+                habitacion.mapaTiles[tileXJugadorIzquierda][tileYJugadorCentro].tipoDeColision
+                        == Tile.PASABLE &&
+                habitacion.mapaTiles[tileXJugadorIzquierda][tileYJugadorSuperior].tipoDeColision
+                        == Tile.PASABLE) {
+
+            // Si en el propio tile del jugador queda espacio para
+            // avanzar más, avanzo
+            int TileJugadorBordeIzquierdo = tileXJugadorIzquierda * Tile.ancho;
+            double distanciaX = (x - ancho / 2) - TileJugadorBordeIzquierdo;
+
+            if (distanciaX > 0) {
+                double velocidadNecesaria = Utilidades.proximoACero(-distanciaX, velocidadX);
+                x += velocidadNecesaria;
+            } else {
+                // Opcional, corregir posiciónx = TileJugadorBordeIzquierdo + ancho / 2;
             }
         }
-        if (velocidadX <= 0) {
-            if (habitacion.mapaTiles[tileXJugadorIzquierda][tileYJugadorCentro].tipoDeColision ==
-                    Tile.PASABLE) {
-                x += velocidadX;
+    }
+
+    private void aplicarMovimientoAbajo(Tile[] mapaTile, Tile[] mapaTile1, int tileYJugadorInferior) {
+        // Tengo un tile abajo y es PASABLE
+        // El tile de delante está dentro del Nivel
+        if (mapaTile1[tileYJugadorInferior + 1].tipoDeColision ==
+                Tile.PASABLE &&
+                mapaTile[tileYJugadorInferior + 1].tipoDeColision ==
+                        Tile.PASABLE &&
+                mapaTile1[tileYJugadorInferior].tipoDeColision ==
+                        Tile.PASABLE &&
+                mapaTile[tileYJugadorInferior].tipoDeColision ==
+                        Tile.PASABLE) {
+
+            y += velocidadY;
+
+            // No tengo un tile PASABLE delante
+            // o es el FINAL del nivel o es uno SOLIDO
+        } else if (mapaTile1[tileYJugadorInferior].tipoDeColision ==
+                Tile.PASABLE &&
+                mapaTile[tileYJugadorInferior].tipoDeColision ==
+                        Tile.PASABLE) {
+
+            // Si en el propio tile del jugador queda espacio para
+            // avanzar más, avanzo
+            int tileJugadorBordeInferior = tileYJugadorInferior * Tile.altura + Tile.altura;
+            double distanciaY = tileJugadorBordeInferior - (y + altura / 2);
+
+            if (distanciaY > 0) {
+                double velocidadNecesaria = Math.min(distanciaY, velocidadY);
+                y += velocidadNecesaria;
+            } else {
+                // Opcional, corregir posición
+                y = tileJugadorBordeInferior - altura / 2;
             }
         }
-        if (velocidadY <= 0) {
-            if (habitacion.mapaTiles[tileXJugadorCentro][tileYJugadorSuperior].tipoDeColision ==
-                    Tile.PASABLE) {
-                y += velocidadY;
+    }
+
+    private void aplicarMovimientoDerecha(Habitacion habitacion, int tileXJugadorDerecha, int tileYJugadorInferior, int tileYJugadorCentro, int tileYJugadorSuperior) {
+        // Tengo un tile delante y es PASABLE
+        // El tile de delante está dentro del Nivel
+        if (habitacion.mapaTiles[tileXJugadorDerecha + 1][tileYJugadorInferior].tipoDeColision ==
+                Tile.PASABLE &&
+                habitacion.mapaTiles[tileXJugadorDerecha + 1][tileYJugadorCentro].tipoDeColision ==
+                        Tile.PASABLE &&
+                habitacion.mapaTiles[tileXJugadorDerecha + 1][tileYJugadorSuperior].tipoDeColision ==
+                        Tile.PASABLE &&
+                habitacion.mapaTiles[tileXJugadorDerecha][tileYJugadorInferior].tipoDeColision ==
+                        Tile.PASABLE &&
+                habitacion.mapaTiles[tileXJugadorDerecha][tileYJugadorCentro].tipoDeColision ==
+                        Tile.PASABLE &&
+                habitacion.mapaTiles[tileXJugadorDerecha][tileYJugadorSuperior].tipoDeColision ==
+                        Tile.PASABLE) {
+
+            x += velocidadX;
+
+            // No tengo un tile PASABLE delante
+            // o es el FINAL del nivel o es uno SOLIDO
+        } else if (habitacion.mapaTiles[tileXJugadorDerecha][tileYJugadorInferior].tipoDeColision ==
+                Tile.PASABLE &&
+                habitacion.mapaTiles[tileXJugadorDerecha][tileYJugadorCentro].tipoDeColision ==
+                        Tile.PASABLE &&
+                habitacion.mapaTiles[tileXJugadorDerecha][tileYJugadorSuperior].tipoDeColision ==
+                        Tile.PASABLE) {
+
+            // Si en el propio tile del jugador queda espacio para
+            // avanzar más, avanzo
+            int TileJugadorBordeDerecho = tileXJugadorDerecha * Tile.ancho + Tile.ancho;
+            double distanciaX = TileJugadorBordeDerecho - (x + ancho / 2);
+
+            if (distanciaX > 0) {
+                double velocidadNecesaria = Math.min(distanciaX, velocidadX);
+                x += velocidadNecesaria;
+            } else {
+                // Opcional, corregir posición
+                x = TileJugadorBordeDerecho - ancho / 2;
             }
         }
-        if (velocidadY > 0) {
-            if (habitacion.mapaTiles[tileXJugadorCentro][tileYJugadorInferior].tipoDeColision ==
-                    Tile.PASABLE) {
-                y += velocidadY;
+    }
+
+    private void aplicarMovimientoArriba(Habitacion habitacion, int tileXJugadorDerecha, int tileXJugadorIzquierda, int tileYJugadorInferior, int tileYJugadorSuperior) {
+        // Tengo un tile arriba y es PASABLE
+        // El tile de arriba está dentro del Nivel
+        if (habitacion.mapaTiles[tileXJugadorDerecha][tileYJugadorSuperior - 1].tipoDeColision ==
+                        Tile.PASABLE &&
+                habitacion.mapaTiles[tileXJugadorIzquierda][tileYJugadorSuperior - 1].tipoDeColision ==
+                        Tile.PASABLE &&
+                habitacion.mapaTiles[tileXJugadorDerecha][tileYJugadorSuperior].tipoDeColision ==
+                        Tile.PASABLE &&
+                habitacion.mapaTiles[tileXJugadorIzquierda][tileYJugadorSuperior].tipoDeColision ==
+                        Tile.PASABLE) {
+
+            y += velocidadY;
+
+            // No tengo un tile PASABLE detrás
+            // o es el INICIO del nivel o es uno SOLIDO
+        } else if (tileXJugadorIzquierda >= 0 && tileYJugadorSuperior <= habitacion.altoMapaTiles() - 1 &&
+                habitacion.mapaTiles[tileXJugadorDerecha][tileYJugadorSuperior].tipoDeColision ==
+                        Tile.PASABLE &&
+                habitacion.mapaTiles[tileXJugadorIzquierda][tileYJugadorSuperior].tipoDeColision ==
+                        Tile.PASABLE) {
+
+            // Si en el propio tile del jugador queda espacio para
+            // avanzar más, avanzo
+            int tileJugadorBordeSuperior = tileYJugadorSuperior * Tile.altura;
+            double distanciaY = (y - altura / 2) - tileJugadorBordeSuperior;
+
+            if (distanciaY > 0) {
+                double velocidadNecesaria = Utilidades.proximoACero(-distanciaY, velocidadY);
+                y += velocidadNecesaria;
+            } else {
+                // Opcional, corregir posición
+                y = tileJugadorBordeSuperior + altura / 2;
             }
         }
     }
