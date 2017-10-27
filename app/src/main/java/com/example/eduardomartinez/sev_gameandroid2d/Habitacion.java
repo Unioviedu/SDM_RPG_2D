@@ -35,8 +35,8 @@ public class Habitacion {
 
     public float orientacionPadMoverX;
     public float orientacionPadMoverY;
-    public float orientacionPadDispararX;
-    public float orientacionPadDispararY;
+    public double orientacionPadDispararX;
+    public double orientacionPadDispararY;
 
     public Habitacion(Context context, int numeroHabitacion) throws Exception {
         inicializado = false;
@@ -264,22 +264,23 @@ public class Habitacion {
                                                        int tileXDisparoIzquierda, DisparoJugador disparoJugador) {
         boolean iteratorRemove = false;
         if (tileYDisparo+1 <= altoMapaTiles()-1 &&
-                mapaTiles[tileYDisparo+1][tileXDisparoDerecha].tipoDeColision
+                mapaTiles[tileXDisparoDerecha][tileYDisparo+1].tipoDeColision
                 == Tile.PASABLE &&
-                mapaTiles[tileYDisparo+1][tileXDisparoIzquierda].tipoDeColision
+                mapaTiles[tileXDisparoIzquierda][tileYDisparo+1].tipoDeColision
                 == Tile.PASABLE) {
             disparoJugador.y += disparoJugador.velocidadY;
         } else if (tileYDisparo <= altoMapaTiles() - 1) {
-            int TileDisparoBordeAbajo = tileYDisparo*Tile.altura + Tile.altura;
-            double distanciaY =
-                    TileDisparoBordeAbajo - (disparoJugador.y + disparoJugador.cAbajo);
-            if (distanciaY > 0) {
-                double velocidadNecesaria =
-                        Math.min(distanciaY, disparoJugador.velocidadY);
-                disparoJugador.y += velocidadNecesaria;
-            } else {
-                iteratorRemove = true;
-            }
+                int TileDisparoBordeAbajo = tileYDisparo * Tile.altura + Tile.altura;
+                double distanciaY =
+                        TileDisparoBordeAbajo - (disparoJugador.y + disparoJugador.cAbajo);
+
+                if (distanciaY > 0) {
+                    double velocidadNecesaria =
+                            Math.min(distanciaY, disparoJugador.velocidadY);
+                    disparoJugador.y += velocidadNecesaria;
+                } else {
+                    iteratorRemove = true;
+                }
         }
         return iteratorRemove;
     }
@@ -288,9 +289,9 @@ public class Habitacion {
                                                       int tileXDisparoIzquierda, DisparoJugador disparoJugador) {
         boolean iteratorRemove = false;
         if (tileYDisparo-1 >= 0 && tileXDisparoDerecha < anchoMapaTiles()-1 &&
-                mapaTiles[tileYDisparo-1][tileXDisparoDerecha].tipoDeColision ==
+                mapaTiles[tileXDisparoDerecha][tileYDisparo-1].tipoDeColision ==
                 Tile.PASABLE &&
-                mapaTiles[tileYDisparo-1][tileXDisparoIzquierda].tipoDeColision ==
+                mapaTiles[tileXDisparoIzquierda][tileYDisparo-1].tipoDeColision ==
                 Tile.PASABLE) {
             disparoJugador.y += disparoJugador.velocidadY;
         } else if (tileYDisparo >= 0) {

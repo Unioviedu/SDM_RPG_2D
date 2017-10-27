@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 
 import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
+import com.example.eduardomartinez.sev_gameandroid2d.Utilidades;
 import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
 
 /**
@@ -17,13 +18,18 @@ public class DisparoJugador extends Modelo {
     public double velocidadX;
     public double velocidadY;
     float sensibilidad = 20;
-    float velocidad = 20;
+    float velocidad = 40;
 
 
-    public DisparoJugador(Context context, double x, double y, int orientacion, float orientacionX, float orientacionY) {
+    public DisparoJugador(Context context, double x, double y, int orientacion, double orientacionX, double orientacionY) {
         super(context, x, y, 110, 110);
 
-        if(orientacionX < -sensibilidad)
+        cArriba = 6;
+        cAbajo = 6;
+        cDerecha = 6;
+        cIzquierda = 6;
+
+        /*if(orientacionX < -sensibilidad)
             velocidadX = velocidad;
         else if(orientacionX > sensibilidad)
             velocidadX = -velocidad;
@@ -40,7 +46,18 @@ public class DisparoJugador extends Modelo {
                 velocidadX = -velocidad;
                 velocidadY = 0;
             }
-        }
+        }*/
+
+        int orientacionDisparo = Utilidades.orientacion(orientacionX, orientacionY);
+
+        if (orientacionDisparo == Jugador.DERECHA)
+            velocidadX = velocidad;
+        else if (orientacionDisparo == Jugador.IZQUIERDA)
+            velocidadX = -velocidad;
+        else if (orientacionDisparo == Jugador.ARRIBA)
+            velocidadY = -velocidad;
+        else if (orientacionDisparo == Jugador.ABAJO)
+            velocidadY = velocidad;
 
         inicializar();
     }

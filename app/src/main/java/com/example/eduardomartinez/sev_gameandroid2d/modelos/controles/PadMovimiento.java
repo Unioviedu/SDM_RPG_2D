@@ -44,4 +44,13 @@ public class PadMovimiento extends Modelo {
     public int getOrientacionY(float cliclY) {
         return (int) (y - cliclY);
     }
+
+    public double getOrientacionXDisparo (float cliclX) {
+        return (cliclX - x);
+    }
+
+    public double getOrientacionYDisparo (float cliclY) {
+        return (cliclY - y);
+    }
+
 }

@@ -46,6 +46,8 @@ public class Jugador extends Modelo {
     public double velocidadY;
 
     public int orientacion;
+    public double orientacionDisparoX;
+    public double orientacionDisparoY;
     public static final int DERECHA = 1;
     public static int ARRIBA = 2;
     public static final int IZQUIERDA = -1;
@@ -95,13 +97,13 @@ public class Jugador extends Modelo {
                 CAMINANDO_IZQUIERDA, 6, true);
 
         crearSprite(R.drawable.protagonista_animacion_disparando_arriba,
-                DISPARANDO_ARRIBA, 2, false);
-        crearSprite(R.drawable.protagonista_animacion_golpeado_abajo,
-                DISPARANDO_ABAJO, 2, false);
+                DISPARANDO_ARRIBA, 25, 2, false);
+        crearSprite(R.drawable.protagonista_animacion_disparando_abajo,
+                DISPARANDO_ABAJO, 25, 2, false);
         crearSprite(R.drawable.protagonista_animacion_disparando_derecha,
-                DISPARANDO_DERECHA, 2, false);
+                DISPARANDO_DERECHA, 25, 2, false);
         crearSprite(R.drawable.protagonista_animacion_disparando_izquierda,
-                DISPARANDO_IZQUIERDA, 2, false);
+                DISPARANDO_IZQUIERDA, 25, 2, false);
 
         crearSprite(R.drawable.protagonista_animacion_golpeado_arriba,
                 GOLPEADO_ARRIBA, 2, false);
@@ -182,6 +184,8 @@ public class Jugador extends Modelo {
     }
 
     private void comprobarDisparando() {
+        int orientacion = Utilidades.orientacion(orientacionDisparoX, orientacionDisparoY);
+
         if (orientacion == DERECHA)
             spriteActual = sprites.get(DISPARANDO_DERECHA);
         else if (orientacion == IZQUIERDA)
@@ -212,11 +216,23 @@ public class Jugador extends Modelo {
         return temp;
     }
 
+    private Sprite crearSprite(int animacion, String nombre, int fps, int frames, boolean bucle) {
+        Sprite temp = new Sprite (CargadorGraficos.cargarDrawable(context, animacion),
+                ancho, altura,
+                fps, frames, bucle);
+        sprites.put(nombre, temp);
+
+        return temp;
+    }
+
     public void procesarOrdenes(float orientacionMoverX, float orientacionMoverY,
-                                boolean disparar, float orientacionPadDispararX,
-                                float orientacionPadDispararY) {
+                                boolean disparar, double orientacionPadDispararX,
+                                double orientacionPadDispararY) {
         if (disparar) {
             disparando = true;
+
+            this.orientacionDisparoX = orientacionPadDispararX;
+            this.orientacionDisparoY = orientacionPadDispararY;
 
             sprites.get(DISPARANDO_DERECHA).setFrameActual(0);
             sprites.get(DISPARANDO_IZQUIERDA).setFrameActual(0);
@@ -261,13 +277,17 @@ public class Jugador extends Modelo {
                 = (int) (y - (altura / 2 - 1)) / Tile.altura;
 
         if (velocidadX > 0)
-            aplicarMovimientoDerecha(habitacion, tileXJugadorDerecha, tileYJugadorInferior, tileYJugadorCentro, tileYJugadorSuperior);
+            aplicarMovimientoDerecha(habitacion, tileXJugadorDerecha,
+                    tileYJugadorInferior, tileYJugadorCentro, tileYJugadorSuperior);
         if (velocidadY > 0)
-            aplicarMovimientoAbajo(habitacion.mapaTiles[tileXJugadorIzquierda], habitacion.mapaTiles[tileXJugadorDerecha], tileYJugadorInferior);
+            aplicarMovimientoAbajo(habitacion.mapaTiles[tileXJugadorIzquierda], habitacion.mapaTiles[tileXJugadorDerecha],
+                    tileYJugadorInferior);
         if (velocidadX <= 0)
-            aplicarMovimientoIzquierda(habitacion, tileXJugadorIzquierda, tileYJugadorInferior, tileYJugadorCentro, tileYJugadorSuperior);
+            aplicarMovimientoIzquierda(habitacion, tileXJugadorIzquierda,
+                    tileYJugadorInferior, tileYJugadorCentro, tileYJugadorSuperior);
         if (velocidadY <= 0)
-            aplicarMovimientoArriba(habitacion, tileXJugadorDerecha, tileXJugadorIzquierda, tileYJugadorInferior, tileYJugadorSuperior);
+            aplicarMovimientoArriba(habitacion, tileXJugadorDerecha,
+                    tileXJugadorIzquierda, tileYJugadorInferior, tileYJugadorSuperior);
     }
 
     private void aplicarMovimientoIzquierda(Habitacion habitacion, int tileXJugadorIzquierda, int tileYJugadorInferior, int tileYJugadorCentro, int tileYJugadorSuperior) {
@@ -301,13 +321,13 @@ public class Jugador extends Modelo {
             // Si en el propio tile del jugador queda espacio para
             // avanzar más, avanzo
             int TileJugadorBordeIzquierdo = tileXJugadorIzquierda * Tile.ancho;
-            double distanciaX = (x - ancho / 2) - TileJugadorBordeIzquierdo;
+            double distanciaX = (x - cIzquierda) - TileJugadorBordeIzquierdo;
 
             if (distanciaX > 0) {
                 double velocidadNecesaria = Utilidades.proximoACero(-distanciaX, velocidadX);
                 x += velocidadNecesaria;
             } else {
-                // Opcional, corregir posiciónx = TileJugadorBordeIzquierdo + ancho / 2;
+                x = TileJugadorBordeIzquierdo + cDerecha;
             }
         }
     }
@@ -336,14 +356,14 @@ public class Jugador extends Modelo {
             // Si en el propio tile del jugador queda espacio para
             // avanzar más, avanzo
             int tileJugadorBordeInferior = tileYJugadorInferior * Tile.altura + Tile.altura;
-            double distanciaY = tileJugadorBordeInferior - (y + altura / 2);
+            double distanciaY = tileJugadorBordeInferior - (y + cAbajo);
 
             if (distanciaY > 0) {
                 double velocidadNecesaria = Math.min(distanciaY, velocidadY);
                 y += velocidadNecesaria;
             } else {
                 // Opcional, corregir posición
-                y = tileJugadorBordeInferior - altura / 2;
+                y = tileJugadorBordeInferior - cArriba;
             }
         }
     }
@@ -378,14 +398,14 @@ public class Jugador extends Modelo {
             // Si en el propio tile del jugador queda espacio para
             // avanzar más, avanzo
             int TileJugadorBordeDerecho = tileXJugadorDerecha * Tile.ancho + Tile.ancho;
-            double distanciaX = TileJugadorBordeDerecho - (x + ancho / 2);
+            double distanciaX = TileJugadorBordeDerecho - (x + cDerecha);
 
             if (distanciaX > 0) {
                 double velocidadNecesaria = Math.min(distanciaX, velocidadX);
                 x += velocidadNecesaria;
             } else {
                 // Opcional, corregir posición
-                x = TileJugadorBordeDerecho - ancho / 2;
+                x = TileJugadorBordeDerecho - cIzquierda;
             }
         }
     }
@@ -415,14 +435,14 @@ public class Jugador extends Modelo {
             // Si en el propio tile del jugador queda espacio para
             // avanzar más, avanzo
             int tileJugadorBordeSuperior = tileYJugadorSuperior * Tile.altura;
-            double distanciaY = (y - altura / 2) - tileJugadorBordeSuperior;
+            double distanciaY = (y - cArriba) - tileJugadorBordeSuperior;
 
             if (distanciaY > 0) {
                 double velocidadNecesaria = Utilidades.proximoACero(-distanciaY, velocidadY);
                 y += velocidadNecesaria;
             } else {
                 // Opcional, corregir posición
-                y = tileJugadorBordeSuperior + altura / 2;
+                y = tileJugadorBordeSuperior + cAbajo;
             }
         }
     }
