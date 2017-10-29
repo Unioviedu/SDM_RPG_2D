@@ -9,6 +9,7 @@ import com.example.eduardomartinez.sev_gameandroid2d.R;
 import com.example.eduardomartinez.sev_gameandroid2d.Tile;
 import com.example.eduardomartinez.sev_gameandroid2d.Utilidades;
 import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Interaccionable;
 
 import java.util.HashMap;
 
@@ -60,7 +61,8 @@ public class Jugador extends Modelo {
     float sensibilidadPad = 20;
     public float velocidad = 12;
 
-    public int vidas;
+    public int vidasTotales;
+    public int vidasActuales;
     public double msInmunidad = 0;
 
     public Jugador(Context context, double xInicial, double yInicial) {
@@ -72,7 +74,7 @@ public class Jugador extends Modelo {
         this.x =  this.xInicial;
         this.y =  this.yInicial;
 
-        vidas = 3;
+        vidasTotales = vidasActuales = 3;
 
         orientacion = ABAJO;
 
@@ -147,8 +149,8 @@ public class Jugador extends Modelo {
 
     public int golpeado(){
         if (msInmunidad <= 0) {
-            if (vidas > 0) {
-                vidas--;
+            if (vidasActuales > 0) {
+                vidasActuales--;
                 msInmunidad = 3000;
                 golpeado = true;
                 // Reiniciar animaciones que no son bucle
@@ -158,7 +160,7 @@ public class Jugador extends Modelo {
                 sprites.get(GOLPEADO_ABAJO).setFrameActual(0);
             }
         }
-        return vidas;
+        return vidasActuales;
     }
 
     private void comprobarCaminando() {
@@ -290,6 +292,16 @@ public class Jugador extends Modelo {
         if (velocidadY <= 0)
             aplicarMovimientoArriba(habitacion, tileXJugadorDerecha,
                     tileXJugadorIzquierda, tileYJugadorInferior, tileYJugadorSuperior);
+
+        comprobarColisiones(habitacion);
+    }
+
+    private void comprobarColisiones(Habitacion habitacion) {
+        for(Interaccionable interaccionable: habitacion.interaccionables){
+            if(interaccionable.colisiona(this)){
+                interaccionable.activarItem(habitacion);
+            }
+        }
     }
 
     private void aplicarMovimientoIzquierda(Habitacion habitacion, int tileXJugadorIzquierda, int tileYJugadorInferior, int tileYJugadorCentro, int tileYJugadorSuperior) {

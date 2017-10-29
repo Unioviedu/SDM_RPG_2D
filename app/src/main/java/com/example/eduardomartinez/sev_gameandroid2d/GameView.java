@@ -8,12 +8,10 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.example.eduardomartinez.sev_gameandroid2d.modelos.DisparoJugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Vida;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.controles.PadMovimiento;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
@@ -183,7 +181,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
 
         double posX = 0.05 * pantallaAncho;
         double posY = 0.05 * pantallaAlto;
-        for(int i = 0; i < getHabitacionActual().jugador.vidas; i++){
+        for(int i = 0; i < getHabitacionActual().jugador.vidasTotales; i++){
             vidas.add(new Vida(context, posX + i*70, posY));
         }
 
@@ -200,8 +198,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
         padDisparo.dibujar(canvas);
         padMovimiento.dibujar(canvas);
 
-        for(Vida vida : vidas)
-            vida.dibujar(canvas);
+        for(int i = 0; i < getHabitacionActual().jugador.vidasTotales; i++){
+            if(i < getHabitacionActual().jugador.vidasActuales)
+                vidas.get(i).dibujar(canvas);
+            else{
+                vidas.get(i).setVidaVacia();
+                vidas.get(i).dibujar(canvas);
+            }
+        }
 
     }
 

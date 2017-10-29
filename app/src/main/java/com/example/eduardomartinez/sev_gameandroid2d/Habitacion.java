@@ -5,7 +5,9 @@ import android.graphics.Canvas;
 import android.util.Log;
 
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.DisparoJugador;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Interaccionable;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Pinchos;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -30,8 +32,9 @@ public class Habitacion {
     public Jugador jugador;
     private List<DisparoJugador> disparosJugador;
 
+    public List<Interaccionable> interaccionables;
+
     public boolean botonDispararPulsado;
-    public boolean botonSaltarPulsado;
 
     public float orientacionPadMoverX;
     public float orientacionPadMoverY;
@@ -57,9 +60,9 @@ public class Habitacion {
     }
 
     public void inicializar() throws Exception {
-        inicializarMapaTiles();
         disparosJugador = new LinkedList<>();
-        jugador = new Jugador(context, 250, 250);
+        interaccionables = new LinkedList<>();
+        inicializarMapaTiles();
     }
 
     private void inicializarMapaTiles() throws Exception {
@@ -88,21 +91,42 @@ public class Habitacion {
         for (int y = 0; y < altoMapaTiles(); ++y) {
             for (int x = 0; x < anchoMapaTiles(); ++x) {
                 char tipoDeTile = lineas.get(y).charAt(x);
-                mapaTiles[x][y] = new Tile(context, altoMapaTiles(),
-                                            anchoMapaTiles(),tipoDeTile, x ,y);
+                mapaTiles[x][y] = inicializarTile(context, tipoDeTile, x, y);
             }
         }
     }
 
-    private void aplicarReglasMoviemiento() {
-        jugador.aplicarReglasMovimiento(this);
+    private Tile inicializarTile(Context context, char tipoDeTile, int x, int y) {
+        switch (tipoDeTile){
+            case '#':
+                return new Tile(context, Tile.SOLIDO, Tile.determinarImagenPared(altoMapaTiles(), anchoMapaTiles(), x, y));
+            case 'P':
+                return new Tile(context, Tile.SOLIDO, R.drawable.piedra_1);
+            case 'J':
+                jugador = new Jugador(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2);
+                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+            case 'T':
+                interaccionables.add(new Pinchos(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
+                return new Tile(context, Tile.PASABLE, R.drawable.pinchos);
+            case '.':
+                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+            default:
+                throw new RuntimeException("Tipo de tile incorrecto");
+        }
+    }
 
+    private void aplicarReglasMoviemiento() {
+        if(inicializado) {
+            jugador.aplicarReglasMovimiento(this);
+        }
     }
 
     public void dibujar (Canvas canvas) {
         if(inicializado) {
 
             dibujarTiles(canvas);
+            for(Interaccionable interaccionable: interaccionables)
+                interaccionable.dibujar(canvas);
 
             for (DisparoJugador disparoJugador: disparosJugador)
                 disparoJugador.dibujar(canvas);
