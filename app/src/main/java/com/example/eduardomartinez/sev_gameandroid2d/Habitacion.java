@@ -27,7 +27,7 @@ public class Habitacion {
     private boolean inicializado;
     public GameView gameView;
 
-    private Jugador jugador;
+    public Jugador jugador;
     private List<DisparoJugador> disparosJugador;
 
     public boolean botonDispararPulsado;

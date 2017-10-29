@@ -29,25 +29,6 @@ public class DisparoJugador extends Modelo {
         cDerecha = 6;
         cIzquierda = 6;
 
-        /*if(orientacionX < -sensibilidad)
-            velocidadX = velocidad;
-        else if(orientacionX > sensibilidad)
-            velocidadX = -velocidad;
-        else if(orientacionY < -sensibilidad)
-            velocidadY = velocidad;
-        else if(orientacionY > sensibilidad)
-            velocidadY = -velocidad;
-        else if((orientacionX <= sensibilidad && orientacionX >= -sensibilidad) &&
-                orientacionY >= -sensibilidad && orientacionY <= sensibilidad) {
-            if (orientacion == Jugador.DERECHA) {
-                velocidadX = velocidad;
-                velocidadY = 0;
-            } else {
-                velocidadX = -velocidad;
-                velocidadY = 0;
-            }
-        }*/
-
         int orientacionDisparo = Utilidades.orientacion(orientacionX, orientacionY);
 
         if (orientacionDisparo == Jugador.DERECHA)

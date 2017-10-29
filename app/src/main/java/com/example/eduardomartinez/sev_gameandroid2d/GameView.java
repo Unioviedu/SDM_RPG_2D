@@ -9,8 +9,11 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.DisparoJugador;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.Vida;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.controles.PadMovimiento;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
@@ -25,10 +28,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     private List<Habitacion> habitaciones;
     public int habitacionActual = 0;
 
-    private List<DisparoJugador> disparosJugador;
-
     private PadMovimiento padMovimiento;
     private PadMovimiento padDisparo;
+
+    private List<Vida> vidas;
 
     public GameView(Context context) {
         super(context);
@@ -176,6 +179,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
         padDisparo = new PadMovimiento(context, pantallaAncho*0.85, pantallaAlto*0.8);
         padMovimiento = new PadMovimiento(context);
 
+        vidas = new ArrayList<>();
+
+        double posX = 0.05 * pantallaAncho;
+        double posY = 0.05 * pantallaAlto;
+        for(int i = 0; i < getHabitacionActual().jugador.vidas; i++){
+            vidas.add(new Vida(context, posX + i*70, posY));
+        }
+
     }
 
     public void actualizar(long tiempo) throws Exception {
@@ -188,6 +199,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
 
         padDisparo.dibujar(canvas);
         padMovimiento.dibujar(canvas);
+
+        for(Vida vida : vidas)
+            vida.dibujar(canvas);
 
     }
 

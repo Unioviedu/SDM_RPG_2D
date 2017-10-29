@@ -72,6 +72,8 @@ public class Jugador extends Modelo {
         this.x =  this.xInicial;
         this.y =  this.yInicial;
 
+        vidas = 3;
+
         orientacion = ABAJO;
 
         inicializar();

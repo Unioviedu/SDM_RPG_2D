@@ -29,17 +29,7 @@ public class GestorNivel {
         List<Habitacion> habitacionesNivel = new LinkedList<>();
         List<Integer> numeroHabitaciones = new ArrayList<>();
         Random random = new Random();
-//        TODO: Generar las habitaciones aleatoriamente
-//        while(habitacionesGeneradas) {
-//            int numero = random.nextInt(11);
-//            if (!numeroHabitaciones.contains(numero)) {
-//                numeroHabitaciones.add(numero);
-//                habitacionesNivel.add(new Habitacion(context, numero));
-//            }
-//            if(numeroHabitaciones.size() == longitudJuego) {
-//                habitacionesGeneradas = true;
-//            }
-//        }
+        //TODO: Generar las habitaciones aleatoriamente
 
         for(int i = 0; i < longitudJuego; i++){
             habitacionesNivel.add(new Habitacion(context, i));
