@@ -164,8 +164,7 @@ public class Habitacion {
                 disparoJugador.actualizar(tiempo);
 
             if (botonDispararPulsado) {
-                disparosJugador.add(new DisparoJugador(context, jugador.x, jugador.y,
-                        jugador.orientacion, orientacionPadDispararX, orientacionPadDispararY));
+                disparosJugador.add(jugador.disparar(context, orientacionPadDispararX, orientacionPadDispararY));
                 botonDispararPulsado = false;
             }
 

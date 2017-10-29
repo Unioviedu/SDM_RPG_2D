@@ -132,10 +132,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
             getHabitacionActual().orientacionPadMoverX = 0;
             getHabitacionActual().orientacionPadMoverY = 0;
         }
-        if(!pulsacionPadDisparar) {
-            getHabitacionActual().orientacionPadDispararX = 0;
-            getHabitacionActual().orientacionPadDispararY = 0;
-        }
     }
 
 

@@ -125,6 +125,12 @@ public class Jugador extends Modelo {
         spriteActual.dibujarSprite(canvas, (int) x, (int) y,msInmunidad > 0);
     }
 
+    public DisparoJugador disparar(Context context, double orientacionPadDispararX,
+                                   double orientacionPadDispararY) {
+        return new DisparoJugador(context, x, y,
+                    orientacion, orientacionPadDispararX, orientacionPadDispararY);
+    }
+
     public void actualizar (long tiempo) {
         if(msInmunidad > 0)
             msInmunidad -= tiempo;

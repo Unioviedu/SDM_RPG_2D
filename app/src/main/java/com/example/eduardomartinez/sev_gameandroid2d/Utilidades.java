@@ -1,5 +1,7 @@
 package com.example.eduardomartinez.sev_gameandroid2d;
 
+import android.util.Log;
+
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.controles.PadMovimiento;
 
