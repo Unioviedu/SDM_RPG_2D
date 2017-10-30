@@ -21,8 +21,8 @@ public class Pinchos extends Interaccionable {
 
     @Override
     public void dibujar(Canvas canvas) {
-        int yArriva = (int)  y - altura / 2;
-        int xIzquierda = (int) x - ancho / 2;
+        int yArriva = (int)  y - Habitacion.scrollEjeY - altura / 2;
+        int xIzquierda = (int) x - Habitacion.scrollEjeX - ancho / 2;
 
         imagen.setBounds(xIzquierda, yArriva, xIzquierda
                 + ancho, yArriva + altura);
@@ -31,7 +31,8 @@ public class Pinchos extends Interaccionable {
 
     @Override
     public boolean activarItem(Habitacion habitacion){
-        habitacion.jugador.golpeado();
+        if(habitacion.jugador.golpeado() <= 0)
+            habitacion.nivelPausado = true;
         return false;
     }
 }

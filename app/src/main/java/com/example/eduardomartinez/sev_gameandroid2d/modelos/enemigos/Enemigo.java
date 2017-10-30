@@ -57,7 +57,7 @@ public abstract class Enemigo extends Modelo {
     @Override
     public void dibujar(Canvas canvas) {
         if (estado != Estados.INACTIVO) {
-            spriteActual.dibujarSprite(canvas, (int) x, (int) y);
+            spriteActual.dibujarSprite(canvas, (int) x - Habitacion.scrollEjeX, (int) y - Habitacion.scrollEjeY);
         }
     }
 

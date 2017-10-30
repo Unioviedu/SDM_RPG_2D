@@ -25,7 +25,7 @@ public abstract class Interaccionable extends Modelo {
 
     @Override
     public void dibujar(Canvas canvas) {
-        sprite.dibujarSprite(canvas, (int) x, (int) y);
+        sprite.dibujarSprite(canvas, (int) x - Habitacion.scrollEjeX, (int) y - Habitacion.scrollEjeY);
     }
 
     @Override

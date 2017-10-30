@@ -122,7 +122,7 @@ public class Jugador extends Modelo {
     }
 
     public void dibujar(Canvas canvas){
-        spriteActual.dibujarSprite(canvas, (int) x, (int) y,msInmunidad > 0);
+        spriteActual.dibujarSprite(canvas, (int) x - Habitacion.scrollEjeX, (int) y - Habitacion.scrollEjeY,msInmunidad > 0);
     }
 
     public DisparoJugador disparar(Context context, double orientacionPadDispararX,

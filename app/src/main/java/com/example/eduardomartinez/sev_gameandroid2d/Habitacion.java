@@ -48,6 +48,8 @@ public class Habitacion {
     public float orientacionPadMoverY;
     public double orientacionPadDispararX;
     public double orientacionPadDispararY;
+    public static int scrollEjeX;
+    public static int scrollEjeY;
 
     public Habitacion(Context context, int numeroHabitacion) throws Exception {
         inicializado = false;
@@ -157,18 +159,6 @@ public class Habitacion {
             jugador.dibujar(canvas);
 
             if(nivelPausado && jugador.vidasActuales == 0){
-                /*Rect origen = new Rect(0,0 ,
-                        480,320);
-
-                Paint efectoTransparente = new Paint();
-                efectoTransparente.setAntiAlias(true);
-
-                Rect destino = new Rect((int)(GameView.pantallaAncho/2 - 480/2),
-                        (int)(GameView.pantallaAlto/2 - 320/2),
-                        (int)(GameView.pantallaAncho/2 + 480/2),
-                        (int)(GameView.pantallaAlto/2 + 320/2));
-                canvas.drawBitmap(CargadorGraficos.cargarBitmap(context,R.drawable.pantalla_has_perdido)
-                        ,origen,origen, null);*/
                 Drawable hasPerdido = CargadorGraficos.cargarDrawable(context, R.drawable.pantalla_has_perdido);
                 hasPerdido.setBounds((int)(GameView.pantallaAncho/2 - 480),
                         (int)(GameView.pantallaAlto/2 - 320),
@@ -181,20 +171,54 @@ public class Habitacion {
 
     private void dibujarTiles(Canvas canvas){
 
-        for (int y = 0; y < altoMapaTiles(); ++y) {
-            for (int x = 0; x < anchoMapaTiles(); ++x) {
+        int tileXJugador = (int) jugador.x / Tile.ancho;
+        int tileYJugador = (int) jugador.y / Tile.altura;
+
+        int izquierda = (int) (tileXJugador - tilesEnDistanciaX(jugador.x - scrollEjeX));
+        izquierda = Math.max(0,izquierda);
+
+        if ( jugador.x  < anchoMapaTiles()* Tile.ancho - GameView.pantallaAncho*0.3 )
+            if( jugador.x - scrollEjeX > GameView.pantallaAncho * 0.7 ){
+                scrollEjeX = (int) ((jugador .x ) - GameView.pantallaAncho* 0.7);
+            }
+        if ( jugador.y  < altoMapaTiles()* Tile.altura - GameView.pantallaAlto*0.3 )
+            if( jugador.y - scrollEjeY > GameView.pantallaAlto * 0.7 )
+                scrollEjeY = (int) ((jugador .y ) - GameView.pantallaAlto* 0.7);
+
+        if ( jugador.x  > GameView.pantallaAncho*0.3 )
+            if( jugador.x - scrollEjeX < GameView.pantallaAncho *0.3 ){
+                scrollEjeX = (int)(jugador .x - GameView.pantallaAncho*0.3);
+            }
+
+        if ( jugador.y  > GameView.pantallaAlto*0.3 )
+            if (jugador.y - scrollEjeY < GameView.pantallaAlto * 0.3)
+                scrollEjeY = (int) (jugador.y - GameView.pantallaAlto * 0.3);
+
+        int derecha = izquierda +
+                GameView.pantallaAncho / Tile.ancho + 1;
+        // el ultimo tile visible, no puede superar el tamaño del mapa
+        derecha = Math.min(derecha, anchoMapaTiles() - 1);
+
+
+        for (int y = 0; y < altoMapaTiles() ; ++y) {
+            for (int x = izquierda; x <= derecha; ++x) {
                 if (mapaTiles[x][y].imagen != null) {
                     // Calcular la posición en pantalla correspondiente
                     // izquierda, arriba, derecha , abajo
                     mapaTiles[x][y].imagen.setBounds(
-                            (x  * Tile.ancho),
-                            (y * Tile.altura),
-                            (x * Tile.ancho) + Tile.ancho,
-                            (y * Tile.altura) + Tile.altura);
+                            (x  * Tile.ancho) - scrollEjeX,
+                            (y * Tile.altura) - scrollEjeY,
+                            (x * Tile.ancho) + Tile.ancho - scrollEjeX,
+                            (y * Tile.altura) + Tile.altura - scrollEjeY);
+
                     mapaTiles[x][y].imagen.draw(canvas);
                 }
             }
         }
+    }
+
+    private float tilesEnDistanciaX(double distanciaX){
+        return (float) distanciaX/Tile.ancho;
     }
 
     public void actualizar (long tiempo) {
