@@ -1,5 +1,6 @@
 package com.example.eduardomartinez.sev_gameandroid2d;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
@@ -100,6 +101,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
         for(int i=0; i < 6; i++){
             if(accion[i] != NO_ACTION ) {
 
+                if(accion[i] == ACTION_DOWN){
+                    if(getHabitacionActual().nivelPausado) {
+                        getHabitacionActual().nivelPausado = false;
+                        hasPerdido();
+                    }
+                }
 
                 if(padDisparo.estaPulsado(x[i], y[i])){
                     double orientacionX = padDisparo.getOrientacionXDisparo(x[i]);
@@ -184,22 +191,25 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     }
 
     public void actualizar(long tiempo) throws Exception {
-        getHabitacionActual().actualizar(tiempo);
+        if(!getHabitacionActual().nivelPausado) {
+            getHabitacionActual().actualizar(tiempo);
+        }
     }
 
     protected void dibujar(Canvas canvas) {
+        getHabitacionActual().dibujar(canvas);
 
-        habitaciones.get(habitacionActual).dibujar(canvas);
+        if(!getHabitacionActual().nivelPausado) {
+            padDisparo.dibujar(canvas);
+            padMovimiento.dibujar(canvas);
 
-        padDisparo.dibujar(canvas);
-        padMovimiento.dibujar(canvas);
-
-        for(int i = 0; i < getHabitacionActual().jugador.vidasTotales; i++){
-            if(i < getHabitacionActual().jugador.vidasActuales)
-                vidas.get(i).dibujar(canvas);
-            else{
-                vidas.get(i).setVidaVacia();
-                vidas.get(i).dibujar(canvas);
+            for (int i = 0; i < getHabitacionActual().jugador.vidasTotales; i++) {
+                if (i < getHabitacionActual().jugador.vidasActuales)
+                    vidas.get(i).dibujar(canvas);
+                else {
+                    vidas.get(i).setVidaVacia();
+                    vidas.get(i).dibujar(canvas);
+                }
             }
         }
 
@@ -253,5 +263,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
         }
     }
 
+    public void hasPerdido(){
+        ((Activity) context).finish();
+    }
 
 }

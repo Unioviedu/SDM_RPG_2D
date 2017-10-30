@@ -2,6 +2,9 @@ package com.example.eduardomartinez.sev_gameandroid2d;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.DisparoJugador;
@@ -38,6 +41,8 @@ public class Habitacion {
     public List<Interaccionable> interaccionables;
 
     public boolean botonDispararPulsado;
+
+    public boolean nivelPausado;
 
     public float orientacionPadMoverX;
     public float orientacionPadMoverY;
@@ -126,8 +131,12 @@ public class Habitacion {
         if(inicializado) {
             jugador.aplicarReglasMovimiento(this);
 
-            for(Enemigo enemigo: enemigos)
+            for(Enemigo enemigo: enemigos) {
                 enemigo.aplicarReglasMovimiento(this);
+                if(enemigo.colisiona(jugador))
+                    if(jugador.golpeado() <= 0)
+                        nivelPausado = true;
+            }
         }
     }
 
@@ -146,6 +155,27 @@ public class Habitacion {
             }
 
             jugador.dibujar(canvas);
+
+            if(nivelPausado && jugador.vidasActuales == 0){
+                /*Rect origen = new Rect(0,0 ,
+                        480,320);
+
+                Paint efectoTransparente = new Paint();
+                efectoTransparente.setAntiAlias(true);
+
+                Rect destino = new Rect((int)(GameView.pantallaAncho/2 - 480/2),
+                        (int)(GameView.pantallaAlto/2 - 320/2),
+                        (int)(GameView.pantallaAncho/2 + 480/2),
+                        (int)(GameView.pantallaAlto/2 + 320/2));
+                canvas.drawBitmap(CargadorGraficos.cargarBitmap(context,R.drawable.pantalla_has_perdido)
+                        ,origen,origen, null);*/
+                Drawable hasPerdido = CargadorGraficos.cargarDrawable(context, R.drawable.pantalla_has_perdido);
+                hasPerdido.setBounds((int)(GameView.pantallaAncho/2 - 480),
+                        (int)(GameView.pantallaAlto/2 - 320),
+                        (int)(GameView.pantallaAncho/2 + 480),
+                        (int)(GameView.pantallaAlto/2 + 320));
+                hasPerdido.draw(canvas);
+            }
         }
     }
 
