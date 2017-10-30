@@ -310,7 +310,9 @@ public class Jugador extends Modelo {
         }
     }
 
-    private void aplicarMovimientoIzquierda(Habitacion habitacion, int tileXJugadorIzquierda, int tileYJugadorInferior, int tileYJugadorCentro, int tileYJugadorSuperior) {
+    private void aplicarMovimientoIzquierda(Habitacion habitacion, int tileXJugadorIzquierda,
+                                            int tileYJugadorInferior, int tileYJugadorCentro,
+                                            int tileYJugadorSuperior) {
         // Tengo un tile detrás y es PASABLE
         // El tile de detras está dentro del Nivel
         if (habitacion.mapaTiles[tileXJugadorIzquierda - 1][tileYJugadorInferior].tipoDeColision ==

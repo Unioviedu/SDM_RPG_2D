@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.util.Log;
 
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.DisparoJugador;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.Enemigo;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.EnemigoRebota;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Interaccionable;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Pinchos;
@@ -30,6 +32,7 @@ public class Habitacion {
     public GameView gameView;
 
     public Jugador jugador;
+    private List<Enemigo> enemigos;
     private List<DisparoJugador> disparosJugador;
 
     public List<Interaccionable> interaccionables;
@@ -62,6 +65,7 @@ public class Habitacion {
     public void inicializar() throws Exception {
         disparosJugador = new LinkedList<>();
         interaccionables = new LinkedList<>();
+        enemigos = new LinkedList<>();
         inicializarMapaTiles();
     }
 
@@ -110,6 +114,9 @@ public class Habitacion {
                 return new Tile(context, Tile.PASABLE, R.drawable.pinchos);
             case '.':
                 return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+            case '1':
+                enemigos.add(new EnemigoRebota(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
+                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
             default:
                 throw new RuntimeException("Tipo de tile incorrecto");
         }
@@ -118,6 +125,9 @@ public class Habitacion {
     private void aplicarReglasMoviemiento() {
         if(inicializado) {
             jugador.aplicarReglasMovimiento(this);
+
+            for(Enemigo enemigo: enemigos)
+                enemigo.aplicarReglasMovimiento(this);
         }
     }
 
@@ -130,6 +140,10 @@ public class Habitacion {
 
             for (DisparoJugador disparoJugador: disparosJugador)
                 disparoJugador.dibujar(canvas);
+
+            for (Enemigo enemigo: enemigos) {
+                enemigo.dibujar(canvas);
+            }
 
             jugador.dibujar(canvas);
         }
@@ -167,6 +181,9 @@ public class Habitacion {
                 disparosJugador.add(jugador.disparar(context, orientacionPadDispararX, orientacionPadDispararY));
                 botonDispararPulsado = false;
             }
+
+            /*for (Enemigo enemigo: enemigos)
+                enemigo.actualizar(tiempo);*/
 
             aplicarReglasMoviemiento();
             aplicarReglasDisparoJugador();
