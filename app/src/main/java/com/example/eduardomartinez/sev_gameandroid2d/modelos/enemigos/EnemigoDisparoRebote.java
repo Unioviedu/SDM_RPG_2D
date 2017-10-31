@@ -24,6 +24,11 @@ public class EnemigoDisparoRebote extends Enemigo {
 
     }
 
+    @Override
+    public DisparoEnemigo disparar(Context context, double posJugadorY, long milisegundos) {
+        return null;
+    }
+
     public void actualizar() {
 
     }

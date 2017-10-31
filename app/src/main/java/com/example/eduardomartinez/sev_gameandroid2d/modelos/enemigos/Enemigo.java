@@ -86,4 +86,6 @@ public abstract class Enemigo extends Modelo {
     public abstract void aplicarReglasMovimiento(Habitacion habitacion);
 
     public abstract void actualizar(long tiempo);
+
+    public abstract DisparoEnemigo disparar (Context context, double posJugadorY, long milisegundos);
 }
