@@ -30,7 +30,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     private PadMovimiento padMovimiento;
     private PadMovimiento padDisparo;
 
-    private List<Vida> vidas;
+    public List<Vida> vidas;
 
     public GameView(Context context) {
         super(context);
@@ -176,6 +176,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     protected void inicializar() throws Exception {
 
         habitaciones = GestorNivel.getInstance().seleccionarLongitudJuego(context);
+        getHabitacionActual().gameView = this;
 
         padDisparo = new PadMovimiento(context, pantallaAncho*0.85, pantallaAlto*0.8);
         padMovimiento = new PadMovimiento(context);
@@ -204,9 +205,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
             padMovimiento.dibujar(canvas);
 
             for (int i = 0; i < getHabitacionActual().jugador.vidasTotales; i++) {
-                if (i < getHabitacionActual().jugador.vidasActuales)
+                Log.d("vidas", "vidas totales "+getHabitacionActual().jugador.vidasTotales+" vidas actuales "+getHabitacionActual().jugador.vidasActuales);
+                if (i < getHabitacionActual().jugador.vidasActuales) {
+                    vidas.get(i).setVidaLlena();
                     vidas.get(i).dibujar(canvas);
-                else {
+                }else {
                     vidas.get(i).setVidaVacia();
                     vidas.get(i).dibujar(canvas);
                 }

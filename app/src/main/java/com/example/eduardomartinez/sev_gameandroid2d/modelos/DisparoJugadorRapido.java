@@ -13,34 +13,23 @@ import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
  * Created by eduardomartinez on 25/10/17.
  */
 
-public class DisparoJugador extends Modelo {
-    protected Sprite sprite;
+public class DisparoJugadorRapido extends DisparoJugador {
 
-    public double velocidadX;
-    public double velocidadY;
-    float sensibilidad = 20;
-    float velocidad;
+    public DisparoJugadorRapido(Context context, double x, double y, double orientacionX, double orientacionY) {
+        super(context, x, y, orientacionX, orientacionY);
 
-
-    public DisparoJugador(Context context, double x, double y, double orientacionX, double orientacionY) {
-        super(context, x, y, 110, 110);
-
-        cArriba = 6;
-        cAbajo = 6;
-        cDerecha = 6;
-        cIzquierda = 6;
-        velocidad = 10;
+        velocidad = 100;
 
         sprite = new Sprite(CargadorGraficos.cargarDrawable(context,
                 R.drawable.animacion_disparo1),
                 ancho, altura,
                 24, 4, true);
 
-        inicializar(  orientacionX,  orientacionY);
+        inicializar(orientacionX,orientacionY);
     }
 
-    protected void inicializar(double orientacionX, double orientacionY) {
-
+    @Override
+   protected void inicializar( double orientacionX, double orientacionY) {
         int orientacionDisparo = Utilidades.orientacion(orientacionX, orientacionY);
 
         if (orientacionDisparo == Jugador.DERECHA)
@@ -53,17 +42,8 @@ public class DisparoJugador extends Modelo {
             velocidadY = velocidad;
     }
 
-    public void actualizar(long tiempo) {
-        sprite.actualizar(tiempo);
+    @Override
+    public DisparoJugadorRapido disparar(Context context, double x, double y, double orientacionPadDispararX, double orientacionPadDispararY) {
+        return new DisparoJugadorRapido(context, x, y, orientacionPadDispararX, orientacionPadDispararY);
     }
-
-    public void dibujar(Canvas canvas) {
-        sprite.dibujarSprite(canvas, (int) x - Habitacion.scrollEjeX,  (int) y - Habitacion.scrollEjeY);
-    }
-
-    public DisparoJugador disparar(Context context, double x, double y, double orientacionPadDispararX, double orientacionPadDispararY) {
-        return new DisparoJugador(context, x, y, orientacionPadDispararX, orientacionPadDispararY);
-    }
-
-
 }

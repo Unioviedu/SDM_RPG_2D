@@ -2,6 +2,7 @@ package com.example.eduardomartinez.sev_gameandroid2d.modelos;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.Log;
 
 import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
@@ -12,6 +13,7 @@ import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Interaccionable;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Created by eduardomartinez on 24/10/17.
@@ -79,6 +81,8 @@ public class Jugador extends Modelo {
         orientacion = ABAJO;
 
         inicializar();
+
+        disparoJugador = new DisparoJugador(context, x, y, orientacionDisparoX, orientacionDisparoY);
     }
 
     public void inicializar() {
@@ -127,8 +131,8 @@ public class Jugador extends Modelo {
 
     public DisparoJugador disparar(Context context, double orientacionPadDispararX,
                                    double orientacionPadDispararY) {
-        return new DisparoJugador(context, x, y,
-                    orientacion, orientacionPadDispararX, orientacionPadDispararY);
+        Log.d("clase", disparoJugador.getClass().toString());
+        return disparoJugador.disparar(context, x, y ,orientacionPadDispararX, orientacionPadDispararY);
     }
 
     public void actualizar (long tiempo) {
@@ -303,11 +307,14 @@ public class Jugador extends Modelo {
     }
 
     private void comprobarColisiones(Habitacion habitacion) {
-        for(Interaccionable interaccionable: habitacion.interaccionables){
-            if(interaccionable.colisiona(this)){
-                interaccionable.activarItem(habitacion);
+        for(Iterator<Interaccionable> iterator = habitacion.interaccionables.iterator(); iterator.hasNext();) {
+            Interaccionable item = iterator.next();
+                if (item.colisiona(this)) {
+                    if (item.activarItem(habitacion)) {
+                        iterator.remove();
+                    }
+                }
             }
-        }
     }
 
     private void aplicarMovimientoIzquierda(Habitacion habitacion, int tileXJugadorIzquierda,
