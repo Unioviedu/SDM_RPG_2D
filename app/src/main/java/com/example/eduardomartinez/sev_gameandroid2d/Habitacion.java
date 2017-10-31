@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.DisparoJugador;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.DisparoEnemigo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.Enemigo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.EnemigoRebota;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Interaccionable;
@@ -37,6 +38,7 @@ public class Habitacion {
     public Jugador jugador;
     private List<Enemigo> enemigos;
     private List<DisparoJugador> disparosJugador;
+    private List<DisparoEnemigo> disparosEnemigo;
 
     public List<Interaccionable> interaccionables;
 
@@ -71,6 +73,7 @@ public class Habitacion {
 
     public void inicializar() throws Exception {
         disparosJugador = new LinkedList<>();
+        disparosEnemigo = new LinkedList<>();
         interaccionables = new LinkedList<>();
         enemigos = new LinkedList<>();
         inicializarMapaTiles();
@@ -152,9 +155,11 @@ public class Habitacion {
             for (DisparoJugador disparoJugador: disparosJugador)
                 disparoJugador.dibujar(canvas);
 
-            for (Enemigo enemigo: enemigos) {
+            for (Enemigo enemigo: enemigos)
                 enemigo.dibujar(canvas);
-            }
+
+            for(DisparoEnemigo disparoEnemigo: disparosEnemigo)
+                disparoEnemigo.dibujar(canvas);
 
             jugador.dibujar(canvas);
 
@@ -236,11 +241,25 @@ public class Habitacion {
                 botonDispararPulsado = false;
             }
 
+            long tiempoDisparo = System.currentTimeMillis();
+
+            for (Enemigo enemigo: enemigos) {
+                DisparoEnemigo disparo = enemigo.disparar(context, jugador.y, tiempoDisparo);
+
+                if (disparo != null)
+                    disparosEnemigo.add(disparo);
+            }
+
+            /*for (DisparoEnemigo disparoEnemigo : disparosEnemigo) {
+                //disparoEnemigo.actualizar(tiempo);
+            }*/
+
             /*for (Enemigo enemigo: enemigos)
                 enemigo.actualizar(tiempo);*/
 
             aplicarReglasMoviemiento();
             aplicarReglasDisparoJugador();
+            aplicarReglasDisparoEnemigo();
         }
     }
 
@@ -298,7 +317,6 @@ public class Habitacion {
                     continue;
                 }
             }
-
         }
     }
 
@@ -387,6 +405,165 @@ public class Habitacion {
                 Tile.PASABLE &&
                 mapaTiles[tileXDisparoIzquierda][tileYDisparo-1].tipoDeColision ==
                 Tile.PASABLE) {
+            disparoJugador.y += disparoJugador.velocidadY;
+        } else if (tileYDisparo >= 0) {
+            int TileDisparoBordeArriba = tileYDisparo*Tile.altura;
+            double distanciaY = (disparoJugador.y - disparoJugador.cArriba) -
+                    TileDisparoBordeArriba;
+
+            if (distanciaY > 0) {
+                double velocidadNecesaria =
+                        Utilidades.proximoACero(-distanciaY, disparoJugador.velocidadY);
+                disparoJugador.y += velocidadNecesaria;
+            } else {
+                iteratorRemove = true;
+            }
+        }
+        return iteratorRemove;
+    }
+
+    private void aplicarReglasDisparoEnemigo() {
+        for (Iterator<DisparoEnemigo> iterator = disparosEnemigo.iterator();
+             iterator.hasNext(); ) {
+
+            DisparoEnemigo disparoEnemigo = iterator.next();
+
+            int tileXDisparo = (int) disparoEnemigo.x / Tile.ancho;
+            int tileYDisparoInferior =
+                    (int) (disparoEnemigo.y + disparoEnemigo.cAbajo) / Tile.altura;
+            int tileYDisparoSuperior =
+                    (int) (disparoEnemigo.y - disparoEnemigo.cArriba) / Tile.altura;
+
+            if (disparoEnemigo.velocidadX > 0) {
+                boolean iteratorRemove = aplicarReglasDisparoJugadorDerecha(tileXDisparo, tileYDisparoInferior,
+                        tileYDisparoSuperior, disparoEnemigo);
+                if (iteratorRemove) {
+                    iterator.remove();
+                    continue;
+                }
+            }
+
+            if (disparoEnemigo.velocidadX < 0) {
+                boolean iteratorRemove = aplicarReglasDisparoJugadorIzquierda(tileXDisparo, tileYDisparoInferior,
+                        tileYDisparoSuperior, disparoEnemigo);
+                if (iteratorRemove) {
+                    iterator.remove();
+                    continue;
+                }
+            }
+
+
+            int tileYDisparo = (int) disparoEnemigo.y / Tile.altura;
+            int tileXDisparoDerecha =
+                    (int) (disparoEnemigo.x + disparoEnemigo.cDerecha) / Tile.ancho;
+            int tileXDisparoIzquierda =
+                    (int) (disparoEnemigo.x - disparoEnemigo.cIzquierda) / Tile.ancho;
+
+            if (disparoEnemigo.velocidadY > 0) {
+                boolean iteratorRemove = aplicarReglasDisparoJugadorAbajo(tileYDisparo, tileXDisparoDerecha,
+                        tileXDisparoIzquierda, disparoEnemigo);
+                if (iteratorRemove) {
+                    iterator.remove();
+                    continue;
+                }
+            }
+
+            if (disparoEnemigo.velocidadY < 0) {
+                boolean iteratorRemove = aplicarReglasDisparoJugadorArriba(tileYDisparo, tileXDisparoDerecha,
+                        tileXDisparoIzquierda, disparoEnemigo);
+                if (iteratorRemove) {
+                    iterator.remove();
+                    continue;
+                }
+            }
+        }
+    }
+
+    private boolean aplicarReglasDisparoJugadorDerecha(int tileXDisparo, int tileYDisparoInferior,
+                                                       int tileYDisparoSuperior, DisparoEnemigo disparoJugador) {
+        boolean iteratorRemove = false;
+        if (tileXDisparo + 1 <= anchoMapaTiles() - 1 &&
+                mapaTiles[tileXDisparo + 1][tileYDisparoInferior].tipoDeColision
+                        == Tile.PASABLE &&
+                mapaTiles[tileXDisparo + 1][tileYDisparoSuperior].tipoDeColision
+                        == Tile.PASABLE) {
+            disparoJugador.x += disparoJugador.velocidadX;
+        } else if (tileXDisparo <= anchoMapaTiles() - 1) {
+            int TileDisparoBordeDerecho = tileXDisparo * Tile.ancho + Tile.ancho;
+            double distanciaX =
+                    TileDisparoBordeDerecho - (disparoJugador.x + disparoJugador.cDerecha);
+
+            if (distanciaX > 0) {
+                double velocidadNecesaria =
+                        Math.min(distanciaX, disparoJugador.velocidadX);
+                disparoJugador.x += velocidadNecesaria;
+            } else {
+                iteratorRemove = true;
+            }
+        }
+
+        return iteratorRemove;
+    }
+
+    private boolean aplicarReglasDisparoJugadorIzquierda(int tileXDisparo, int tileYDisparoInferior,
+                                                         int tileYDisparoSuperior, DisparoEnemigo disparoJugador) {
+        boolean iteratorRemove = false;
+        if (tileXDisparo - 1 >= 0 && tileYDisparoSuperior < altoMapaTiles()-1 &&
+                mapaTiles[tileXDisparo - 1][tileYDisparoInferior].tipoDeColision
+                        == Tile.PASABLE &&
+                mapaTiles[tileXDisparo - 1][tileYDisparoSuperior].tipoDeColision
+                        == Tile.PASABLE) {
+            disparoJugador.x += disparoJugador.velocidadX;
+        } else if (tileXDisparo >= 0) {
+            int TileDisparoBordeIzquierdo = tileXDisparo * Tile.ancho;
+            double distanciaX =
+                    (disparoJugador.x - disparoJugador.cIzquierda) - TileDisparoBordeIzquierdo;
+
+            if (distanciaX > 0) {
+                double velocidadNecesaria =
+                        Utilidades.proximoACero(-distanciaX, disparoJugador.velocidadX);
+                disparoJugador.x += velocidadNecesaria;
+            } else {
+                iteratorRemove = true;
+            }
+        }
+
+        return iteratorRemove;
+    }
+
+    private boolean aplicarReglasDisparoJugadorAbajo(int tileYDisparo, int tileXDisparoDerecha,
+                                                     int tileXDisparoIzquierda, DisparoEnemigo disparoJugador) {
+        boolean iteratorRemove = false;
+        if (tileYDisparo+1 <= altoMapaTiles()-1 &&
+                mapaTiles[tileXDisparoDerecha][tileYDisparo+1].tipoDeColision
+                        == Tile.PASABLE &&
+                mapaTiles[tileXDisparoIzquierda][tileYDisparo+1].tipoDeColision
+                        == Tile.PASABLE) {
+            disparoJugador.y += disparoJugador.velocidadY;
+        } else if (tileYDisparo <= altoMapaTiles() - 1) {
+            int TileDisparoBordeAbajo = tileYDisparo * Tile.altura + Tile.altura;
+            double distanciaY =
+                    TileDisparoBordeAbajo - (disparoJugador.y + disparoJugador.cAbajo);
+
+            if (distanciaY > 0) {
+                double velocidadNecesaria =
+                        Math.min(distanciaY, disparoJugador.velocidadY);
+                disparoJugador.y += velocidadNecesaria;
+            } else {
+                iteratorRemove = true;
+            }
+        }
+        return iteratorRemove;
+    }
+
+    private boolean aplicarReglasDisparoJugadorArriba(int tileYDisparo, int tileXDisparoDerecha,
+                                                      int tileXDisparoIzquierda, DisparoEnemigo disparoJugador) {
+        boolean iteratorRemove = false;
+        if (tileYDisparo-1 >= 0 && tileXDisparoDerecha < anchoMapaTiles()-1 &&
+                mapaTiles[tileXDisparoDerecha][tileYDisparo-1].tipoDeColision ==
+                        Tile.PASABLE &&
+                mapaTiles[tileXDisparoIzquierda][tileYDisparo-1].tipoDeColision ==
+                        Tile.PASABLE) {
             disparoJugador.y += disparoJugador.velocidadY;
         } else if (tileYDisparo >= 0) {
             int TileDisparoBordeArriba = tileYDisparo*Tile.altura;

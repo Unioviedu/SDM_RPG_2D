@@ -23,4 +23,9 @@ public class EnemigoDisparoDirecciones  extends Enemigo{
     public void actualizar(long tiempo) {
 
     }
+
+    @Override
+    public DisparoEnemigo disparar(Context context, double posJugadorY, long milisegundos) {
+        return null;
+    }
 }

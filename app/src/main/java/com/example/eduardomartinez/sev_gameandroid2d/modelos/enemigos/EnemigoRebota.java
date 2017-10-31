@@ -7,6 +7,7 @@ import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
 import com.example.eduardomartinez.sev_gameandroid2d.Tile;
 import com.example.eduardomartinez.sev_gameandroid2d.Utilidades;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
 
 /**
  * Created by eduardomartinez on 25/10/17.
@@ -18,6 +19,9 @@ public class EnemigoRebota extends Enemigo {
         super(context, x, y, 59*2, 50*2);
 
         velocidadX = 20;
+
+        cadenciaDisparo = 300;
+        miliSegundosDisparo = 0;
 
         spriteActual = crearSprite(R.drawable.protagonista_animacion_caminando_izquierda,
                 CAMINANDO_DERECHA,
@@ -49,6 +53,25 @@ public class EnemigoRebota extends Enemigo {
     @Override
     public void actualizar(long tiempo) {
 
+    }
+
+    @Override
+    public DisparoEnemigo disparar(Context context, double posJugadorY, long milisegundos) {
+        int orientacion;
+
+        if (milisegundos - miliSegundosDisparo> cadenciaDisparo
+                + Math.random()* cadenciaDisparo) {
+            miliSegundosDisparo = milisegundos;
+
+            if (posJugadorY < y)
+                orientacion = Jugador.ARRIBA;
+            else
+                orientacion = Jugador.ABAJO;
+        } else {
+            return null;
+        }
+
+        return new DisparoEnemigoRebota(context, x, y, orientacion);
     }
 
     private void aplicarReglasMovimientoDerecha(Habitacion habitacion, int tileXEnemigoIzquierda,
