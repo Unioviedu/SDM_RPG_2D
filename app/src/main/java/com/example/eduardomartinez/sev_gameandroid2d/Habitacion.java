@@ -5,13 +5,14 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
-import com.example.eduardomartinez.sev_gameandroid2d.modelos.DisparoJugador;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.disparos.DisparoJugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.DisparoEnemigo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.Enemigo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.EnemigoRebota;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemDisparoRapido;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Interaccionable;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemPasarHabitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Pinchos;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemVidaExtra;
 
@@ -36,7 +37,7 @@ public class Habitacion {
     public GameView gameView;
 
     public Jugador jugador;
-    private List<Enemigo> enemigos;
+    public List<Enemigo> enemigos;
     private List<DisparoJugador> disparosJugador;
     private List<DisparoEnemigo> disparosEnemigo;
 
@@ -52,6 +53,7 @@ public class Habitacion {
     public double orientacionPadDispararY;
     public static int scrollEjeX;
     public static int scrollEjeY;
+    public ItemPasarHabitacion puerta;
 
     public Habitacion(Context context, int numeroHabitacion) throws Exception {
         inicializado = false;
@@ -133,6 +135,10 @@ public class Habitacion {
             case '1':
                 enemigos.add(new EnemigoRebota(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
                 return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+            case 'O':
+                puerta = new ItemPasarHabitacion(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2);
+                interaccionables.add(puerta);
+                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
             default:
                 throw new RuntimeException("Tipo de tile incorrecto");
         }
@@ -147,6 +153,9 @@ public class Habitacion {
                 if(enemigo.colisiona(jugador))
                     if(jugador.golpeado() <= 0)
                         nivelPausado = true;
+            }
+            if(enemigos.isEmpty()){
+                puerta.activa = true;
             }
         }
     }
@@ -433,6 +442,10 @@ public class Habitacion {
              iterator.hasNext(); ) {
 
             DisparoEnemigo disparoEnemigo = iterator.next();
+
+            if(disparoEnemigo.colisiona(jugador)){
+                jugador.golpeado();
+            }
 
             int tileXDisparo = (int) disparoEnemigo.x / Tile.ancho;
             int tileYDisparoInferior =

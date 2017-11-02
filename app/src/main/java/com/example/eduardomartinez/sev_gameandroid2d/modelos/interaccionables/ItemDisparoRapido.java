@@ -4,11 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 
 import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
-import com.example.eduardomartinez.sev_gameandroid2d.GameView;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
-import com.example.eduardomartinez.sev_gameandroid2d.modelos.DisparoJugadorRapido;
-import com.example.eduardomartinez.sev_gameandroid2d.modelos.Vida;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.disparos.DisparoJugadorRapido;
 
 /**
  * Created by karolmc on 29/10/2017.

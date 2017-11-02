@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Vida;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.controles.PadMovimiento;
 
@@ -255,6 +256,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
             catch (InterruptedException e) {
             }
         }
+    }
+
+    public Habitacion habitacionCompleta(){
+        Jugador jugador = getHabitacionActual().jugador;
+        habitacionActual++;
+        getHabitacionActual().jugador = jugador;
+        return getHabitacionActual();
     }
 
     public void nivelCompleto() throws Exception {

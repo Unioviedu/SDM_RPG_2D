@@ -1,12 +1,9 @@
-package com.example.eduardomartinez.sev_gameandroid2d.modelos;
+package com.example.eduardomartinez.sev_gameandroid2d.modelos.disparos;
 
 import android.content.Context;
-import android.graphics.Canvas;
 
 import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
-import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
-import com.example.eduardomartinez.sev_gameandroid2d.Utilidades;
 import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
 
 /**
@@ -16,12 +13,9 @@ import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
 public class DisparoJugadorNormal extends DisparoJugador {
 
     public DisparoJugadorNormal(Context context, double x, double y, double orientacionX, double orientacionY) {
-        super(context, x, y, 110, 110);
+        super(context, x, y, orientacionX, orientacionY);
 
-        sprite = new Sprite(CargadorGraficos.cargarDrawable(context,
-                R.drawable.animacion_disparo1),
-                ancho, altura,
-                24, 4, true);
+        imagen = CargadorGraficos.cargarDrawable(context, R.drawable.disparo_jugador_normal);
     }
 
     @Override

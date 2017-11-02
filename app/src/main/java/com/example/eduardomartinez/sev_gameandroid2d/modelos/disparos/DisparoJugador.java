@@ -1,20 +1,19 @@
-package com.example.eduardomartinez.sev_gameandroid2d.modelos;
+package com.example.eduardomartinez.sev_gameandroid2d.modelos.disparos;
 
 import android.content.Context;
 import android.graphics.Canvas;
 
-import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
-import com.example.eduardomartinez.sev_gameandroid2d.R;
 import com.example.eduardomartinez.sev_gameandroid2d.Utilidades;
 import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.Modelo;
 
 /**
  * Created by eduardomartinez on 25/10/17.
  */
 
 public abstract class DisparoJugador extends Modelo {
-    protected Sprite sprite;
 
     public double velocidadX;
     public double velocidadY;
@@ -24,7 +23,7 @@ public abstract class DisparoJugador extends Modelo {
 
 
     public DisparoJugador(Context context, double x, double y, double orientacionX, double orientacionY) {
-        super(context, x, y, 110, 110);
+        super(context, x, y, 100, 100);
 
         cArriba = 6;
         cAbajo = 6;
@@ -53,15 +52,17 @@ public abstract class DisparoJugador extends Modelo {
             velocidadY = velocidad;
     }
 
+    @Override
+    public void dibujar(Canvas canvas){
+        int yArriva = (int)  y - Habitacion.scrollEjeY - altura / 2;
+        int xIzquierda = (int) x - Habitacion.scrollEjeX - ancho / 2;
+
+        imagen.setBounds(xIzquierda, yArriva, xIzquierda
+                + ancho, yArriva + altura);
+        imagen.draw(canvas);
+    }
+
     protected abstract void doInicializar();
-
-    public void actualizar(long tiempo) {
-        sprite.actualizar(tiempo);
-    }
-
-    public void dibujar(Canvas canvas) {
-        sprite.dibujarSprite(canvas, (int) x - Habitacion.scrollEjeX,  (int) y - Habitacion.scrollEjeY);
-    }
 
     public abstract DisparoJugador disparar(double orientacionX, double orientacionY);
 

@@ -2,7 +2,6 @@ package com.example.eduardomartinez.sev_gameandroid2d.modelos;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.util.Log;
 
 import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
@@ -10,6 +9,8 @@ import com.example.eduardomartinez.sev_gameandroid2d.R;
 import com.example.eduardomartinez.sev_gameandroid2d.Tile;
 import com.example.eduardomartinez.sev_gameandroid2d.Utilidades;
 import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.disparos.DisparoJugador;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.disparos.DisparoJugadorNormal;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Interaccionable;
 
 import java.util.HashMap;
