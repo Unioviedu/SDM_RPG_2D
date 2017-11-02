@@ -30,6 +30,11 @@ public class EnemigoDisparoRebote extends Enemigo {
         return null;
     }
 
+    @Override
+    public void golpeado() {
+
+    }
+
     public void actualizar() {
 
     }

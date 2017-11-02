@@ -75,6 +75,11 @@ public class EnemigoRebota extends Enemigo {
         return new DisparoEnemigoRebota(context, x, y, orientacion);
     }
 
+    @Override
+    public void golpeado() {
+        estado = Estados.INACTIVO;
+    }
+
     private void aplicarReglasMovimientoDerecha(Habitacion habitacion, int tileXEnemigoIzquierda,
                                                 int tileXEnemigoDerecha, int tileYEnemigoInferior,
                                                 int tileYEnemigoCentro, int tileYEnemigoSuperior) {

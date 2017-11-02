@@ -19,7 +19,7 @@ public class EnemigoDisparoDirecciones  extends Enemigo{
 
         velocidadX = 20;
 
-        cadenciaDisparo = 100;
+        cadenciaDisparo = 800;
         miliSegundosDisparo = 0;
 
         spriteActual = crearSprite(R.drawable.protagonista_animacion_caminando_izquierda,
@@ -51,5 +51,10 @@ public class EnemigoDisparoDirecciones  extends Enemigo{
             return new DisparoEnemigoDirecciones(context, x, y, orientacion);
         } else
             return null;
+    }
+
+    @Override
+    public void golpeado() {
+        estado = Estados.INACTIVO;
     }
 }

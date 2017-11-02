@@ -89,4 +89,6 @@ public abstract class Enemigo extends Modelo {
 
     public abstract DisparoEnemigo disparar (Context context, double posJugadorX, double posJugadorY,
                                              long milisegundos);
+
+    public abstract void golpeado();
 }

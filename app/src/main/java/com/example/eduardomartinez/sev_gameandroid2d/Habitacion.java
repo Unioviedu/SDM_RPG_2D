@@ -10,6 +10,7 @@ import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.DisparoEne
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.Enemigo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.EnemigoDisparoDirecciones;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.EnemigoRebota;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.Estados;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemDisparoRapido;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Interaccionable;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
@@ -261,7 +262,15 @@ public class Habitacion {
 
             long tiempoDisparo = System.currentTimeMillis();
 
-            for (Enemigo enemigo: enemigos) {
+            for (Iterator<Enemigo> iterator = enemigos.iterator();
+                 iterator.hasNext();) {
+                Enemigo enemigo = iterator.next();
+
+                if (enemigo.estado == Estados.INACTIVO) {
+                    iterator.remove();
+                    continue;
+                }
+
                 DisparoEnemigo disparo = enemigo.disparar(context, jugador.x, jugador.y, tiempoDisparo);
 
                 if (disparo != null)
@@ -286,6 +295,14 @@ public class Habitacion {
              iterator.hasNext(); ) {
 
             DisparoJugador disparoJugador = iterator.next();
+
+            for (Enemigo enemigo: enemigos) {
+                if (enemigo.colisiona(disparoJugador)) {
+                    enemigo.golpeado();
+                    iterator.remove();
+                    continue;
+                }
+            }
 
             int tileXDisparo = (int) disparoJugador.x / Tile.ancho;
             int tileYDisparoInferior =
@@ -448,6 +465,8 @@ public class Habitacion {
 
             if(disparoEnemigo.colisiona(jugador)){
                 jugador.golpeado();
+                iterator.remove();
+                continue;
             }
 
             int tileXDisparo = (int) disparoEnemigo.x / Tile.ancho;
