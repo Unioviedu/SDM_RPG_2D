@@ -82,7 +82,7 @@ public class Jugador extends Modelo {
 
         inicializar();
 
-        disparoJugador = new DisparoJugador(context, x, y, orientacionDisparoX, orientacionDisparoY);
+        disparoJugador = new DisparoJugadorNormal(context, x, y, orientacionDisparoX, orientacionDisparoY);
     }
 
     public void inicializar() {
@@ -129,10 +129,8 @@ public class Jugador extends Modelo {
         spriteActual.dibujarSprite(canvas, (int) x - Habitacion.scrollEjeX, (int) y - Habitacion.scrollEjeY,msInmunidad > 0);
     }
 
-    public DisparoJugador disparar(Context context, double orientacionPadDispararX,
-                                   double orientacionPadDispararY) {
-        Log.d("clase", disparoJugador.getClass().toString());
-        return disparoJugador.disparar(context, x, y ,orientacionPadDispararX, orientacionPadDispararY);
+    public DisparoJugador disparar() {
+        return disparoJugador.disparar(orientacionDisparoX, orientacionDisparoY);
     }
 
     public void actualizar (long tiempo) {

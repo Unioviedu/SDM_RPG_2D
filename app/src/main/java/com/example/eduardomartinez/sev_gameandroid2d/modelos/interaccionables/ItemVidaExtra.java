@@ -13,9 +13,9 @@ import com.example.eduardomartinez.sev_gameandroid2d.modelos.Vida;
  * Created by karolmc on 29/10/2017.
  */
 
-public class VidaExtra extends Interaccionable {
+public class ItemVidaExtra extends Interaccionable {
 
-    public VidaExtra(Context context, double x, double y) {
+    public ItemVidaExtra(Context context, double x, double y) {
         super(context, x, y, 100 , 100);
 
         imagen = CargadorGraficos.cargarDrawable(context, R.drawable.item_vida_extra);

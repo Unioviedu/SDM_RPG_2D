@@ -13,13 +13,14 @@ import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
  * Created by eduardomartinez on 25/10/17.
  */
 
-public class DisparoJugador extends Modelo {
+public abstract class DisparoJugador extends Modelo {
     protected Sprite sprite;
 
     public double velocidadX;
     public double velocidadY;
-    float sensibilidad = 20;
     float velocidad;
+    double orientacionX;
+    double orientacionY;
 
 
     public DisparoJugador(Context context, double x, double y, double orientacionX, double orientacionY) {
@@ -29,17 +30,16 @@ public class DisparoJugador extends Modelo {
         cAbajo = 6;
         cDerecha = 6;
         cIzquierda = 6;
-        velocidad = 10;
-
-        sprite = new Sprite(CargadorGraficos.cargarDrawable(context,
-                R.drawable.animacion_disparo1),
-                ancho, altura,
-                24, 4, true);
+        this.orientacionX = orientacionX;
+        this.orientacionY = orientacionY;
+        this.context = context;
 
         inicializar(  orientacionX,  orientacionY);
     }
 
     protected void inicializar(double orientacionX, double orientacionY) {
+
+        doInicializar();
 
         int orientacionDisparo = Utilidades.orientacion(orientacionX, orientacionY);
 
@@ -53,6 +53,8 @@ public class DisparoJugador extends Modelo {
             velocidadY = velocidad;
     }
 
+    protected abstract void doInicializar();
+
     public void actualizar(long tiempo) {
         sprite.actualizar(tiempo);
     }
@@ -61,9 +63,7 @@ public class DisparoJugador extends Modelo {
         sprite.dibujarSprite(canvas, (int) x - Habitacion.scrollEjeX,  (int) y - Habitacion.scrollEjeY);
     }
 
-    public DisparoJugador disparar(Context context, double x, double y, double orientacionPadDispararX, double orientacionPadDispararY) {
-        return new DisparoJugador(context, x, y, orientacionPadDispararX, orientacionPadDispararY);
-    }
+    public abstract DisparoJugador disparar(double orientacionX, double orientacionY);
 
 
 }

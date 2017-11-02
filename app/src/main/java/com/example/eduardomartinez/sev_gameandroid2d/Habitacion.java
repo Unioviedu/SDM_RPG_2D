@@ -2,8 +2,6 @@ package com.example.eduardomartinez.sev_gameandroid2d;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
@@ -11,11 +9,11 @@ import com.example.eduardomartinez.sev_gameandroid2d.modelos.DisparoJugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.DisparoEnemigo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.Enemigo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.EnemigoRebota;
-import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.DisparoRapido;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemDisparoRapido;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Interaccionable;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Pinchos;
-import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.VidaExtra;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemVidaExtra;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -127,10 +125,10 @@ public class Habitacion {
             case '.':
                 return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
             case 'V':
-                interaccionables.add(new VidaExtra(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
+                interaccionables.add(new ItemVidaExtra(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
                 return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
             case 'R':
-                interaccionables.add(new DisparoRapido(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
+                interaccionables.add(new ItemDisparoRapido(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
                 return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
             case '1':
                 enemigos.add(new EnemigoRebota(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
@@ -245,7 +243,7 @@ public class Habitacion {
                 disparoJugador.actualizar(tiempo);
 
             if (botonDispararPulsado) {
-                disparosJugador.add(jugador.disparar(context, orientacionPadDispararX, orientacionPadDispararY));
+                disparosJugador.add(jugador.disparar());
                 botonDispararPulsado = false;
             }
 

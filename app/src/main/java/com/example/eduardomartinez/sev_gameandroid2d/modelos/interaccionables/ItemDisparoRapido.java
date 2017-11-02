@@ -14,9 +14,9 @@ import com.example.eduardomartinez.sev_gameandroid2d.modelos.Vida;
  * Created by karolmc on 29/10/2017.
  */
 
-public class DisparoRapido extends Interaccionable {
+public class ItemDisparoRapido extends Interaccionable {
 
-    public DisparoRapido(Context context, double x, double y) {
+    public ItemDisparoRapido(Context context, double x, double y) {
         super(context, x, y, 100 , 100);
 
         imagen = CargadorGraficos.cargarDrawable(context, R.drawable.disparo_rapido);

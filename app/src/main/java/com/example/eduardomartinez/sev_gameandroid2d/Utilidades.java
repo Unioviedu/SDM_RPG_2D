@@ -20,7 +20,7 @@ public class Utilidades {
     }
 
     public static int orientacion (double orientacionX, double orientacionY) {
-        int sensibilidad = 25;
+        int sensibilidad = 30;
         int orientacion;
 
         if (orientacionY < sensibilidad && orientacionY > -sensibilidad) {
