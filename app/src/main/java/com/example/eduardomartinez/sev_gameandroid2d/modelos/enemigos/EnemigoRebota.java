@@ -56,7 +56,8 @@ public class EnemigoRebota extends Enemigo {
     }
 
     @Override
-    public DisparoEnemigo disparar(Context context, double posJugadorY, long milisegundos) {
+    public DisparoEnemigo disparar(Context context, double posJugadorX, double posJugadorY,
+                                   long milisegundos) {
         int orientacion;
 
         if (milisegundos - miliSegundosDisparo> cadenciaDisparo
