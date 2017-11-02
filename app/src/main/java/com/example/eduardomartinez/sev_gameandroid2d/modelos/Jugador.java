@@ -131,7 +131,7 @@ public class Jugador extends Modelo {
     }
 
     public DisparoJugador disparar() {
-        return disparoJugador.disparar(orientacionDisparoX, orientacionDisparoY);
+        return disparoJugador.disparar(x, y, orientacionDisparoX, orientacionDisparoY);
     }
 
     public void actualizar (long tiempo) {

@@ -26,7 +26,7 @@ public class DisparoJugadorRapido extends DisparoJugador {
     }
 
     @Override
-    public DisparoJugador disparar(double orientacionX, double orientacionY) {
+    public DisparoJugador disparar(double x, double y, double orientacionX, double orientacionY) {
         return new DisparoJugadorRapido(context, x, y, orientacionX, orientacionY);
     }
 }

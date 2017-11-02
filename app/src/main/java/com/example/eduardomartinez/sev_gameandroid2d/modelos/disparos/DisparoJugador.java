@@ -64,7 +64,7 @@ public abstract class DisparoJugador extends Modelo {
 
     protected abstract void doInicializar();
 
-    public abstract DisparoJugador disparar(double orientacionX, double orientacionY);
+    public abstract DisparoJugador disparar(double x, double y, double orientacionX, double orientacionY);
 
 
 }
