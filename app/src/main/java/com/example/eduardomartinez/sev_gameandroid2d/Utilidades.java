@@ -53,4 +53,38 @@ public class Utilidades {
 
         return orientacion;
     }
+
+    public static int orientacion8Direcciones(double x, double y, double posJugadorX, double posJugadorY) {
+        int orientacion;
+
+        if(posJugadorX == x) {
+            if (posJugadorX > x)
+                orientacion = Jugador.DERECHA;
+            else
+                orientacion = Jugador.IZQUIERDA;
+        }
+
+        else if (posJugadorY == y) {
+            if (posJugadorY > y)
+                orientacion = Jugador.ABAJO;
+            else
+                orientacion = Jugador.ARRIBA;
+        }
+
+        else if (posJugadorX > x) {
+            if (posJugadorY > y)
+                orientacion = Jugador.DERECHA_ABAJO;
+            else
+                orientacion = Jugador.DERECHA_ARRIBA;
+        }
+
+        else {
+            if (posJugadorY > y)
+                orientacion = Jugador.IZQUIERDA_ABAJO;
+            else
+                orientacion = Jugador.IZQUIERDA_ARRIBA;
+        }
+
+        return orientacion;
+    }
 }

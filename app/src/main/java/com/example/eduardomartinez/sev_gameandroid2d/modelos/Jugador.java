@@ -51,10 +51,16 @@ public class Jugador extends Modelo {
     public int orientacion;
     public double orientacionDisparoX;
     public double orientacionDisparoY;
+
     public static final int DERECHA = 1;
-    public static int ARRIBA = 2;
+    public static final int ARRIBA = 2;
     public static final int IZQUIERDA = -1;
     public static final int ABAJO = -2;
+
+    public static final int DERECHA_ARRIBA = 3;
+    public static final int DERECHA_ABAJO = -3;
+    public static final int IZQUIERDA_ARRIBA = 4;
+    public static final int IZQUIERDA_ABAJO = -4;
 
     public DisparoJugador disparoJugador;
     private boolean disparando;

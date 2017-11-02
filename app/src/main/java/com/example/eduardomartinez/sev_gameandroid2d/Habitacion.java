@@ -10,6 +10,7 @@ import android.util.Log;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.DisparoJugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.DisparoEnemigo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.Enemigo;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.EnemigoDisparoDirecciones;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.EnemigoRebota;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.DisparoRapido;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Interaccionable;
@@ -135,6 +136,9 @@ public class Habitacion {
             case '1':
                 enemigos.add(new EnemigoRebota(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
                 return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+            case '2':
+                enemigos.add(new EnemigoDisparoDirecciones(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
+                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
             default:
                 throw new RuntimeException("Tipo de tile incorrecto");
         }
@@ -163,13 +167,13 @@ public class Habitacion {
             for (DisparoJugador disparoJugador: disparosJugador)
                 disparoJugador.dibujar(canvas);
 
-            for (Enemigo enemigo: enemigos)
-                enemigo.dibujar(canvas);
-
             for(DisparoEnemigo disparoEnemigo: disparosEnemigo)
                 disparoEnemigo.dibujar(canvas);
 
             jugador.dibujar(canvas);
+
+            for (Enemigo enemigo: enemigos)
+                enemigo.dibujar(canvas);
 
             if(nivelPausado && jugador.vidasActuales == 0){
                 Drawable hasPerdido = CargadorGraficos.cargarDrawable(context, R.drawable.pantalla_has_perdido);
@@ -252,7 +256,7 @@ public class Habitacion {
             long tiempoDisparo = System.currentTimeMillis();
 
             for (Enemigo enemigo: enemigos) {
-                DisparoEnemigo disparo = enemigo.disparar(context, jugador.y, tiempoDisparo);
+                DisparoEnemigo disparo = enemigo.disparar(context, jugador.x, jugador.y, tiempoDisparo);
 
                 if (disparo != null)
                     disparosEnemigo.add(disparo);
@@ -265,9 +269,9 @@ public class Habitacion {
             /*for (Enemigo enemigo: enemigos)
                 enemigo.actualizar(tiempo);*/
 
+            aplicarReglasDisparoEnemigo();
             aplicarReglasMoviemiento();
             aplicarReglasDisparoJugador();
-            aplicarReglasDisparoEnemigo();
         }
     }
 
