@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.Escudo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Vida;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.controles.PadMovimiento;
@@ -32,6 +33,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     private PadMovimiento padDisparo;
 
     public List<Vida> vidas;
+    public Escudo escudo;
 
     public GameView(Context context) {
         super(context);
@@ -190,6 +192,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
             vidas.add(new Vida(context, posX + i*70, posY));
         }
 
+        escudo = new Escudo(context, 0.05 * GameView.pantallaAncho + (getHabitacionActual().jugador.vidasTotales)*70, 0.05 * GameView.pantallaAlto);
+
     }
 
     public void actualizar(long tiempo) throws Exception {
@@ -214,6 +218,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
                     vidas.get(i).dibujar(canvas);
                 }
             }
+            if(getHabitacionActual().jugador.escudo){
+                escudo.dibujar(canvas);
+            }
+
         }
 
     }

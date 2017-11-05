@@ -7,18 +7,19 @@ import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.GameView;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.Escudo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Vida;
 
 /**
  * Created by karolmc on 29/10/2017.
  */
 
-public class ItemVidaExtra extends Interaccionable {
+public class ItemEscudo extends Interaccionable {
 
-    public ItemVidaExtra(Context context, double x, double y) {
+    public ItemEscudo(Context context, double x, double y) {
         super(context, x, y, 100 , 100);
 
-        imagen = CargadorGraficos.cargarDrawable(context, R.drawable.item_vida_extra);
+        imagen = CargadorGraficos.cargarDrawable(context, R.drawable.escudo_item);
     }
 
     @Override
@@ -33,10 +34,8 @@ public class ItemVidaExtra extends Interaccionable {
 
     @Override
     public boolean activarItem(Habitacion habitacion){
-        habitacion.jugador.vidasTotales++;
-        habitacion.jugador.vidasActuales++;
+        habitacion.jugador.escudo = true;
         habitacion.gameView.escudo.x = 0.05 * GameView.pantallaAncho + (habitacion.jugador.vidasTotales)*70;
-        habitacion.gameView.vidas.add(new Vida(habitacion.gameView.context, 0.05 * GameView.pantallaAncho + (habitacion.jugador.vidasTotales-1)*70, 0.05 * GameView.pantallaAlto));
         return true;
     }
 }

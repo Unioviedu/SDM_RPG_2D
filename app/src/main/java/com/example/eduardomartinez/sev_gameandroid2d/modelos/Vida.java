@@ -16,6 +16,7 @@ public class Vida extends Modelo {
     public static final String VIDA_LLENA = "vida_llena";
     public static final String VIDA_VACIA = "vida_vacia";
 
+
     private HashMap<String, Drawable> iconos = new HashMap<>();
 
     public Vida(Context context, double x, double y, int altura, int ancho) {

@@ -14,6 +14,7 @@ import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.Estados;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemDisparoRapido;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Interaccionable;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemEscudo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemPasarHabitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Pinchos;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemVidaExtra;
@@ -143,6 +144,9 @@ public class Habitacion {
             case 'O':
                 puerta = new ItemPasarHabitacion(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2);
                 interaccionables.add(puerta);
+                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+            case 'E':
+                interaccionables.add(new ItemEscudo(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
                 return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
             case '2':
                 enemigos.add(new EnemigoDisparoDirecciones(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));

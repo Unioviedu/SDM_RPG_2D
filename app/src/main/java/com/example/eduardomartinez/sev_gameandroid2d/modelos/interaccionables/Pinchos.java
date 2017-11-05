@@ -33,6 +33,7 @@ public class Pinchos extends Interaccionable {
     public boolean activarItem(Habitacion habitacion){
         if(habitacion.jugador.golpeado() <= 0)
             habitacion.nivelPausado = true;
+        habitacion.pausadoStatus = Habitacion.PERDIDO;
         return false;
     }
 }
