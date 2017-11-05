@@ -206,7 +206,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
             padMovimiento.dibujar(canvas);
 
             for (int i = 0; i < getHabitacionActual().jugador.vidasTotales; i++) {
-                Log.d("vidas", "vidas totales "+getHabitacionActual().jugador.vidasTotales+" vidas actuales "+getHabitacionActual().jugador.vidasActuales);
                 if (i < getHabitacionActual().jugador.vidasActuales) {
                     vidas.get(i).setVidaLlena();
                     vidas.get(i).dibujar(canvas);
@@ -259,18 +258,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     }
 
     public Habitacion habitacionCompleta(){
-        Jugador jugador = getHabitacionActual().jugador;
-        habitacionActual++;
-        getHabitacionActual().jugador = jugador;
-        return getHabitacionActual();
-    }
-
-    public void nivelCompleto() throws Exception {
-
-        if (habitacionActual < habitaciones.size()){ // Número Máximo de Nivel
+        if(habitacionActual+1 < GestorNivel.getInstance().longitudJuego) {
+            Jugador jugador = getHabitacionActual().jugador;
             habitacionActual++;
+            getHabitacionActual().gameView = this;
+            getHabitacionActual().jugador = jugador;
+            return getHabitacionActual();
         } else {
-            habitacionActual = 0;
+            getHabitacionActual().nivelPausado = true;
+            getHabitacionActual().pausadoStatus = Habitacion.GANADO;
+            return getHabitacionActual();
         }
     }
 

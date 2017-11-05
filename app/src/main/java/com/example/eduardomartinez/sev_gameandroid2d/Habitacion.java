@@ -48,6 +48,9 @@ public class Habitacion {
     public boolean botonDispararPulsado;
 
     public boolean nivelPausado;
+    public int pausadoStatus;
+    public final static int GANADO = 1;
+    public final static int PERDIDO = 2;
 
     public float orientacionPadMoverX;
     public float orientacionPadMoverY;
@@ -140,6 +143,7 @@ public class Habitacion {
             case 'O':
                 puerta = new ItemPasarHabitacion(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2);
                 interaccionables.add(puerta);
+                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
             case '2':
                 enemigos.add(new EnemigoDisparoDirecciones(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
                 return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
@@ -155,8 +159,10 @@ public class Habitacion {
             for(Enemigo enemigo: enemigos) {
                 enemigo.aplicarReglasMovimiento(this);
                 if(enemigo.colisiona(jugador))
-                    if(jugador.golpeado() <= 0)
+                    if(jugador.golpeado() <= 0) {
                         nivelPausado = true;
+                        pausadoStatus = PERDIDO;
+                    }
             }
             if(enemigos.isEmpty()){
                 puerta.activa = true;
@@ -182,13 +188,27 @@ public class Habitacion {
             for (Enemigo enemigo: enemigos)
                 enemigo.dibujar(canvas);
 
-            if(nivelPausado && jugador.vidasActuales == 0){
-                Drawable hasPerdido = CargadorGraficos.cargarDrawable(context, R.drawable.pantalla_has_perdido);
-                hasPerdido.setBounds((int)(GameView.pantallaAncho/2 - 480),
-                        (int)(GameView.pantallaAlto/2 - 320),
-                        (int)(GameView.pantallaAncho/2 + 480),
-                        (int)(GameView.pantallaAlto/2 + 320));
-                hasPerdido.draw(canvas);
+            if(nivelPausado){
+                switch (pausadoStatus) {
+                    case PERDIDO:
+                        Drawable hasPerdido = CargadorGraficos.cargarDrawable(context, R.drawable.pantalla_has_perdido);
+                        hasPerdido.setBounds((int) (GameView.pantallaAncho / 2 - 480),
+                                (int) (GameView.pantallaAlto / 2 - 320),
+                                (int) (GameView.pantallaAncho / 2 + 480),
+                                (int) (GameView.pantallaAlto / 2 + 320));
+                        hasPerdido.draw(canvas);
+                        break;
+                    case GANADO:
+                        Drawable hasGanado = CargadorGraficos.cargarDrawable(context, R.drawable.pantalla_has_ganado);
+                        hasGanado.setBounds((int) (GameView.pantallaAncho / 2 - 480),
+                                (int) (GameView.pantallaAlto / 2 - 320),
+                                (int) (GameView.pantallaAncho / 2 + 480),
+                                (int) (GameView.pantallaAlto / 2 + 320));
+                        hasGanado.draw(canvas);
+                        break;
+                    default:
+                        throw new RuntimeException("Juego pausado con motivo incorrecto");
+                }
             }
         }
     }

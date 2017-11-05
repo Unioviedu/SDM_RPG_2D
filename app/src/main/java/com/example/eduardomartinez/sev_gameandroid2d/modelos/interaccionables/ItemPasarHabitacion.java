@@ -2,6 +2,7 @@ package com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.Log;
 
 import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.GameView;
