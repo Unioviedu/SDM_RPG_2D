@@ -35,13 +35,14 @@ public class DisparoEnemigoRebota extends DisparoEnemigo {
 
     }
 
-    public void actualizar(long tiempo) {
-        sprite.actualizar(tiempo);
-    }
-
     @Override
     public void dibujar(Canvas canvas) {
         sprite.dibujarSprite(canvas, (int) x - Habitacion.scrollEjeX, (int) y - Habitacion.scrollEjeY);
+    }
+
+    @Override
+    public void rebota(Habitacion habitacion) {
+
     }
 
 

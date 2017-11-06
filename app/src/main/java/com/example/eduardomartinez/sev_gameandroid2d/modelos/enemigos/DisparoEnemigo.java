@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 
 import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
+import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
 import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Modelo;
@@ -13,9 +14,11 @@ import com.example.eduardomartinez.sev_gameandroid2d.modelos.Modelo;
  */
 
 public abstract class DisparoEnemigo extends Modelo {
-    private Sprite sprite;
+    public Sprite sprite;
     public double velocidadX;
     public double velocidadY;
+
+    public boolean rebota = false;
 
     public DisparoEnemigo(Context context, double x, double y) {
         super(context, x, y, 110, 110);
@@ -33,4 +36,6 @@ public abstract class DisparoEnemigo extends Modelo {
     }
 
     public abstract void dibujar(Canvas canvas);
+
+    public abstract void rebota(Habitacion habitacion);
 }
