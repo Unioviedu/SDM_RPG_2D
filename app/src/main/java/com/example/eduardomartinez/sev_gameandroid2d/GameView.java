@@ -22,6 +22,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     boolean iniciado = false;
     public Context context;
     public GameLoop gameloop;
+    public GestorAudio gestorAudio;
 
     public static int pantallaAncho;
     public static int pantallaAlto;
@@ -43,8 +44,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
         setFocusable(true);
 
         this.context = context;
+
+        inicializarGestorAudio(context);
         gameloop = new GameLoop(this);
         gameloop.setRunning(true);
+    }
+
+    public void inicializarGestorAudio(Context context) {
+        gestorAudio = GestorAudio.getInstancia(context, R.raw.musica_ambiente);
+        gestorAudio.reproducirMusicaAmbiente();
     }
 
     public Habitacion getHabitacionActual(){
