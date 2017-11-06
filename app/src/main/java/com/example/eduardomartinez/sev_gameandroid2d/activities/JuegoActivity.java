@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.eduardomartinez.sev_gameandroid2d.GameView;
+import com.example.eduardomartinez.sev_gameandroid2d.GestorAudio;
 
 public class JuegoActivity extends Activity {
 
@@ -42,5 +43,20 @@ public class JuegoActivity extends Activity {
             gameView.gameloop.setRunning(false);
             gameView = null;
         }
+    }
+
+    @Override
+    protected void onPause() {
+        if (GestorAudio.getInstancia() != null){
+            GestorAudio.getInstancia().pararMusicaAmbiente();
+        }
+        super.onPause();
+    }
+    @Override
+    protected void onResume() {
+        if (GestorAudio.getInstancia() != null){
+            GestorAudio.getInstancia().reproducirMusicaAmbiente();
+        }
+        super.onResume();
     }
 }

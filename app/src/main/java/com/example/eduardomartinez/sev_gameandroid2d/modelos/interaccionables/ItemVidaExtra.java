@@ -35,6 +35,7 @@ public class ItemVidaExtra extends Interaccionable {
     public boolean activarItem(Habitacion habitacion){
         habitacion.jugador.vidasTotales++;
         habitacion.jugador.vidasActuales++;
+        habitacion.gameView.escudo.x = 0.05 * GameView.pantallaAncho + (habitacion.jugador.vidasTotales)*70;
         habitacion.gameView.vidas.add(new Vida(habitacion.gameView.context, 0.05 * GameView.pantallaAncho + (habitacion.jugador.vidasTotales-1)*70, 0.05 * GameView.pantallaAlto));
         return true;
     }

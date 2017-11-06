@@ -15,6 +15,7 @@ import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.Estados;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemDisparoRapido;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Interaccionable;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
+//import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemEscudo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemPasarHabitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Pinchos;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemVidaExtra;
@@ -49,6 +50,9 @@ public class Habitacion {
     public boolean botonDispararPulsado;
 
     public boolean nivelPausado;
+    public int pausadoStatus;
+    public final static int GANADO = 1;
+    public final static int PERDIDO = 2;
 
     public float orientacionPadMoverX;
     public float orientacionPadMoverY;
@@ -141,6 +145,10 @@ public class Habitacion {
             case 'O':
                 puerta = new ItemPasarHabitacion(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2);
                 interaccionables.add(puerta);
+                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+            case 'E':
+               // interaccionables.add(new ItemEscudo(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
+                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
             case '2':
                 enemigos.add(new EnemigoDisparoDirecciones(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
                 return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
@@ -159,8 +167,8 @@ public class Habitacion {
             for(Enemigo enemigo: enemigos) {
                 enemigo.aplicarReglasMovimiento(this);
                 if(enemigo.colisiona(jugador))
-                    if(jugador.golpeado() <= 0)
-                        nivelPausado = true;
+                    jugador.golpeado();
+
             }
             if(enemigos.isEmpty()){
                 puerta.activa = true;
@@ -186,13 +194,27 @@ public class Habitacion {
             for (Enemigo enemigo: enemigos)
                 enemigo.dibujar(canvas);
 
-            if(nivelPausado && jugador.vidasActuales == 0){
-                Drawable hasPerdido = CargadorGraficos.cargarDrawable(context, R.drawable.pantalla_has_perdido);
-                hasPerdido.setBounds((int)(GameView.pantallaAncho/2 - 480),
-                        (int)(GameView.pantallaAlto/2 - 320),
-                        (int)(GameView.pantallaAncho/2 + 480),
-                        (int)(GameView.pantallaAlto/2 + 320));
-                hasPerdido.draw(canvas);
+            if(nivelPausado){
+                switch (pausadoStatus) {
+                    case PERDIDO:
+                        Drawable hasPerdido = CargadorGraficos.cargarDrawable(context, R.drawable.pantalla_has_perdido);
+                        hasPerdido.setBounds((int) (GameView.pantallaAncho / 2 - 480),
+                                (int) (GameView.pantallaAlto / 2 - 320),
+                                (int) (GameView.pantallaAncho / 2 + 480),
+                                (int) (GameView.pantallaAlto / 2 + 320));
+                        hasPerdido.draw(canvas);
+                        break;
+                    case GANADO:
+                        /*Drawable hasGanado = CargadorGraficos.cargarDrawable(context, R.drawable.pantalla_has_ganado);
+                        hasGanado.setBounds((int) (GameView.pantallaAncho / 2 - 480),
+                                (int) (GameView.pantallaAlto / 2 - 320),
+                                (int) (GameView.pantallaAncho / 2 + 480),
+                                (int) (GameView.pantallaAlto / 2 + 320));
+                        hasGanado.draw(canvas);*/
+                        break;
+                    default:
+                        throw new RuntimeException("Juego pausado con motivo incorrecto");
+                }
             }
         }
     }
@@ -279,6 +301,11 @@ public class Habitacion {
 
                 if (disparo != null)
                     disparosEnemigo.add(disparo);
+
+                if(jugador.vidasActuales <= 0) {
+                    nivelPausado = true;
+                    pausadoStatus = PERDIDO;
+                }
             }
 
             /*for (DisparoEnemigo disparoEnemigo : disparosEnemigo) {
@@ -467,7 +494,7 @@ public class Habitacion {
 
             DisparoEnemigo disparoEnemigo = iterator.next();
 
-            if(disparoEnemigo.colisiona(jugador)){
+            if(disparoEnemigo.colisiona(jugador) && jugador.msInmunidad <= 0){
                 jugador.golpeado();
                 iterator.remove();
                 continue;

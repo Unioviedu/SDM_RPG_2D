@@ -72,6 +72,7 @@ public class Jugador extends Modelo {
 
     public int vidasTotales;
     public int vidasActuales;
+    public boolean escudo;
     public double msInmunidad = 0;
 
     public Jugador(Context context, double xInicial, double yInicial) {
@@ -164,16 +165,21 @@ public class Jugador extends Modelo {
 
     public int golpeado(){
         if (msInmunidad <= 0) {
-            if (vidasActuales > 0) {
-                vidasActuales--;
-                msInmunidad = 3000;
-                golpeado = true;
-                // Reiniciar animaciones que no son bucle
-                sprites.get(GOLPEADO_IZQUIERDA).setFrameActual(0);
-                sprites.get(GOLPEADO_DERECHA).setFrameActual(0);
-                sprites.get(GOLPEADO_ARRIBA).setFrameActual(0);
-                sprites.get(GOLPEADO_ABAJO).setFrameActual(0);
+            if(escudo){
+                escudo = false;
+            } else {
+                if (vidasActuales > 0) {
+                    vidasActuales--;
+                    msInmunidad = 3000;
+                    golpeado = true;
+                    // Reiniciar animaciones que no son bucle
+                    sprites.get(GOLPEADO_IZQUIERDA).setFrameActual(0);
+                    sprites.get(GOLPEADO_DERECHA).setFrameActual(0);
+                    sprites.get(GOLPEADO_ARRIBA).setFrameActual(0);
+                    sprites.get(GOLPEADO_ABAJO).setFrameActual(0);
+                }
             }
+
         }
         return vidasActuales;
     }

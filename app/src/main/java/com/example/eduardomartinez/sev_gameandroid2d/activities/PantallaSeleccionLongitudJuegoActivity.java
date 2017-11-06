@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.eduardomartinez.sev_gameandroid2d.GestorAudio;
 import com.example.eduardomartinez.sev_gameandroid2d.GestorNivel;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
 
@@ -43,5 +44,20 @@ public class PantallaSeleccionLongitudJuegoActivity extends Activity {
 
         Intent actividadJuego = new Intent(PantallaSeleccionLongitudJuegoActivity.this, JuegoActivity.class);
         startActivity(actividadJuego);
+    }
+
+    @Override
+    protected void onPause() {
+        if (GestorAudio.getInstancia() != null){
+            GestorAudio.getInstancia().pararMusicaAmbiente();
+        }
+        super.onPause();
+    }
+    @Override
+    protected void onResume() {
+        if (GestorAudio.getInstancia() != null){
+            GestorAudio.getInstancia().reproducirMusicaAmbiente();
+        }
+        super.onResume();
     }
 }

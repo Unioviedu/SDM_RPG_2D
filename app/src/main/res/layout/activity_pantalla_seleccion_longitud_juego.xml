@@ -11,7 +11,7 @@
         android:id="@+id/boton_3"
         android:layout_width="521dp"
         android:layout_height="98dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginBottom="-1dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:background="@android:color/transparent"
@@ -21,9 +21,10 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@drawable/boton_3"
-        tools:layout_editor_absoluteX="226dp"
-        tools:layout_editor_absoluteY="169dp"
-        app:layout_constraintHorizontal_bias="0.501" />
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
         android:id="@+id/boton_5"

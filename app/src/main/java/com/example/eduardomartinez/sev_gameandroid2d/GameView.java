@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.Escudo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Vida;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.controles.PadMovimiento;
@@ -21,6 +22,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     boolean iniciado = false;
     public Context context;
     public GameLoop gameloop;
+    public GestorAudio gestorAudio;
 
     public static int pantallaAncho;
     public static int pantallaAlto;
@@ -32,6 +34,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     private PadMovimiento padDisparo;
 
     public List<Vida> vidas;
+    public Escudo escudo;
 
     public GameView(Context context) {
         super(context);
@@ -41,8 +44,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
         setFocusable(true);
 
         this.context = context;
+
+        inicializarGestorAudio(context);
         gameloop = new GameLoop(this);
         gameloop.setRunning(true);
+    }
+
+    public void inicializarGestorAudio(Context context) {
+        gestorAudio = GestorAudio.getInstancia(context, R.raw.musica_ambiente);
+        gestorAudio.reproducirMusicaAmbiente();
     }
 
     public Habitacion getHabitacionActual(){
@@ -190,6 +200,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
             vidas.add(new Vida(context, posX + i*70, posY));
         }
 
+        escudo = new Escudo(context, 0.05 * GameView.pantallaAncho + (getHabitacionActual().jugador.vidasTotales)*70, 0.05 * GameView.pantallaAlto);
+
     }
 
     public void actualizar(long tiempo) throws Exception {
@@ -206,7 +218,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
             padMovimiento.dibujar(canvas);
 
             for (int i = 0; i < getHabitacionActual().jugador.vidasTotales; i++) {
-                Log.d("vidas", "vidas totales "+getHabitacionActual().jugador.vidasTotales+" vidas actuales "+getHabitacionActual().jugador.vidasActuales);
                 if (i < getHabitacionActual().jugador.vidasActuales) {
                     vidas.get(i).setVidaLlena();
                     vidas.get(i).dibujar(canvas);
@@ -215,6 +226,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
                     vidas.get(i).dibujar(canvas);
                 }
             }
+            if(getHabitacionActual().jugador.escudo){
+                escudo.dibujar(canvas);
+            }
+
         }
 
     }
@@ -259,18 +274,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback  {
     }
 
     public Habitacion habitacionCompleta(){
-        Jugador jugador = getHabitacionActual().jugador;
-        habitacionActual++;
-        getHabitacionActual().jugador = jugador;
-        return getHabitacionActual();
-    }
-
-    public void nivelCompleto() throws Exception {
-
-        if (habitacionActual < habitaciones.size()){ // Número Máximo de Nivel
+        if(habitacionActual+1 < GestorNivel.getInstance().longitudJuego) {
+            Jugador jugador = getHabitacionActual().jugador;
             habitacionActual++;
+            getHabitacionActual().gameView = this;
+            getHabitacionActual().jugador = jugador;
+            return getHabitacionActual();
         } else {
-            habitacionActual = 0;
+            getHabitacionActual().nivelPausado = true;
+            getHabitacionActual().pausadoStatus = Habitacion.GANADO;
+            return getHabitacionActual();
         }
     }
 
