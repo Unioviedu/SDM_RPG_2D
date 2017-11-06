@@ -147,7 +147,7 @@ public class Habitacion {
                 interaccionables.add(puerta);
                 return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
             case 'E':
-               // interaccionables.add(new ItemEscudo(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
+                interaccionables.add(new ItemEscudo(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
                 return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
             case '2':
                 enemigos.add(new EnemigoDisparoDirecciones(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));

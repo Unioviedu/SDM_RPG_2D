@@ -15,8 +15,8 @@ public class Tile {
     public static final int DESTRUIBLE = 2;
     public static final int PINCHOS = 3;
 
-    public static int ancho = 100;
-    public static int altura = 100;
+    public static int ancho = GameView.pantallaAncho/10;
+    public static int altura = GameView.pantallaAncho/10;
 
     public int tipoDeColision;
 

@@ -21,6 +21,8 @@ public abstract class DisparoJugador extends Modelo {
     double orientacionX;
     double orientacionY;
 
+    public boolean rebota = false;
+
 
     public DisparoJugador(Context context, double x, double y, double orientacionX, double orientacionY) {
         super(context, x, y, 100, 100);

@@ -3,6 +3,7 @@ package com.example.eduardomartinez.sev_gameandroid2d.modelos;
 import android.content.Context;
 import android.graphics.Canvas;
 
+import com.example.eduardomartinez.sev_gameandroid2d.Ar;
 import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
@@ -76,7 +77,7 @@ public class Jugador extends Modelo {
     public double msInmunidad = 0;
 
     public Jugador(Context context, double xInicial, double yInicial) {
-        super(context, xInicial, yInicial, 59*2, 50*2);
+        super(context, xInicial, yInicial, Ar.coor(1.2), Ar.coor(1));
 
         this.xInicial = xInicial;
         this.yInicial = yInicial;

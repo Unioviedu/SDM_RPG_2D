@@ -2,6 +2,7 @@ package com.example.eduardomartinez.sev_gameandroid2d.modelos.controles;
 
 import android.content.Context;
 
+import com.example.eduardomartinez.sev_gameandroid2d.Ar;
 import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.GameView;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
@@ -15,14 +16,14 @@ public class PadMovimiento extends Modelo {
 
     public PadMovimiento(Context context) {
         super(context, GameView.pantallaAncho*0.15 , GameView.pantallaAlto*0.8,
-                280,280);
+                Ar.coor(2.5), Ar.coor(2.5));
 
         imagen = CargadorGraficos.cargarDrawable(context, R.drawable.pad);
     }
 
     public PadMovimiento(Context context, double posX, double posY) {
         super(context, posX , posY,
-                280,280);
+                Ar.coor(2.5), Ar.coor(2.5));
 
         imagen = CargadorGraficos.cargarDrawable(context, R.drawable.pad);
     }
