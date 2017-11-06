@@ -163,10 +163,8 @@ public class Habitacion {
             for(Enemigo enemigo: enemigos) {
                 enemigo.aplicarReglasMovimiento(this);
                 if(enemigo.colisiona(jugador))
-                    if(jugador.golpeado() <= 0) {
-                        nivelPausado = true;
-                        pausadoStatus = PERDIDO;
-                    }
+                    jugador.golpeado();
+
             }
             if(enemigos.isEmpty()){
                 puerta.activa = true;
@@ -299,6 +297,11 @@ public class Habitacion {
 
                 if (disparo != null)
                     disparosEnemigo.add(disparo);
+
+                if(jugador.vidasActuales <= 0) {
+                    nivelPausado = true;
+                    pausadoStatus = PERDIDO;
+                }
             }
 
             /*for (DisparoEnemigo disparoEnemigo : disparosEnemigo) {
@@ -487,7 +490,7 @@ public class Habitacion {
 
             DisparoEnemigo disparoEnemigo = iterator.next();
 
-            if(disparoEnemigo.colisiona(jugador)){
+            if(disparoEnemigo.colisiona(jugador) && jugador.msInmunidad <= 0){
                 jugador.golpeado();
                 iterator.remove();
                 continue;
