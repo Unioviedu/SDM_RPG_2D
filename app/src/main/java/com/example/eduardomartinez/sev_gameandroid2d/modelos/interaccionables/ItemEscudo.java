@@ -14,7 +14,7 @@ import com.example.eduardomartinez.sev_gameandroid2d.modelos.Vida;
  * Created by karolmc on 29/10/2017.
  */
 
-public class ItemEscudo extends Interaccionable {
+public class ItemEscudo extends Interaccionable  {
 
     public ItemEscudo(Context context, double x, double y) {
         super(context, x, y, 100 , 100);
