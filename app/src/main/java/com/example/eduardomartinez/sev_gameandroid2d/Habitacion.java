@@ -15,7 +15,7 @@ import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.Estados;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemDisparoRapido;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Interaccionable;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
-//import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemEscudo;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemEscudo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemPasarHabitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Pinchos;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemVidaExtra;
@@ -205,12 +205,12 @@ public class Habitacion {
                         hasPerdido.draw(canvas);
                         break;
                     case GANADO:
-                        /*Drawable hasGanado = CargadorGraficos.cargarDrawable(context, R.drawable.pantalla_has_ganado);
+                        Drawable hasGanado = CargadorGraficos.cargarDrawable(context, R.drawable.pantalla_has_ganado);
                         hasGanado.setBounds((int) (GameView.pantallaAncho / 2 - 480),
                                 (int) (GameView.pantallaAlto / 2 - 320),
                                 (int) (GameView.pantallaAncho / 2 + 480),
                                 (int) (GameView.pantallaAlto / 2 + 320));
-                        hasGanado.draw(canvas);*/
+                        hasGanado.draw(canvas);
                         break;
                     default:
                         throw new RuntimeException("Juego pausado con motivo incorrecto");
