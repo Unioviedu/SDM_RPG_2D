@@ -15,8 +15,10 @@ import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.Estados;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemDisparoRapido;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Interaccionable;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemDisparoRebota;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemEscudo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemPasarHabitacion;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemRecuperarVida;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.Pinchos;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables.ItemVidaExtra;
 
@@ -136,8 +138,14 @@ public class Habitacion {
             case 'V':
                 interaccionables.add(new ItemVidaExtra(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
                 return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+            case 'H':
+                interaccionables.add(new ItemRecuperarVida(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
+                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
             case 'R':
                 interaccionables.add(new ItemDisparoRapido(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
+                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+            case 'B':
+                interaccionables.add(new ItemDisparoRebota(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
                 return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
             case '1':
                 enemigos.add(new EnemigoRebota(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 
+import com.example.eduardomartinez.sev_gameandroid2d.Ar;
 import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.GameView;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 public class Escudo extends Modelo {
 
     public Escudo(Context context, double x, double y, int altura, int ancho) {
-        super(context, x, y, altura, ancho);
+        super(context, x, y, Ar.coor(0.4), Ar.coor(0.4));
 
         imagen = CargadorGraficos.cargarDrawable(context, R.drawable.escudo);
     }

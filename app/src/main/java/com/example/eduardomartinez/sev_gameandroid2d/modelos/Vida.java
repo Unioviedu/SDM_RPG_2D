@@ -3,6 +3,7 @@ package com.example.eduardomartinez.sev_gameandroid2d.modelos;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+import com.example.eduardomartinez.sev_gameandroid2d.Ar;
 import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
 
@@ -20,7 +21,7 @@ public class Vida extends Modelo {
     private HashMap<String, Drawable> iconos = new HashMap<>();
 
     public Vida(Context context, double x, double y, int altura, int ancho) {
-        super(context, x, y, altura, ancho);
+        super(context, x, y, Ar.coor(0.4), Ar.coor(0.4));
         iconos.put(VIDA_LLENA, CargadorGraficos.cargarDrawable(context, R.drawable.vida_llena));
         iconos.put(VIDA_VACIA, CargadorGraficos.cargarDrawable(context, R.drawable.vida_vacia));
 

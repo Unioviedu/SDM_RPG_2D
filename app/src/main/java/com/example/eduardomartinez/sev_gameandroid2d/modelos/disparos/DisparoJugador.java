@@ -3,6 +3,7 @@ package com.example.eduardomartinez.sev_gameandroid2d.modelos.disparos;
 import android.content.Context;
 import android.graphics.Canvas;
 
+import com.example.eduardomartinez.sev_gameandroid2d.Ar;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.Utilidades;
 import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
@@ -25,7 +26,7 @@ public abstract class DisparoJugador extends Modelo {
 
 
     public DisparoJugador(Context context, double x, double y, double orientacionX, double orientacionY) {
-        super(context, x, y, 100, 100);
+        super(context, x, y, Ar.coor(1), Ar.coor(1));
 
         cArriba = 6;
         cAbajo = 6;
