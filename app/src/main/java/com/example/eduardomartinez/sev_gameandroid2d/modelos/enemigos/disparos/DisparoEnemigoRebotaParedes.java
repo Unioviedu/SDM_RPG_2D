@@ -1,28 +1,42 @@
-package com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos;
+package com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.disparos;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.util.Log;
 
 import com.example.eduardomartinez.sev_gameandroid2d.gestores.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
 import com.example.eduardomartinez.sev_gameandroid2d.Tile;
 import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.disparos.DisparoEnemigo;
 
 /**
  * Created by eduardomartinez on 6/11/17.
  */
 
 public class DisparoEnemigoRebotaParedes extends DisparoEnemigo {
-    private double velocidad = 10;
+    private double velocidad = 18;
     int cont = 0;
 
-    public DisparoEnemigoRebotaParedes(Context context, double x, double y) {
+    public static int MAX_NUMERO_REBOTES = 5;
+
+    public DisparoEnemigoRebotaParedes(Context context, double x, double y, int orientacion) {
         super(context, x, y);
 
-        velocidadX = velocidad;
-        velocidadY = velocidad;
+        if (orientacion == Jugador.DERECHA_ABAJO) {
+            velocidadX = velocidad;
+            velocidadY = velocidad;
+        } else if (orientacion == Jugador.DERECHA_ARRIBA) {
+            velocidadX = velocidad;
+            velocidadY = -velocidad;
+        } else if (orientacion == Jugador.IZQUIERDA_ABAJO) {
+            velocidadX = -velocidad;
+            velocidadY = velocidad;
+        } else if (orientacion == Jugador.IZQUIERDA_ARRIBA) {
+            velocidadX = -velocidad;
+            velocidadY = -velocidad;
+        }
 
         rebota = true;
 
@@ -52,8 +66,6 @@ public class DisparoEnemigoRebotaParedes extends DisparoEnemigo {
         double distanciaIzquierda = Math.abs(0-x);
         double distanciaDerecha = anchuraHabitacion - x;
 
-        Log.i("distancia", "arriba "+distanciaArriba+" abajo "+distanciaAbajo+" derecha "+distanciaDerecha+ " izquierda "+distanciaIzquierda);
-
         if (x > anchuraHabitacion/2) {
             if (y > alturaHabitacion/2) {
                 if (distanciaDerecha < distanciaAbajo)
@@ -79,6 +91,11 @@ public class DisparoEnemigoRebotaParedes extends DisparoEnemigo {
                     paredArribaAbajo();
             }
         }
+
+        cont++;
+
+        if (cont >= MAX_NUMERO_REBOTES)
+            rebota = false;
     }
 
     private void paredArribaAbajo() {

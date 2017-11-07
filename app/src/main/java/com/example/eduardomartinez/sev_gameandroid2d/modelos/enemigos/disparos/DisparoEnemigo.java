@@ -1,4 +1,4 @@
-package com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos;
+package com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.disparos;
 
 import android.content.Context;
 import android.graphics.Canvas;
