@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.example.eduardomartinez.sev_gameandroid2d.GestorAudio;
-import com.example.eduardomartinez.sev_gameandroid2d.GestorNivel;
+import com.example.eduardomartinez.sev_gameandroid2d.gestores.GestorAudio;
+import com.example.eduardomartinez.sev_gameandroid2d.gestores.GestorNivel;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
 
 public class PantallaSeleccionLongitudJuegoActivity extends Activity {

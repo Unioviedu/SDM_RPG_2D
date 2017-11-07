@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
+import com.example.eduardomartinez.sev_gameandroid2d.gestores.CargadorGraficos;
+import com.example.eduardomartinez.sev_gameandroid2d.gestores.GestorAudio;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.disparos.DisparoJugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.DisparoEnemigo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.Enemigo;
@@ -291,6 +293,7 @@ public class Habitacion {
 
             if (botonDispararPulsado) {
                 disparosJugador.add(jugador.disparar());
+                GestorAudio.getInstancia().reproducirSonido(1);
                 botonDispararPulsado = false;
             }
 

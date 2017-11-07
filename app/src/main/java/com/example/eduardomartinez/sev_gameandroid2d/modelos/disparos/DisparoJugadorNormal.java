@@ -2,9 +2,8 @@ package com.example.eduardomartinez.sev_gameandroid2d.modelos.disparos;
 
 import android.content.Context;
 
-import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
+import com.example.eduardomartinez.sev_gameandroid2d.gestores.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
-import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
 
 /**
  * Created by eduardomartinez on 25/10/17.

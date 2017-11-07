@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.eduardomartinez.sev_gameandroid2d.gestores.GestorAudio;
+import com.example.eduardomartinez.sev_gameandroid2d.gestores.GestorNivel;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Escudo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Vida;

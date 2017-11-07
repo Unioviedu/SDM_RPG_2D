@@ -1,6 +1,8 @@
-package com.example.eduardomartinez.sev_gameandroid2d;
+package com.example.eduardomartinez.sev_gameandroid2d.gestores;
 
 import android.content.Context;
+
+import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

@@ -1,4 +1,4 @@
-package com.example.eduardomartinez.sev_gameandroid2d;
+package com.example.eduardomartinez.sev_gameandroid2d.gestores;
 
 import android.content.Context;
 import android.graphics.Bitmap;

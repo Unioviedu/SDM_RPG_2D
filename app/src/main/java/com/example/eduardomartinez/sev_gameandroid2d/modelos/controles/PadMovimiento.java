@@ -3,7 +3,7 @@ package com.example.eduardomartinez.sev_gameandroid2d.modelos.controles;
 import android.content.Context;
 
 import com.example.eduardomartinez.sev_gameandroid2d.Ar;
-import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
+import com.example.eduardomartinez.sev_gameandroid2d.gestores.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.GameView;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Modelo;

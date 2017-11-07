@@ -3,7 +3,7 @@ package com.example.eduardomartinez.sev_gameandroid2d;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
-import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
+import com.example.eduardomartinez.sev_gameandroid2d.gestores.CargadorGraficos;
 
 /**
  * Created by karolmc on 24/10/2017.

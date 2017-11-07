@@ -3,12 +3,10 @@ package com.example.eduardomartinez.sev_gameandroid2d.modelos.interaccionables;
 import android.content.Context;
 import android.graphics.Canvas;
 
-import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
+import com.example.eduardomartinez.sev_gameandroid2d.gestores.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.GameView;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
-import com.example.eduardomartinez.sev_gameandroid2d.modelos.Escudo;
-import com.example.eduardomartinez.sev_gameandroid2d.modelos.Vida;
 
 /**
  * Created by karolmc on 29/10/2017.

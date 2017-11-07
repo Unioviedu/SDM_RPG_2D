@@ -1,9 +1,11 @@
-package com.example.eduardomartinez.sev_gameandroid2d;
+package com.example.eduardomartinez.sev_gameandroid2d.gestores;
 
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+
+import com.example.eduardomartinez.sev_gameandroid2d.R;
 
 import java.util.HashMap;
 
@@ -47,6 +49,7 @@ public class GestorAudio implements MediaPlayer.OnPreparedListener {
         gestorAudio = (AudioManager) contexto
                 .getSystemService(Context.AUDIO_SERVICE);
 
+        registrarSonido(1, R.raw.disparo);
 
         sonidoAmbiente = MediaPlayer.create(contexto, idMusicaAmbiente);
         sonidoAmbiente.setLooping(true);

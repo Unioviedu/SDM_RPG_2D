@@ -3,12 +3,11 @@ package com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos;
 import android.content.Context;
 import android.graphics.Canvas;
 
-import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
+import com.example.eduardomartinez.sev_gameandroid2d.gestores.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
 import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
-import com.example.eduardomartinez.sev_gameandroid2d.modelos.Modelo;
 
 /**
  * Created by eduardomartinez on 29/10/17.

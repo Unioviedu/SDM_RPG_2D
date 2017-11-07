@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 
 import com.example.eduardomartinez.sev_gameandroid2d.Ar;
-import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
+import com.example.eduardomartinez.sev_gameandroid2d.gestores.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
 
 import java.util.HashMap;

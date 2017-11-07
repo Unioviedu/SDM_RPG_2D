@@ -4,13 +4,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
 
-import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
-import com.example.eduardomartinez.sev_gameandroid2d.GameView;
+import com.example.eduardomartinez.sev_gameandroid2d.gestores.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
 import com.example.eduardomartinez.sev_gameandroid2d.Tile;
 import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
-import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
 
 /**
  * Created by eduardomartinez on 6/11/17.

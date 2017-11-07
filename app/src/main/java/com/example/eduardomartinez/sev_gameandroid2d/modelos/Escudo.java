@@ -2,15 +2,10 @@ package com.example.eduardomartinez.sev_gameandroid2d.modelos;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 
 import com.example.eduardomartinez.sev_gameandroid2d.Ar;
-import com.example.eduardomartinez.sev_gameandroid2d.CargadorGraficos;
-import com.example.eduardomartinez.sev_gameandroid2d.GameView;
-import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
+import com.example.eduardomartinez.sev_gameandroid2d.gestores.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
-
-import java.util.HashMap;
 
 /**
  * Created by karolmc on 29/10/2017.

@@ -1,14 +1,13 @@
 package com.example.eduardomartinez.sev_gameandroid2d.activities;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.eduardomartinez.sev_gameandroid2d.GameView;
-import com.example.eduardomartinez.sev_gameandroid2d.GestorAudio;
+import com.example.eduardomartinez.sev_gameandroid2d.gestores.GestorAudio;
 
 public class JuegoActivity extends Activity {
 
