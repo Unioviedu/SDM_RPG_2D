@@ -66,9 +66,12 @@ public class Habitacion {
     public static int scrollEjeY;
     public ItemPasarHabitacion puerta;
 
-    public Habitacion(Context context, int numeroHabitacion) throws Exception {
+    public boolean habitacionJefe;
+
+    public Habitacion(Context context, int numeroHabitacion, boolean habitacionJefe) throws Exception {
         inicializado = false;
 
+        this.habitacionJefe = habitacionJefe;
         this.context = context;
         this.numeroHabitacion = numeroHabitacion;
         inicializar();
@@ -126,45 +129,45 @@ public class Habitacion {
     private Tile inicializarTile(Context context, char tipoDeTile, int x, int y) {
         switch (tipoDeTile){
             case '#':
-                return new Tile(context, Tile.SOLIDO, Tile.determinarImagenPared(altoMapaTiles(), anchoMapaTiles(), x, y));
+                return new Tile(context, Tile.SOLIDO, Tile.determinarImagenPared(habitacionJefe, altoMapaTiles(), anchoMapaTiles(), x, y));
             case 'P':
-                return new Tile(context, Tile.SOLIDO, R.drawable.piedra_1);
+                return new Tile(context, Tile.SOLIDO, Tile.determinarImagenPiedra(habitacionJefe));
             case 'J':
                 jugador = new Jugador(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2);
-                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+                return new Tile(context, Tile.PASABLE, Tile.determinarImagenSuelo(habitacionJefe));
             case 'T':
                 interaccionables.add(new Pinchos(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
-                return new Tile(context, Tile.PASABLE, R.drawable.pinchos);
+                return new Tile(context, Tile.PASABLE, Tile.determinarImagenSuelo(habitacionJefe));
             case '.':
-                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+                return new Tile(context, Tile.PASABLE, Tile.determinarImagenSuelo(habitacionJefe));
             case 'V':
                 interaccionables.add(new ItemVidaExtra(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
-                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+                return new Tile(context, Tile.PASABLE, Tile.determinarImagenSuelo(habitacionJefe));
             case 'H':
                 interaccionables.add(new ItemRecuperarVida(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
-                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+                return new Tile(context, Tile.PASABLE, Tile.determinarImagenSuelo(habitacionJefe));
             case 'R':
                 interaccionables.add(new ItemDisparoRapido(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
-                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+                return new Tile(context, Tile.PASABLE, Tile.determinarImagenSuelo(habitacionJefe));
             case 'B':
                 interaccionables.add(new ItemDisparoRebota(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
-                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+                return new Tile(context, Tile.PASABLE, Tile.determinarImagenSuelo(habitacionJefe));
             case '1':
                 enemigos.add(new EnemigoRebota(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
-                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+                return new Tile(context, Tile.PASABLE, Tile.determinarImagenSuelo(habitacionJefe));
             case 'O':
                 puerta = new ItemPasarHabitacion(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2);
                 interaccionables.add(puerta);
-                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+                return new Tile(context, Tile.PASABLE, Tile.determinarImagenSuelo(habitacionJefe));
             case 'E':
                 interaccionables.add(new ItemEscudo(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
-                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+                return new Tile(context, Tile.PASABLE, Tile.determinarImagenSuelo(habitacionJefe));
             case '2':
                 enemigos.add(new EnemigoDisparoDirecciones(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
-                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+                return new Tile(context, Tile.PASABLE, Tile.determinarImagenSuelo(habitacionJefe));
             case '3':
                 enemigos.add(new EnemigoDisparoRebote(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
-                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_suelo);
+                return new Tile(context, Tile.PASABLE, Tile.determinarImagenSuelo(habitacionJefe));
             default:
                 throw new RuntimeException("Tipo de tile incorrecto");
         }

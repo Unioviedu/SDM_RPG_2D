@@ -27,24 +27,53 @@ public class Tile {
         this.tipoDeColision = tipoDeColision;
     }
 
-    public static int determinarImagenPared(int altoMapaTiles, int anchoMapaTiles, int x, int y) {
-        if(x == 0 && y == 0)
-            return R.drawable.habitacion_esquina_izq_arriba;
-        else if(x == 0 && y == altoMapaTiles - 1)
-            return R.drawable.habitacion_esquina_izq_abajo;
-        else if(x == anchoMapaTiles - 1 && y == 0)
-            return R.drawable.habitacion_esquina_der_arriba;
-        else if(x == anchoMapaTiles - 1 && y == altoMapaTiles - 1)
-            return R.drawable.habitacion_esquina_der_abajo;
-        else if(x == 0 && y != 0 && y != altoMapaTiles - 1)
-            return R.drawable.habitacion_pared_izq;
-        else if(x == anchoMapaTiles - 1 && y != 0 && y != altoMapaTiles - 1)
-            return R.drawable.habitacion_pared_der;
-        else if(x != 0 && x != anchoMapaTiles - 1 && y == 0)
-            return R.drawable.habitacion_pared_arriba;
-        else if(x != 0 && x != anchoMapaTiles - 1 && y == altoMapaTiles - 1)
-            return R.drawable.habitacion_pared_abajo;
-        else
-            throw new RuntimeException("Pared Incorrecta");
+    public static int determinarImagenPared(boolean habitacionJefe, int altoMapaTiles, int anchoMapaTiles, int x, int y) {
+        if(habitacionJefe){
+            if (x == 0 && y == 0)
+            return R.drawable.habitacion_boss_esquina_izq_arriba;
+            else if (x == 0 && y == altoMapaTiles - 1)
+                return R.drawable.habitacion_boss_esquina_izq_abajo;
+            else if (x == anchoMapaTiles - 1 && y == 0)
+                return R.drawable.habitacion_boss_esquina_der_arriba;
+            else if (x == anchoMapaTiles - 1 && y == altoMapaTiles - 1)
+                return R.drawable.habitacion_boss_esquina_der_abajo;
+            else if (x == 0 && y != 0 && y != altoMapaTiles - 1)
+                return R.drawable.habitacion_boss_pared_izquierda;
+            else if (x == anchoMapaTiles - 1 && y != 0 && y != altoMapaTiles - 1)
+                return R.drawable.habitacion_boss_pared_derecha;
+            else if (x != 0 && x != anchoMapaTiles - 1 && y == 0)
+                return R.drawable.habitacion_boss_pared_arriba;
+            else if (x != 0 && x != anchoMapaTiles - 1 && y == altoMapaTiles - 1)
+                return R.drawable.habitacion_boss_pared_abajo;
+            else
+                throw new RuntimeException("Pared Incorrecta");
+        } else {
+            if (x == 0 && y == 0)
+                return R.drawable.habitacion_esquina_izq_arriba;
+            else if (x == 0 && y == altoMapaTiles - 1)
+                return R.drawable.habitacion_esquina_izq_abajo;
+            else if (x == anchoMapaTiles - 1 && y == 0)
+                return R.drawable.habitacion_esquina_der_arriba;
+            else if (x == anchoMapaTiles - 1 && y == altoMapaTiles - 1)
+                return R.drawable.habitacion_esquina_der_abajo;
+            else if (x == 0 && y != 0 && y != altoMapaTiles - 1)
+                return R.drawable.habitacion_pared_izq;
+            else if (x == anchoMapaTiles - 1 && y != 0 && y != altoMapaTiles - 1)
+                return R.drawable.habitacion_pared_der;
+            else if (x != 0 && x != anchoMapaTiles - 1 && y == 0)
+                return R.drawable.habitacion_pared_arriba;
+            else if (x != 0 && x != anchoMapaTiles - 1 && y == altoMapaTiles - 1)
+                return R.drawable.habitacion_pared_abajo;
+            else
+                throw new RuntimeException("Pared Incorrecta");
+        }
+    }
+
+    public static int determinarImagenSuelo(boolean habitacionJefe){
+        return habitacionJefe? R.drawable.habitacion_boss_suelo: R.drawable.habitacion_suelo;
+    }
+
+    public static int determinarImagenPiedra(boolean habitacionJefe){
+        return habitacionJefe? R.drawable.piedra_boss: R.drawable.piedra_habitacion;
     }
 }

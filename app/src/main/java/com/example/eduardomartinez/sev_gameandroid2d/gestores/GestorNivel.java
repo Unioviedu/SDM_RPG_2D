@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -26,16 +27,15 @@ public class GestorNivel {
     }
 
     public List<Habitacion>  seleccionarLongitudJuego(Context context) throws Exception {
-
-        boolean habitacionesGeneradas = false;
         List<Habitacion> habitacionesNivel = new LinkedList<>();
-        List<Integer> numeroHabitaciones = new ArrayList<>();
-        Random random = new Random();
-        //TODO: Generar las habitaciones aleatoriamente
 
-        for(int i = 0; i < longitudJuego; i++){
-            habitacionesNivel.add(new Habitacion(context, i));
+        for(int i = 0; i < longitudJuego-1; i++){
+            habitacionesNivel.add(new Habitacion(context, i, false));
         }
+        Collections.shuffle(habitacionesNivel);
+
+        habitacionesNivel.add(new Habitacion(context, 10, true));
+
         return habitacionesNivel;
 
     }
