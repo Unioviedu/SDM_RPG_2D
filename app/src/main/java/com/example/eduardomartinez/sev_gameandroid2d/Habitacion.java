@@ -292,8 +292,12 @@ public class Habitacion {
                 disparoJugador.actualizar(tiempo);
 
             if (botonDispararPulsado) {
-                disparosJugador.add(jugador.disparar());
-                GestorAudio.getInstancia().reproducirSonido(1);
+                DisparoJugador disparo = jugador.disparar();
+                if(disparo != null){
+                    disparosJugador.add(disparo);
+                    GestorAudio.getInstancia().reproducirSonido(1);
+                }
+
                 botonDispararPulsado = false;
             }
 

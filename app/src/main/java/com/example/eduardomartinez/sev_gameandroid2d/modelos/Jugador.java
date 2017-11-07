@@ -68,13 +68,14 @@ public class Jugador extends Modelo {
     private boolean disparando;
     private boolean golpeado = false;
 
-    float sensibilidadPad = 20;
+    float sensibilidadPad = 25;
     public float velocidad = 12;
 
     public int vidasTotales;
     public int vidasActuales;
     public boolean escudo;
     public double msInmunidad = 0;
+    public double msDisparo;
 
     public Jugador(Context context, double xInicial, double yInicial) {
         super(context, xInicial, yInicial, Ar.coor(1.2), Ar.coor(1));
@@ -139,12 +140,19 @@ public class Jugador extends Modelo {
     }
 
     public DisparoJugador disparar() {
-        return disparoJugador.disparar(x, y, orientacionDisparoX, orientacionDisparoY);
+        if(msDisparo <= 0) {
+            msDisparo = 250;
+            return disparoJugador.disparar(x, y, orientacionDisparoX, orientacionDisparoY);
+        }
+        return null;
     }
 
     public void actualizar (long tiempo) {
         if(msInmunidad > 0)
             msInmunidad -= tiempo;
+
+        if(msDisparo > 0)
+            msDisparo -= tiempo;
 
         boolean finSprite = spriteActual.actualizar(tiempo);
 
