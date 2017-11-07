@@ -3,6 +3,7 @@ package com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.eduardomartinez.sev_gameandroid2d.Ar;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
 import com.example.eduardomartinez.sev_gameandroid2d.Tile;
@@ -16,16 +17,16 @@ import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
 public class EnemigoRebota extends Enemigo {
 
     public EnemigoRebota(Context context, double x, double y) {
-        super(context, x, y, 59*2, 50*2);
+        super(context, x, y, Ar.coor(1), Ar.coor(1));
 
         velocidadX = 20;
 
         cadenciaDisparo = 300;
         miliSegundosDisparo = 0;
 
-        spriteActual = crearSprite(R.drawable.protagonista_animacion_caminando_izquierda,
+        spriteActual = crearSprite(R.drawable.enemigo_izq_der_mov,
                 CAMINANDO_DERECHA,
-                6, 6, true);
+                4, 4, true);
     }
 
     @Override
@@ -52,7 +53,7 @@ public class EnemigoRebota extends Enemigo {
 
     @Override
     public void actualizar(long tiempo) {
-
+        spriteActual.actualizar(tiempo);
     }
 
     @Override

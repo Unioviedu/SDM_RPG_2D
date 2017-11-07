@@ -2,6 +2,7 @@ package com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos;
 
 import android.content.Context;
 
+import com.example.eduardomartinez.sev_gameandroid2d.Ar;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
 import com.example.eduardomartinez.sev_gameandroid2d.Utilidades;
@@ -15,16 +16,16 @@ public class EnemigoDisparoDirecciones  extends Enemigo{
     private double velocidad = 10;
 
     public EnemigoDisparoDirecciones(Context context, double x, double y) {
-        super(context, x, y, 59*2, 50*2);
+        super(context, x, y, Ar.coor(1), Ar.coor(1));
 
         velocidadX = 20;
 
         cadenciaDisparo = 800;
         miliSegundosDisparo = 0;
 
-        spriteActual = crearSprite(R.drawable.protagonista_animacion_caminando_izquierda,
+        spriteActual = crearSprite(R.drawable.enemigo_parado,
                 CAMINANDO_DERECHA,
-                6, 6, true);
+                1, 1, true);
     }
 
     @Override
