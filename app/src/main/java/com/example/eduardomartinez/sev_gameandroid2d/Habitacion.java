@@ -8,7 +8,8 @@ import android.util.Log;
 import com.example.eduardomartinez.sev_gameandroid2d.gestores.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.gestores.GestorAudio;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.disparos.DisparoJugador;
-import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.DisparoEnemigo;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.EnemigoBoss;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.disparos.DisparoEnemigo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.Enemigo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.EnemigoDisparoDirecciones;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.EnemigoDisparoRebote;
@@ -168,6 +169,9 @@ public class Habitacion {
             case '3':
                 enemigos.add(new EnemigoDisparoRebote(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
                 return new Tile(context, Tile.PASABLE, Tile.determinarImagenSuelo(habitacionJefe));
+            case '4':
+                enemigos.add(new EnemigoBoss(context, x * Tile.ancho + Tile.ancho/2, y * Tile.altura + Tile.altura/2));
+                return new Tile(context, Tile.PASABLE, Tile.determinarImagenSuelo(habitacionJefe));
             default:
                 throw new RuntimeException("Tipo de tile incorrecto");
         }
@@ -315,10 +319,12 @@ public class Habitacion {
                     continue;
                 }
 
-                DisparoEnemigo disparo = enemigo.disparar(context, jugador.x, jugador.y, tiempoDisparo);
+                List<DisparoEnemigo> listaDisparo = enemigo.disparar(context, jugador.x, jugador.y, tiempoDisparo);
 
-                if (disparo != null)
-                    disparosEnemigo.add(disparo);
+                if (listaDisparo != null)
+                    for (DisparoEnemigo disparo: listaDisparo)
+                        if (disparo != null)
+                            disparosEnemigo.add(disparo);
 
                 if(jugador.vidasActuales <= 0) {
                     nivelPausado = true;

@@ -1,7 +1,6 @@
 package com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.eduardomartinez.sev_gameandroid2d.Ar;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
@@ -9,6 +8,11 @@ import com.example.eduardomartinez.sev_gameandroid2d.R;
 import com.example.eduardomartinez.sev_gameandroid2d.Tile;
 import com.example.eduardomartinez.sev_gameandroid2d.Utilidades;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.disparos.DisparoEnemigo;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.disparos.DisparoEnemigoRebota;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by eduardomartinez on 25/10/17.
@@ -57,7 +61,7 @@ public class EnemigoRebota extends Enemigo {
     }
 
     @Override
-    public DisparoEnemigo disparar(Context context, double posJugadorX, double posJugadorY,
+    public List<DisparoEnemigo> disparar(Context context, double posJugadorX, double posJugadorY,
                                    long milisegundos) {
         int orientacion;
 
@@ -73,7 +77,10 @@ public class EnemigoRebota extends Enemigo {
             return null;
         }
 
-        return new DisparoEnemigoRebota(context, x, y, orientacion);
+        List<DisparoEnemigo> disparosEnemigo = new LinkedList<>();
+        disparosEnemigo.add(new DisparoEnemigoRebota(context, x, y, orientacion));
+
+        return disparosEnemigo;
     }
 
     @Override

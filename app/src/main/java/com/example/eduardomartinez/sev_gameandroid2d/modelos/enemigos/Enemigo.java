@@ -7,8 +7,10 @@ import com.example.eduardomartinez.sev_gameandroid2d.gestores.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Modelo;
+import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.disparos.DisparoEnemigo;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by eduardomartinez on 25/10/17.
@@ -87,8 +89,8 @@ public abstract class Enemigo extends Modelo {
 
     public abstract void actualizar(long tiempo);
 
-    public abstract DisparoEnemigo disparar (Context context, double posJugadorX, double posJugadorY,
-                                             long milisegundos);
+    public abstract List<DisparoEnemigo> disparar (Context context, double posJugadorX, double posJugadorY,
+                                                   long milisegundos);
 
     public abstract void golpeado();
 }
