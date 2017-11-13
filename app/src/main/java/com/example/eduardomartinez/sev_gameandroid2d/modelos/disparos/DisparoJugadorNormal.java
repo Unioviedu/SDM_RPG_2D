@@ -2,6 +2,7 @@ package com.example.eduardomartinez.sev_gameandroid2d.modelos.disparos;
 
 import android.content.Context;
 
+import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.gestores.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
 
@@ -11,8 +12,8 @@ import com.example.eduardomartinez.sev_gameandroid2d.R;
 
 public class DisparoJugadorNormal extends DisparoJugador {
 
-    public DisparoJugadorNormal(Context context, double x, double y, double orientacionX, double orientacionY) {
-        super(context, x, y, orientacionX, orientacionY);
+    public DisparoJugadorNormal(Context context, double x, double y, double orientacionX, double orientacionY, boolean rebota) {
+        super(context, x, y, orientacionX, orientacionY, rebota);
 
         imagen = CargadorGraficos.cargarDrawable(context, R.drawable.disparo_jugador_normal);
     }
@@ -23,8 +24,8 @@ public class DisparoJugadorNormal extends DisparoJugador {
     }
 
     @Override
-    public DisparoJugador disparar(double x, double y, double orientacionX, double orientacionY) {
-        return new DisparoJugadorNormal(context, x, y, orientacionX, orientacionY);
+    public DisparoJugador disparar(double x, double y, double orientacionX, double orientacionY, boolean rebota) {
+        return new DisparoJugadorNormal(context, x, y, orientacionX, orientacionY, rebota);
     }
 
 

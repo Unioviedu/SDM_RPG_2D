@@ -32,7 +32,7 @@ public class ItemDisparoRapido extends Interaccionable {
 
     @Override
     public boolean activarItem(Habitacion habitacion){
-        habitacion.jugador.disparoJugador = new DisparoJugadorRapido(context, x, y, habitacion.jugador.orientacionDisparoX, habitacion.jugador.orientacionDisparoY);
+        habitacion.jugador.disparoJugador = new DisparoJugadorRapido(context, x, y, habitacion.jugador.orientacionDisparoX, habitacion.jugador.orientacionDisparoY, false);
         return true;
     }
 }

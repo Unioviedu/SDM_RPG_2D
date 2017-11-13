@@ -431,7 +431,10 @@ public class Habitacion {
                             Math.min(distanciaX, disparoJugador.velocidadX);
                     disparoJugador.x += velocidadNecesaria;
                 } else {
-                    iteratorRemove = true;
+                    if (disparoJugador.rebota)
+                        disparoJugador.rebota(this);
+                    else
+                        iteratorRemove = true;
                 }
             }
 
@@ -457,7 +460,10 @@ public class Habitacion {
                         Utilidades.proximoACero(-distanciaX, disparoJugador.velocidadX);
                 disparoJugador.x += velocidadNecesaria;
             } else {
-                iteratorRemove = true;
+                if (disparoJugador.rebota)
+                    disparoJugador.rebota(this);
+                else
+                    iteratorRemove = true;
             }
         }
 
@@ -483,7 +489,10 @@ public class Habitacion {
                             Math.min(distanciaY, disparoJugador.velocidadY);
                     disparoJugador.y += velocidadNecesaria;
                 } else {
-                    iteratorRemove = true;
+                    if (disparoJugador.rebota)
+                        disparoJugador.rebota(this);
+                    else
+                        iteratorRemove = true;
                 }
         }
         return iteratorRemove;
@@ -508,7 +517,10 @@ public class Habitacion {
                         Utilidades.proximoACero(-distanciaY, disparoJugador.velocidadY);
                 disparoJugador.y += velocidadNecesaria;
             } else {
-                iteratorRemove = true;
+                if (disparoJugador.rebota)
+                    disparoJugador.rebota(this);
+                else
+                    iteratorRemove = true;
             }
         }
         return iteratorRemove;

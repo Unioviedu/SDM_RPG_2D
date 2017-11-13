@@ -92,7 +92,7 @@ public class Jugador extends Modelo {
 
         inicializar();
 
-        disparoJugador = new DisparoJugadorNormal(context, x, y, orientacionDisparoX, orientacionDisparoY);
+        disparoJugador = new DisparoJugadorNormal(context, x, y, orientacionDisparoX, orientacionDisparoY, false);
     }
 
     public void inicializar() {
@@ -142,7 +142,7 @@ public class Jugador extends Modelo {
     public DisparoJugador disparar() {
         if(msDisparo <= 0) {
             msDisparo = 250;
-            return disparoJugador.disparar(x, y, orientacionDisparoX, orientacionDisparoY);
+            return disparoJugador.disparar(x, y, orientacionDisparoX, orientacionDisparoY, disparoJugador.rebota);
         }
         return null;
     }
