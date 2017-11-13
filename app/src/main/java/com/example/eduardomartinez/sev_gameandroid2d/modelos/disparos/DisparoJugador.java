@@ -119,10 +119,12 @@ public abstract class DisparoJugador extends Modelo {
 
     private void paredArribaAbajo() {
         velocidadY = -velocidadY;
+        velocidadX = velocidadY;
     }
 
     private void paredLateral() {
         velocidadX = -velocidadX;
+        velocidadY = -velocidadX;
     }
 
 
