@@ -41,9 +41,9 @@ public class DisparoEnemigoRebotaParedes extends DisparoEnemigo {
         rebota = true;
 
         sprite = new Sprite(CargadorGraficos.cargarDrawable(context,
-                R.drawable.animacion_disparo1),
+                R.drawable.disparo_rebota_paredes),
                 ancho, altura,
-                24, 4, true);
+                1, 1, true);
     }
 
     @Override

@@ -29,12 +29,12 @@ public class GestorNivel {
     public List<Habitacion>  seleccionarLongitudJuego(Context context) throws Exception {
         List<Habitacion> habitacionesNivel = new LinkedList<>();
 
-        for(int i = 0; i < longitudJuego-1; i++){
+        for(int i = 0; i < 10; i++){
             habitacionesNivel.add(new Habitacion(context, i, false));
         }
         //Collections.shuffle(habitacionesNivel);
 
-        habitacionesNivel.add(new Habitacion(context, 10, true));
+        habitacionesNivel.add(longitudJuego-1, new Habitacion(context, 10, true));
 
         return habitacionesNivel;
 

@@ -23,14 +23,14 @@ public class EnemigoRebota extends Enemigo {
     public EnemigoRebota(Context context, double x, double y) {
         super(context, x, y, Ar.coor(1), Ar.coor(1));
 
-        velocidadX = 20;
+        velocidadX = 30;
 
-        cadenciaDisparo = 300;
+        cadenciaDisparo = 1000;
         miliSegundosDisparo = 0;
 
         spriteActual = crearSprite(R.drawable.enemigo_izq_der_mov,
                 CAMINANDO_DERECHA,
-                4, 4, true);
+                20, 4, true);
     }
 
     @Override

@@ -179,7 +179,7 @@ public class Jugador extends Modelo {
             } else {
                 if (vidasActuales > 0) {
                     vidasActuales--;
-                    msInmunidad = 3000;
+                    msInmunidad = 1500;
                     golpeado = true;
                     // Reiniciar animaciones que no son bucle
                     sprites.get(GOLPEADO_IZQUIERDA).setFrameActual(0);

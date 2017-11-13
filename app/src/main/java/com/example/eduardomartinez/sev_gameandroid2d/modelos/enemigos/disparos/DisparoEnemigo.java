@@ -3,6 +3,7 @@ package com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.disparos;
 import android.content.Context;
 import android.graphics.Canvas;
 
+import com.example.eduardomartinez.sev_gameandroid2d.Ar;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Modelo;
@@ -19,7 +20,7 @@ public abstract class DisparoEnemigo extends Modelo {
     public boolean rebota = false;
 
     public DisparoEnemigo(Context context, double x, double y) {
-        super(context, x, y, 110, 110);
+        super(context, x, y, Ar.coor(1), Ar.coor(1));
 
         cArriba = 6;
         cAbajo = 6;

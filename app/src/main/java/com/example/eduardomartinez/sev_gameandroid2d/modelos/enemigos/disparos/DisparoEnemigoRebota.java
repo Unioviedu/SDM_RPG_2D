@@ -15,20 +15,27 @@ import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.disparos.D
  */
 
 public class DisparoEnemigoRebota extends DisparoEnemigo {
-    private Sprite sprite;
+    private int orientacion;
 
     public DisparoEnemigoRebota(Context context, double x, double y, int orientacion) {
         super(context, x, y);
 
-        if (orientacion == Jugador.ARRIBA)
+        this.orientacion = orientacion;
+        if (orientacion == Jugador.ARRIBA) {
             velocidadY = -10;
-        else
+            sprite = new Sprite(CargadorGraficos.cargarDrawable(context,
+                    R.drawable.disapro_enemigo_rebota_arriba),
+                    ancho, altura,
+                    24, 4, true);
+        }
+        else {
             velocidadY = 10;
+            sprite = new Sprite(CargadorGraficos.cargarDrawable(context,
+                    R.drawable.disapro_enemigo_rebota_abajo),
+                    ancho, altura,
+                    24, 4, true);
+        }
 
-        sprite = new Sprite(CargadorGraficos.cargarDrawable(context,
-                R.drawable.animacion_disparo1),
-                ancho, altura,
-                24, 4, true);
     }
 
     public void inicializar() {

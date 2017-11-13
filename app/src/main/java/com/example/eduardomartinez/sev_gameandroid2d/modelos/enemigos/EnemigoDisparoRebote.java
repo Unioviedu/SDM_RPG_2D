@@ -108,7 +108,6 @@ public class EnemigoDisparoRebote extends Enemigo {
 
     @Override
     public void actualizar(long tiempo) {
-
         spriteActual.actualizar(tiempo);
     }
 

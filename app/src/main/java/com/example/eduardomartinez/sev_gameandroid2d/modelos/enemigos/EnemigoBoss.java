@@ -5,6 +5,8 @@ import android.content.Context;
 import com.example.eduardomartinez.sev_gameandroid2d.Ar;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
 import com.example.eduardomartinez.sev_gameandroid2d.R;
+import com.example.eduardomartinez.sev_gameandroid2d.gestores.CargadorGraficos;
+import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Jugador;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.disparos.DisparoEnemigo;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.enemigos.disparos.DisparoEnemigoRebota;
@@ -23,11 +25,11 @@ public class EnemigoBoss extends Enemigo {
     public EnemigoBoss(Context context, double x, double y) {
         super(context, x, y, Ar.coor(3), Ar.coor(2.5));
 
-        cadenciaDisparo = 600;
+        cadenciaDisparo = 1200;
 
-        spriteActual = crearSprite(R.drawable.protagonista_animacion_caminando_izquierda,
+        spriteActual = crearSprite(R.drawable.boss,
                 CAMINANDO_DERECHA,
-                6, 6, true);
+                24, 4, true);
     }
 
     @Override
@@ -37,7 +39,7 @@ public class EnemigoBoss extends Enemigo {
 
     @Override
     public void actualizar(long tiempo) {
-
+        spriteActual.actualizar(tiempo);
     }
 
     @Override
@@ -49,9 +51,21 @@ public class EnemigoBoss extends Enemigo {
 
             List<DisparoEnemigo> disparosEnemigo = new LinkedList<>();
 
-            disparosEnemigo.add(new DisparoEnemigoRebota(context, x, y, Jugador.ABAJO));
-            disparosEnemigo.add(new DisparoEnemigoRebotaParedes(context, x, y, Jugador.IZQUIERDA_ABAJO));
-            disparosEnemigo.add(new DisparoEnemigoRebotaParedes(context, x, y, Jugador.DERECHA_ABAJO));
+            DisparoEnemigo dis1 = new DisparoEnemigoRebota(context, x, y, Jugador.ABAJO);
+            DisparoEnemigo dis2 = new DisparoEnemigoRebotaParedes(context, x, y, Jugador.IZQUIERDA_ABAJO);
+            DisparoEnemigo dis3 = new DisparoEnemigoRebotaParedes(context, x, y, Jugador.DERECHA_ABAJO);
+
+            Sprite imagen = new Sprite (CargadorGraficos.cargarDrawable(context, R.drawable.disparo_boss),
+                    ancho, altura,
+                    1, 1, true);
+
+            dis1.sprite = imagen;
+            dis2.sprite = imagen;
+            dis3.sprite = imagen;
+
+            disparosEnemigo.add(dis1);
+            disparosEnemigo.add(dis2);
+            disparosEnemigo.add(dis3);
 
             return disparosEnemigo;
         } else

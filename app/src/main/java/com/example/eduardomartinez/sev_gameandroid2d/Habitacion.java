@@ -131,6 +131,8 @@ public class Habitacion {
         switch (tipoDeTile){
             case '#':
                 return new Tile(context, Tile.SOLIDO, Tile.determinarImagenPared(habitacionJefe, altoMapaTiles(), anchoMapaTiles(), x, y));
+            case '@':
+                return new Tile(context, Tile.PASABLE, R.drawable.habitacion_boss_suelo);
             case 'P':
                 return new Tile(context, Tile.SOLIDO, Tile.determinarImagenPiedra(habitacionJefe));
             case 'J':
@@ -332,12 +334,12 @@ public class Habitacion {
                 }
             }
 
-            /*for (DisparoEnemigo disparoEnemigo : disparosEnemigo) {
-                //disparoEnemigo.actualizar(tiempo);
-            }*/
+            for (Enemigo enemigo: enemigos)
+                enemigo.actualizar(tiempo);
 
-            /*for (Enemigo enemigo: enemigos)
-                enemigo.actualizar(tiempo);*/
+            for(DisparoEnemigo disparo: disparosEnemigo){
+                disparo.actualizar(tiempo);
+            }
 
             aplicarReglasDisparoEnemigo();
             aplicarReglasMoviemiento();

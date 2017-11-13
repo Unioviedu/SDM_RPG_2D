@@ -52,9 +52,9 @@ public class DisparoEnemigoDirecciones extends DisparoEnemigo {
 
 
         sprite = new Sprite(CargadorGraficos.cargarDrawable(context,
-                R.drawable.animacion_disparo1),
+                R.drawable.disparo_direcciones),
                 ancho, altura,
-                24, 4, true);
+                1, 1, true);
     }
 
     public void inicializar() {
