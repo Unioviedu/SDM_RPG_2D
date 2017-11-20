@@ -25,7 +25,7 @@ public class EnemigoDisparoRebote extends Enemigo {
     public EnemigoDisparoRebote(Context context, double x, double y) {
         super(context, x, y, Ar.coor(1), Ar.coor(1));
 
-        cadenciaDisparo = 1800;
+        cadenciaDisparo = 2500;
         velocidadY = -20;
 
         spriteActual = crearSprite(R.drawable.enemigo_dispara_rebota,

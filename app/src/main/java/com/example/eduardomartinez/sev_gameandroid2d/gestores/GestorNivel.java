@@ -32,7 +32,7 @@ public class GestorNivel {
         for(int i = 0; i < 10; i++){
             habitacionesNivel.add(new Habitacion(context, i, false));
         }
-        //Collections.shuffle(habitacionesNivel);
+        Collections.shuffle(habitacionesNivel);
 
         habitacionesNivel.add(longitudJuego-1, new Habitacion(context, 10, true));
 

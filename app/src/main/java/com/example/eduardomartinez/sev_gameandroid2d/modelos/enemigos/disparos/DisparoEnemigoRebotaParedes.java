@@ -19,7 +19,7 @@ public class DisparoEnemigoRebotaParedes extends DisparoEnemigo {
     private double velocidad = 18;
     int cont = 0;
 
-    public static int MAX_NUMERO_REBOTES = 5;
+    public static int MAX_NUMERO_REBOTES = 3;
 
     public DisparoEnemigoRebotaParedes(Context context, double x, double y, int orientacion) {
         super(context, x, y);

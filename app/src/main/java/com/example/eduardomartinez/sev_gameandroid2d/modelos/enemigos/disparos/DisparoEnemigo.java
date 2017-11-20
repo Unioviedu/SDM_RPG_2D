@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 
 import com.example.eduardomartinez.sev_gameandroid2d.Ar;
 import com.example.eduardomartinez.sev_gameandroid2d.Habitacion;
+import com.example.eduardomartinez.sev_gameandroid2d.R;
+import com.example.eduardomartinez.sev_gameandroid2d.gestores.CargadorGraficos;
 import com.example.eduardomartinez.sev_gameandroid2d.graficos.Sprite;
 import com.example.eduardomartinez.sev_gameandroid2d.modelos.Modelo;
 
@@ -26,6 +28,11 @@ public abstract class DisparoEnemigo extends Modelo {
         cAbajo = 6;
         cDerecha = 6;
         cIzquierda = 6;
+
+        sprite = new Sprite(CargadorGraficos.cargarDrawable(context,
+                R.drawable.disparo_direcciones),
+                ancho, altura,
+                1, 1, true);
     }
 
     protected abstract void inicializar();
